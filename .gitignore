@@ -50,3 +50,8 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+
+# Visual Studio local files
+server/.vs
+*/*/Debug
+*/*/x64

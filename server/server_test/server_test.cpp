@@ -1,5 +1,6 @@
 #include "CppUnitTest.h"
 #include "../static_lib/base64.h"
+#include "../server/server.h"
 
 #include <string>
 
@@ -23,7 +24,6 @@ namespace servertest
 			Assert::AreEqual(b64_test_str_cn, std::string("6Zi/5pav6aG/5rOV5Zu957qi6YWS55yL"));
 			Assert::AreEqual(b64_test_str_jp, std::string("44GC44GE44GG44GI44GK44GL44GN44GP44GR44GT44GV44GX44GZ44Gb44Gd"));
 		}
-
 
 	};
 }

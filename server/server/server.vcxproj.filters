@@ -15,27 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="event_queue.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="my_socket.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="event_processor.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="user_management.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="data_access.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="event.h">
+    <ClInclude Include="server.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="controller.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="semaphore.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="data_manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="server.cpp">
+    <ClCompile Include="my_socket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="server_test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="xdevapi_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

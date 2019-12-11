@@ -1,0 +1,54 @@
+// SERVER SIDE
+{
+    "EventGroup": "Account",
+    "Event": [
+        "LogIn",
+        "LogOut",
+        "CreateAccount"
+    ],
+    // LogIn
+    "ID": "id",
+    "Pswd": "pswd in b64",
+    // LogOut
+    "ID": "id",
+    // CreateAccount
+    "ID": "id",
+    "Pswd": "pswd in b64"
+}
+
+{
+    "EventGroup": "Data",
+    "Event": [
+        "Del",
+        "Update",
+        "Create",
+        "SetGroup",
+        "Rename"
+    ],
+    // Del
+    "ID": "id",
+    "MemoGroup": "group",
+    "MemoName": "name",
+    // Update
+    "ID": "id",
+    "MemoGroup": "group",
+    "MemoName": "name",
+    "Text": "memo text",
+    // Create
+    "ID": "id",
+    "MemoGroup": "group",
+    "MemoName": "name",
+    "Text": "memo text",
+    // SetGroup
+    "ID": "id",
+    "MemoGroup": "group",
+    "MemoName": "name",
+    "NewGroup": "group",
+    // Rename
+    "ID": "id",
+    "MemoGroup": "group",
+    "MemoName": "name",
+    "NewName": "name"
+	// Sync
+	"ID": "id"
+}

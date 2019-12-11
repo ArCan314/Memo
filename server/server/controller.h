@@ -5,8 +5,9 @@
 #include <mutex>
 #include <memory>
 
+#include "global.h"
 #include "semaphore.h"
-#include "constants_global.h"
+#include "user_management.h"
 #include "../include/cpp-base64/base64.h"
 
 #define RAPIDJSON_HAS_STDSTRING 1
@@ -14,9 +15,6 @@
 
 namespace MemoServer
 {
-using RegType = std::pair<Semaphore, std::string>;
-using RegPointer = std::shared_ptr<RegType>;
-
 class Controller
 {
 public:
@@ -36,7 +34,7 @@ public:
 	bool Dispatch(RegPointer &regist_ptr)
 	{
 		rapidjson::Document dom;
-		dom.Parse(regist_ptr->second);
+		dom.Parse(regist_ptr->second.c_str());
 		if (dom.HasParseError() || !dom.IsObject() || !dom.HasMember(kEventGroupStr))
 		{
 			return false;
@@ -67,6 +65,7 @@ public:
 
 private:
 	std::deque<std::pair<RegPointer, /*valid bit*/bool>> _reg_queue;
+	JobQueue<RegPointer> *_account_pool_handle;
 	std::mutex _queue_mtx;
 	std::mutex _clean_mtx;
 	int _clean_cnt = 0;

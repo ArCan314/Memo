@@ -1,3 +1,5 @@
+-- server side
+
 CREATE TABLE accounts (
     id: NVARCHAR(36) NOT NULL,
     pswd: NVARCHAR(256) NOT NULL,
@@ -13,3 +15,12 @@ CREATE TABLE memos(
     modify_time: TIME,
     PRIMARY KEY(id, group, title)
 );
+
+-- accounts
+-- LOG_IN
+SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;
+-- LOG_OUT
+-- SELECT COUNT(*) FROM accounts WHERE id = ?;
+-- CREATE_ACCOUNT,
+INSERT INTO accounts(id, pswd) VALUES (?, ?);
+

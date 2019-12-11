@@ -15,7 +15,7 @@ public:
 	JobQueue() : _jobs(), _semaphore() {}
 	void Push(const T &job)
 	{
-		std::lock_guard<>(_mtx);
+		std::lock_guard<std::mutex> lock(_mtx);
 		_jobs.push_back(job);
 		_semaphore.Signal();
 	}
@@ -23,7 +23,7 @@ public:
 	T Pop()
 	{
 		_semaphore.Wait();
-		std::lock_guard<>(_mtx);
+		std::lock_guard<std::mutex> lock(_mtx);
 		T res = _jobs.front();
 		_jobs.pop_front();
 		return res;

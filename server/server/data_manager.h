@@ -26,7 +26,7 @@ public:
 
 	QSqlQuery GetQuery()
 	{
-		QSqlQuery res(_db);
+		return QSqlQuery(_db);
 	}
 
 private:

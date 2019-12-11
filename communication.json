@@ -16,6 +16,14 @@
     "Pswd": "pswd in b64"
 }
 
+// CLIENT SIDE
+{
+    "EventGroup": "Account",
+    "Event": "Reply",
+    "Result": true/false
+}
+
+// SERVER SIDE
 {
     "EventGroup": "Data",
     "Event": [

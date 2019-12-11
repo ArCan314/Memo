@@ -3,16 +3,24 @@
 #include <map>
 #include <type_traits>
 #include <utility>
+#include <string>
+#include <vector>
+#include <thread>
+#include <mutex>
 #include <QtCore/qstring.h>
+#include <QtSql/qsqlerror.h>
+#include <QtCore/qvariant.h>
 
-#include "controller.h"
+#include "global.h"
 #include "job_queue.h"
 #include "data_manager.h"
+
 #include "../include/cpp-base64/base64.h"
-#include "../include/PicoSHA2/picosha2.h"
 
 #define RAPID_JSON_HAS_STDSTRING 1
 #include "../include/rapidjson/document.h"
+#include "../include/rapidjson/writer.h"
+#include "../include/rapidjson/stringbuffer.h"
 
 namespace MemoServer
 {
@@ -33,7 +41,6 @@ public:
 			assert(1 == 0);
 		}
 
-
 		while (true)
 		{
 			RegPointer job = _jobs.Pop();
@@ -49,7 +56,7 @@ public:
 					res = LogIn();
 					break;
 				case RecvEventType::LOG_OUT:
-					res = LogOut();
+					// res = LogOut();
 					break;
 				default:
 					assert(1 == 0);
@@ -60,137 +67,97 @@ public:
 			{
 				// log
 			}
+
+			_dom.Clear();
+			_dom.SetObject();
+			_dom.AddMember("EventGroup", rapidjson::Value("Account"), _dom.GetAllocator());
+			_dom.AddMember("Event", rapidjson::Value("Reply"), _dom.GetAllocator());
+			_dom.AddMember("Result", rapidjson::Value(res), _dom.GetAllocator());
+
+			rapidjson::StringBuffer str_buf;
+			_writer.Reset(str_buf);
+			_dom.Accept(_writer);
+			std::string res_str = str_buf.GetString();
+
+			res_str = base64_encode(reinterpret_cast<const unsigned char *>(res_str.c_str()), res_str.size());
+
+			job->second.swap(res_str);
+			job->first.Signal();
 		}
 	}
 
+	JobQueue<RegPointer> *GetHandle()
+	{
+		return &_jobs;
+	}
+
 private:
-	enum class RecvEventType {LOG_IN, LOG_OUT, CREATE_ACCOUNT};
-	enum class SendEventType {RE};
-	static const std::map<std::string, RecvEventType> kRecvEventTypeStr;
-	static const std::map<SendEventType, std::string> kSendEventTypeStr;
-	static const std::map<RecvEventType, QString> kSQLQueryStr;
 	JobQueue<RegPointer> _jobs; // jobs with JSON
 	DBAccess _db;
 	std::string _id;
 	std::string _pswd;
 	rapidjson::Document _dom;
+	rapidjson::Writer<rapidjson::StringBuffer> _writer;
 	RecvEventType _type;
-	
-	bool Parse(const std::string &str)
-	{
-		bool res = true;
-		_dom.Clear();
-		_dom.Parse(str.c_str());
-		// parse error cannot hanppen(checked before)
-		if (_dom.HasMember("Event") &&
-			_dom["Event"].IsString() &&
-			kRecvEventTypeStr.count(_dom["Event"].GetString()))
-		{
-			_type = kRecvEventTypeStr.at(_dom["Event"].GetString());
-			switch (_type)
-			{
-			case RecvEventType::CREATE_ACCOUNT:
-			case RecvEventType::LOG_IN:
-				if (!_dom.HasMember("Pswd"))
-				{
-					res = false;
-					// log
-					break;
-				}
-				_pswd = _dom["Pswd"].GetString();
-			case RecvEventType::LOG_OUT:
-				if (!_dom.HasMember("ID"))
-				{
-					res = false;
-					// log
-					break;
-				}
-				_id = _dom["ID"].GetString();
-				break;
-			default:
-				// log
-				assert(1 == 0);
-				break;
-			}
-		}
-		else
-		{
-			// log
-			res = false;
-		}
-		return res;
-	}
 
-	template <typename T>
-	void AddValue(rapidjson::Document &dom, const std::string &name_str, const rapidjson::Type val_type,const T &val_par = T())
-	{		
-		using rapidjson::Type;
-		
-		rapidjson::Value name, val;
-		name.SetString(name_str.c_str(), dom.GetAllocator());
-		switch (val_type)
-		{
-		case kNullType:
-			val.SetNull();
-			break;
-		case kFalseType:
-			val.SetBool(true);
-			break;
-		case kTrueType:
-			val.SetBool(false);
-			break;
-		case kStringType:
-			val.SetString(val_par, dom.GetAllocator());
-			break;
-		case kNumberType:
-			val.SetInt64(val_par);
-			break;
-		default:
-			assert(1 == 0); // error
-			break;
-		}
+	bool Parse(const std::string &str);
 
-		dom.AddMember(std::move(name), std::move(val));
-	}
+	bool CreateAccount();
+	bool LogOut();
+	bool LogIn();
 
-	bool CreateAccount()
-	{
-		QSqlQuery query = _db.GetQuery();
-		query.prepare(kSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
-	}
+	static std::string HashPswd(std::string &pswd, const std::string &id); // Hash(pswd) = SHA256(pswd + Salt(pswd)), changes pswd and return it
+	static void AppendSalt(std::string &pswd, const std::string &id); // Salt(pswd) = pswd + base64(id), pswd is changed
 
-	bool LogOut()
-	{
-	}
-
-	bool LogIn()
-	{
-	}
 };
 
-const std::map<std::string, AccountManager::RecvEventType>
-AccountManager::kRecvEventTypeStr =
+class AccountManagerPool
 {
-	{"LogIn", RecvEventType::LOG_IN},
-	{"LogOut", RecvEventType::LOG_OUT},
-	{"CreateAccount", RecvEventType::CREATE_ACCOUNT}
-};
+public:
+	AccountManagerPool(std::size_t pool_size = 4) 
+		: _manager_handles(pool_size), _max_manager(pool_size), _manager_threads(pool_size),
+		  _current(0), _prepared(0)
+	{
+		std::string db_name_base("mysql_db_");
+		for (std::size_t i = 0; i < pool_size; i++)
+		{
+			_manager_threads[i] = std::move(std::thread(&AccountManagerPool::RunOneManager, this, i, db_name_base + std::to_string(i)));
+		}
+	};
 
-const std::map<AccountManager::SendEventType, std::string>
-AccountManager::kSendEventTypeStr =
-{
-	{SendEventType::RE, "Return"}
-};
+	void Start(const RegPointer &reg_ptr)
+	{
+		_prepared.Wait();
 
-const std::map<AccountManager::RecvEventType, QString> 
-AccountManager::kSQLQueryStr =
-{
-	{ RecvEventType::LOG_IN,
-	  "SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;"},
-	{ RecvEventType::LOG_OUT,
-	  "SELECT COUNT(*) FROM accounts WHERE id = ?;"},
-	{ RecvEventType::CREATE_ACCOUNT,
-	  "INSERT INTO accounts(id, pswd) VALUES (?, ?);"}
+		while (true)
+		{
+			RegPointer job = _jobs.Pop();
+			_manager_handles[_current]->Push(job);
+			if (++_current == _max_manager) // Round-Robin
+				_current = 0;
+		}
+	}
+
+	JobQueue<RegPointer> *GetHandle()
+	{
+		return &_jobs;
+	}
+private:
+	std::vector<JobQueue<RegPointer> *> _manager_handles;
+	std::vector<std::thread> _manager_threads;
+	JobQueue<RegPointer> _jobs;
+	std::size_t _current;
+	std::size_t _max_manager;
+	Semaphore _prepared;
+
+	void RunOneManager(std::size_t index, const std::string db_name)
+	{
+		AccountManager manager(QString::fromStdString(db_name));
+		_manager_handles[index] = manager.GetHandle();
+		if (index == _max_manager - 1)
+			_prepared.Signal();
+		manager.Start(); // block call		
+	}
 };
 
 };

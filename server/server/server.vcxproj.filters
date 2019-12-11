@@ -27,13 +27,16 @@
     <ClInclude Include="semaphore.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="data_manager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="job_queue.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="global.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="data_access.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="memo_management.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

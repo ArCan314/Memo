@@ -11,9 +11,9 @@ bool MemoServer::AccountManager::Parse(const std::string &str)
 	// parse error cannot hanppen(checked before)
 	if (_dom.HasMember("Event") &&
 		_dom["Event"].IsString() &&
-		kRecvEventTypeStr.count(_dom["Event"].GetString()))
+		kRecvStrToEventType.count(_dom["Event"].GetString()))
 	{
-		_type = kRecvEventTypeStr.at(_dom["Event"].GetString());
+		_type = kRecvStrToEventType.at(_dom["Event"].GetString());
 		switch (_type)
 		{
 		case RecvEventType::CREATE_ACCOUNT:
@@ -52,7 +52,7 @@ bool MemoServer::AccountManager::CreateAccount()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
 	if (!res)
 	{
 		// log
@@ -77,7 +77,7 @@ bool MemoServer::AccountManager::LogOut()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kSQLQueryStr.at(RecvEventType::LOG_OUT));
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_OUT));
 	if (!res)
 	{
 		// log
@@ -92,7 +92,7 @@ bool MemoServer::AccountManager::LogIn()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
 	if (!res)
 	{
 		// log

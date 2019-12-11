@@ -18,9 +18,17 @@ const char *kEventGroupStr = "EventGroup";
 const char *kEventTypeStr = "Event";
 enum class RecvEventType { LOG_IN, LOG_OUT, CREATE_ACCOUNT,  };
 enum class SendEventType { RE };
+enum class ComponentType { ACCOUNT_MANAGER_POOL, DATA_MANAGER_POOL };
+
+const std::map<std::string, ComponentType>
+kEventGroupToCompType =
+{
+	{"Account", ComponentType::ACCOUNT_MANAGER_POOL},
+	{"Data", ComponentType::DATA_MANAGER_POOL}
+};
 
 const std::map<std::string, RecvEventType>
-kRecvEventTypeStr =
+kRecvStrToEventType =
 {
 	{"LogIn", RecvEventType::LOG_IN},
 	{"LogOut", RecvEventType::LOG_OUT},
@@ -28,13 +36,13 @@ kRecvEventTypeStr =
 };
 
 const std::map<SendEventType, std::string> 
-kSendEventTypeStr =
+kEventTypeToStr =
 {
 	{SendEventType::RE, "Reply"}
 };
 
 const std::map<RecvEventType, QString> 
-kSQLQueryStr =
+kEventTypeToSQLQueryStr =
 {
 	{ RecvEventType::LOG_IN,
 	  "SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;"},

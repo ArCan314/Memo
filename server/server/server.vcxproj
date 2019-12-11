@@ -161,8 +161,9 @@
   <ItemGroup>
     <ClInclude Include="global.h" />
     <ClInclude Include="controller.h" />
-    <ClInclude Include="data_manager.h" />
+    <ClInclude Include="data_access.h" />
     <ClInclude Include="job_queue.h" />
+    <ClInclude Include="memo_management.h" />
     <ClInclude Include="semaphore.h" />
     <ClInclude Include="server.h" />
     <ClInclude Include="user_management.h" />

@@ -3,6 +3,7 @@
 #include <deque>
 #include <utility>
 #include <mutex>
+#include <map>
 #include <memory>
 
 #include "global.h"
@@ -31,20 +32,46 @@ public:
 		return res;
 	}
 
+	bool RegHandle(const ComponentType comp_type, JobQueue<RegPointer> *handle)
+	{
+		if (!_handle_map.count(comp_type))
+		{
+			// log
+			_handle_map[comp_type] = handle;
+			return true;
+		}
+		else
+		{
+			// log
+			return false;
+		}
+	}
+
 	bool Dispatch(RegPointer &regist_ptr)
 	{
+		bool res = true;
 		rapidjson::Document dom;
 		dom.Parse(regist_ptr->second.c_str());
 		if (dom.HasParseError() || !dom.IsObject() || !dom.HasMember(kEventGroupStr))
 		{
-			return false;
+			// log
+			res = false;
 		}
 		else
 		{
-			// type = parse
-			// switch(type) -> call processors
+			std::string group_str(dom[kEventGroupStr].GetString());
+			if (kEventGroupToCompType.count(group_str))
+			{
+				ComponentType type = kEventGroupToCompType.at(group_str);
+				_handle_map.at(type)->Push(regist_ptr);
+			}
+			else
+			{
+				// log
+				res = false;
+			}
 		}
-		
+		return res;
 	}
 
 	void Unregister(const std::size_t reg_pos)
@@ -65,7 +92,7 @@ public:
 
 private:
 	std::deque<std::pair<RegPointer, /*valid bit*/bool>> _reg_queue;
-	JobQueue<RegPointer> *_account_pool_handle;
+	std::map<ComponentType, JobQueue<RegPointer> *> _handle_map;
 	std::mutex _queue_mtx;
 	std::mutex _clean_mtx;
 	int _clean_cnt = 0;

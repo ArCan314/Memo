@@ -8,11 +8,12 @@ namespace MemoServer
 class Semaphore
 {
 public:
-	Semaphore(unsigned long count = 1) : _count(count)
+	Semaphore(unsigned long count = 0) : _count(count)
 	{
 	}
 
-	Semaphore(const Semaphore &other) = delete;
+	Semaphore(const Semaphore &) = delete;
+	Semaphore &operator=(const Semaphore &) = delete;
 
 	void Signal()
 	{

@@ -1,7 +1,7 @@
 CREATE TABLE accounts (
     id: NVARCHAR(36) NOT NULL,
     pswd: NVARCHAR(256) NOT NULL,
-    PRIMARY KEY id,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE memos(

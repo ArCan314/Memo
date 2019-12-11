@@ -44,7 +44,7 @@ private:
 	void Proceed(const std::size_t len)
 	{
 		std::size_t reg_pos;
-		RegistPointer reg_ptr = _ctrler->Register(_buf, reg_pos);
+		RegPointer reg_ptr = _ctrler->Register(_buf, reg_pos);
 		bool is_recv_str_valid = _ctrler->Dispatch(reg_ptr);
 		if (is_recv_str_valid)
 		{

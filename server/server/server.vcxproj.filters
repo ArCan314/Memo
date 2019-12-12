@@ -39,6 +39,12 @@
     <ClInclude Include="memo_management.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="component_abstract.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="global_include.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="my_socket.cpp">
@@ -54,6 +60,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="user_management.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="memo_management.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

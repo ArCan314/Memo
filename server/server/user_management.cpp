@@ -52,7 +52,7 @@ bool MemoServer::AccountManager::CreateAccount()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT).front());
 	if (!res)
 	{
 		// log
@@ -92,7 +92,7 @@ bool MemoServer::AccountManager::LogIn()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT));
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT).front());
 	if (!res)
 	{
 		// log

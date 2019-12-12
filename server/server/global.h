@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <map>
+#include <vector>
 
 #include <QtCore/qstring.h>
 
@@ -14,10 +15,10 @@ namespace MemoServer
 using RegType = std::pair<Semaphore, std::string>;
 using RegPointer = std::shared_ptr<RegType>;
 
-const char *kEventGroupStr = "EventGroup";
-const char *kEventTypeStr = "Event";
-enum class RecvEventType { LOG_IN, LOG_OUT, CREATE_ACCOUNT,  };
-enum class SendEventType { RE };
+constexpr char kEventGroupStr[] = "EventGroup";
+constexpr char kEventTypeStr[] = "Event";
+enum class RecvEventType { LOG_IN, LOG_OUT, CREATE_ACCOUNT, SYNC_SERVER, SYNC_CLIENT };
+enum class SendEventType { RE, SYNC_DATA, SYNC_RE };
 enum class ComponentType { ACCOUNT_MANAGER_POOL, DATA_MANAGER_POOL };
 
 const std::map<std::string, ComponentType>
@@ -32,23 +33,59 @@ kRecvStrToEventType =
 {
 	{"LogIn", RecvEventType::LOG_IN},
 	{"LogOut", RecvEventType::LOG_OUT},
-	{"CreateAccount", RecvEventType::CREATE_ACCOUNT}
+	{"CreateAccount", RecvEventType::CREATE_ACCOUNT},
+	{"SyncFromServer", RecvEventType::SYNC_SERVER},
+	{"SyncFromClient", RecvEventType::SYNC_CLIENT}
 };
 
 const std::map<SendEventType, std::string> 
 kEventTypeToStr =
 {
-	{SendEventType::RE, "Reply"}
+	{SendEventType::RE, "Reply"},
+	{SendEventType::SYNC_DATA, "SyncData"},
+	{SendEventType::SYNC_RE, "SyncReply"}
 };
 
-const std::map<RecvEventType, QString> 
+const std::map<RecvEventType, std::vector<QString>>
 kEventTypeToSQLQueryStr =
 {
-	{ RecvEventType::LOG_IN,
-	  "SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;"},
+	{ 
+		RecvEventType::LOG_IN,
+		{
+			"SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;"
+		}
+	},
+
 	{ RecvEventType::LOG_OUT,
-	  "SELECT COUNT(*) FROM accounts WHERE id = ?;"},
-	{ RecvEventType::CREATE_ACCOUNT,
-	  "INSERT INTO accounts(id, pswd) VALUES (?, ?);"}
+		{
+			"SELECT COUNT(*) FROM accounts WHERE id = ?;"
+		}
+	},
+
+	{ 
+		RecvEventType::CREATE_ACCOUNT,
+		{
+			"INSERT INTO accounts(id, pswd) VALUES (?, ?);"
+		}
+	},
+
+	{ 
+		RecvEventType::SYNC_SERVER,
+		{
+			"SELECT memo_id FROM id_memo;",
+			"SELECT memo_title FROM memos WHERE memo_id = ?;",
+			"SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?;"
+		}
+	},
+
+	{ 
+		RecvEventType::SYNC_CLIENT,
+		{
+			"DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);", // delete all posible records
+			"INSERT INTO memos VALUES(?, ?);",
+			"INSERT INTO id_memo VALUES (?, ?);",
+			"INSERT INTO records VALUES (?, ?, ?, ?);" // insert records
+		}
+	}
 };
 };

@@ -33,7 +33,7 @@ public:
 
 	void Start()
 	{
-		bool res;
+		bool res = true;
 		res = _db.OpenConnection();
 		if (!res)
 		{
@@ -90,7 +90,6 @@ public:
 	{
 		return &_jobs;
 	}
-
 private:
 	JobQueue<RegPointer> _jobs; // jobs with JSON
 	DBAccess _db;
@@ -118,14 +117,14 @@ public:
 		: _manager_handles(pool_size), _max_manager(pool_size), _manager_threads(pool_size),
 		  _current(0), _prepared(0)
 	{
-		std::string db_name_base("mysql_db_");
+		std::string db_name_base("mysql_db_user_");
 		for (std::size_t i = 0; i < pool_size; i++)
 		{
 			_manager_threads[i] = std::move(std::thread(&AccountManagerPool::RunOneManager, this, i, db_name_base + std::to_string(i)));
 		}
 	};
 
-	void Start(const RegPointer &reg_ptr)
+	void Start()
 	{
 		_prepared.Wait();
 

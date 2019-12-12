@@ -15,9 +15,10 @@ using namespace boost::asio::ip;
 class ServerSession : public std::enable_shared_from_this<ServerSession>
 {
 public:
-	ServerSession(tcp::socket socket, boost::asio::io_context &io_context) 
+	ServerSession(tcp::socket socket, boost::asio::io_context &io_context, Controller *ctrler) 
 		: _strand(io_context),
-		  _socket(std::move(socket))
+		  _socket(std::move(socket)),
+		  _ctrler(ctrler)
 	{
 	}
 
@@ -54,6 +55,7 @@ private:
 		}
 		else
 		{
+			// log
 			// _respond = error json
 		}
 		_ctrler->Unregister(reg_pos);
@@ -85,26 +87,26 @@ private:
 class Server
 {
 public:
-	Server(boost::asio::io_context &io_context, short port) 
+	Server(boost::asio::io_context &io_context, short port, Controller *ctrler) 
 		: _io_context(io_context),
 		  _acceptor(io_context, tcp::endpoint(tcp::v4(), port))
 	{
-		Accept();
+		Accept(ctrler);
 	}
 
 private:
 
-	void Accept()
+	void Accept(Controller * ctrler)
 	{
 		_acceptor.async_accept(
-			[this](const boost::system::error_code ec, tcp::socket socket)
+			[this, ctrler](const boost::system::error_code ec, tcp::socket socket)
 			{
 				if (!ec)
 				{
-					std::make_shared<ServerSession>(std::move(socket), _io_context)->Start();
+					std::make_shared<ServerSession>(std::move(socket), _io_context, ctrler)->Start();
 				}
 
-				Accept();
+				Accept(ctrler);
 			});
 	}
 

@@ -1,6 +1,8 @@
+CREATE DATABASE IF NOT EXISTS memo_data;
+
 -- server side
 
-CREATE TABLE accounts (
+CREATE TABLE IF NOT EXISTS accounts (
     id VARCHAR(36) NOT NULL,
     pswd VARCHAR(256) NOT NULL,
     PRIMARY KEY (id)
@@ -16,13 +18,13 @@ SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;
 -- CREATE_ACCOUNT,
 INSERT INTO accounts(id, pswd) VALUES (?, ?);
 
-CREATE TABLE memos(
+CREATE TABLE IF NOT EXISTS memos(
     memo_id INT NOT NULL,
     memo_title VARCHAR(20),
     PRIMARY KEY (memo_id)
 ); -- first
 
-CREATE TABLE records(
+CREATE TABLE IF NOT EXISTS records(
     memo_id INT NOT NULL,
     record_id INT NOT NULL,
     due_date DATE,
@@ -31,7 +33,7 @@ CREATE TABLE records(
     CONSTRAINT records_memo_ref FOREIGN KEY (memo_id) REFERENCES memos (memo_id) ON DELETE CASCADE
 ); -- second
 
-CREATE TABLE id_memo(
+CREATE TABLE IF NOT EXISTS id_memo(
     id VARCHAR(36) NOT NULL,
     memo_id INT NOT NULL,
     PRIMARY KEY(id, memo_id),

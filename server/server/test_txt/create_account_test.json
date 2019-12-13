@@ -1,0 +1,6 @@
+{
+    "EventGroup": "Account",
+    "Event": "CreateAccount",
+    "ID": "test_id",
+    "Pswd": "test_pswd"
+}

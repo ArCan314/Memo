@@ -29,6 +29,7 @@ public:
 		RegPointer res(new RegType(1, json_str));
 		// auto res = std::make_shared<RegistType>(Semaphore(1), json_str);
 		_reg_queue.push_back({ res, true });
+		reg_pos = _reg_queue.size() - 1;
 		return res;
 	}
 
@@ -83,7 +84,7 @@ public:
 		if (_clean_cnt >= _clean_cnt_max)
 		{
 			_clean_cnt = 0;
-			while (!_reg_queue.front().second)
+			while (_reg_queue.size() && !_reg_queue.front().second)
 			{
 				_reg_queue.pop_front();
 			}

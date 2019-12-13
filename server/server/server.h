@@ -2,11 +2,14 @@
 
 #define BOOST_ASIO_NO_DEPRECATED
 #include <string>
+#include <vector>
 #include <utility>
 #include <memory>
 #include <boost/asio.hpp>
+#include <iostream>
 
 #include "controller.h"
+
 
 namespace MemoServer
 {
@@ -18,7 +21,8 @@ public:
 	ServerSession(tcp::socket socket, boost::asio::io_context &io_context, Controller *ctrler) 
 		: _strand(io_context),
 		  _socket(std::move(socket)),
-		  _ctrler(ctrler)
+		  _ctrler(ctrler),
+		  _buf_vec(1024)
 	{
 	}
 
@@ -31,12 +35,15 @@ private:
 
 	void ReadClientData()
 	{
+		_buf.clear();
 		auto self(shared_from_this());
-		_socket.async_receive(boost::asio::buffer(_buf),
+		_socket.async_receive(boost::asio::buffer(_buf_vec),
 							  boost::asio::bind_executor(_strand, [this, self](const boost::system::error_code ec, std::size_t byte_transfered)
 							  {
 								  if (!ec)
 								  {
+									  for (int i = 0; i < byte_transfered; i++)
+										  _buf.push_back(_buf_vec[i]);
 									  Proceed(byte_transfered);
 								  }
 							  }));
@@ -45,6 +52,7 @@ private:
 	void Proceed(const std::size_t len)
 	{
 		std::size_t reg_pos;
+		std::cerr << "Receive: " << _buf << std::endl;
 		RegPointer reg_ptr = _ctrler->Register(_buf, reg_pos);
 		bool is_recv_str_valid = _ctrler->Dispatch(reg_ptr);
 		if (is_recv_str_valid)
@@ -55,11 +63,14 @@ private:
 		}
 		else
 		{
+			reg_ptr->second = "INVALID JSON QUERY.\n";
 			// log
 			// _respond = error json
 		}
 		_ctrler->Unregister(reg_pos);
 
+		_respond.swap(reg_ptr->second);
+		std::cerr << "Result: " << _respond << std::endl;
 		Respond();
 	}
 
@@ -78,6 +89,7 @@ private:
 	}
 
 	tcp::socket _socket;
+	std::vector<unsigned char> _buf_vec;
 	std::string _buf;
 	std::string _respond;
 	boost::asio::io_context::strand _strand;

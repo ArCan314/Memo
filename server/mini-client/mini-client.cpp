@@ -1,5 +1,6 @@
 #include <boost/asio.hpp>
 #include <string>
+#include <vector>
 #include <iostream>
 
 #include "../include/cpp-base64/base64.h"
@@ -33,9 +34,13 @@ int main()
 
 			write(socket, buffer(request, request.size()));
 
+			std::vector<unsigned char> buf(10240);
 			std::string reply;
-			read(socket, buffer(reply, reply.size()));
+			auto len = socket.read_some(buffer(buf));
+			for (int i = 0; i < len; i++)
+				reply.push_back(buf[i]);
 
+			std::cout << reply << std::endl;
 			std::cout << base64_decode(reply) << std::endl;
 		}
 

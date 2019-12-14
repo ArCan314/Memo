@@ -7,6 +7,7 @@
 #include <vector>
 #include <thread>
 #include <mutex>
+#include <string>
 #include <QtCore/qstring.h>
 #include <QtSql/qsqlerror.h>
 #include <QtCore/qvariant.h>
@@ -30,6 +31,9 @@ public:
 	AccountManager(const QString &db_name) : _db(db_name), _dom()
 	{
 	}
+
+	static bool HasAccountID(const QString &id);
+	static bool HasAccountID(const std::string &id);
 
 	void Start()
 	{
@@ -68,7 +72,7 @@ public:
 				// log
 			}
 
-			_dom.Clear();
+			// _dom.Clear();
 			_dom.SetObject();
 			_dom.AddMember("EventGroup", rapidjson::Value("Account"), _dom.GetAllocator());
 			_dom.AddMember("Event", rapidjson::Value("Reply"), _dom.GetAllocator());

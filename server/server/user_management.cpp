@@ -1,12 +1,57 @@
+#include <iostream>
+
 #include "user_management.h"
+#include "db_access.h"
 
 #include "../include/cpp-base64/base64.h"
 #include "../include/PicoSHA2/picosha2.h"
 
+bool MemoServer::AccountManager::HasAccountID(const QString &id)
+{
+	DBAccess db("has_id_check");
+	if (!db.OpenConnection())
+	{
+		// log
+		std::cerr << db.dbg_get().lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
+	}
+
+	auto query = db.GetQuery();
+
+	if (!query.exec("USE memo_data;"))
+	{
+		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
+	}
+
+	if (!query.prepare("SELECT * FROM accounts WHERE id = ?"))
+	{
+		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
+	}
+
+	query.addBindValue(id);
+	if (!query.exec())
+	{
+		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
+	}
+
+	return query.size();
+}
+
+bool MemoServer::AccountManager::HasAccountID(const std::string &id)
+{
+	return HasAccountID(QString::fromStdString(id));
+}
+
 bool MemoServer::AccountManager::Parse(const std::string &str)
 {
 	bool res = true;
-	_dom.Clear();
+	// _dom.Clear();
 	_dom.Parse(str.c_str());
 	// parse error cannot hanppen(checked before)
 	if (_dom.HasMember("Event") &&
@@ -52,10 +97,20 @@ bool MemoServer::AccountManager::CreateAccount()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT).front());
+
+	res = query.exec(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT)[0]);
 	if (!res)
 	{
 		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
+	}
+
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT)[1]);
+	if (!res)
+	{
+		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
 		assert(1 == 0);
 	}
 
@@ -92,10 +147,20 @@ bool MemoServer::AccountManager::LogIn()
 {
 	bool res;
 	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT).front());
+
+	res = query.exec(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_IN)[0]);
 	if (!res)
 	{
 		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
+	}
+
+	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_IN)[1]);
+	if (!res)
+	{
+		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
 		assert(1 == 0);
 	}
 
@@ -106,6 +171,7 @@ bool MemoServer::AccountManager::LogIn()
 	if (!res)
 	{
 		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
 		assert(1 == 0);
 	}
 
@@ -115,7 +181,11 @@ bool MemoServer::AccountManager::LogIn()
 		if (query.value(0).toInt() == 1) // no user named id or pswd is not correct
 			res = true;
 		else
+		{
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
 			res = false;
+		}
 	}
 	else
 	{

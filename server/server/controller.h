@@ -26,8 +26,8 @@ public:
 		std::lock_guard<std::mutex> lock(_queue_mtx);
 		std::string json_str(base64_decode(recv_str)); // TODO : check if the string has invalid base64 characters
 
-		RegPointer res(new RegType(1, json_str));
-		// auto res = std::make_shared<RegistType>(Semaphore(1), json_str);
+		RegPointer res(new RegType(0, json_str));
+		// auto res = std::make_shared<RegistType>(Semaphore(0), json_str);
 		_reg_queue.push_back({ res, true });
 		reg_pos = _reg_queue.size() - 1;
 		return res;

@@ -22,7 +22,7 @@ public:
 		: _strand(io_context),
 		  _socket(std::move(socket)),
 		  _ctrler(ctrler),
-		  _buf_vec(1024)
+		  _buf_vec(10240)
 	{
 	}
 
@@ -63,7 +63,8 @@ private:
 		}
 		else
 		{
-			reg_ptr->second = "INVALID JSON QUERY.\n";
+			static const char *invalid_json_query = "SU5WQUxJRCBKU09OIFFVRVJZLg==";
+			reg_ptr->second = invalid_json_query;
 			// log
 			// _respond = error json
 		}

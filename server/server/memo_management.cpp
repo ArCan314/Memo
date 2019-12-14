@@ -1,11 +1,13 @@
 #include "memo_management.h"
 
+#include "user_management.h"
+
 #include <QtCore/qvariant.h>
 
 bool MemoServer::MemoManager::Parse(const std::string &str)
 {
 	bool res = true;
-	_dom.Clear();
+	// _dom.Clear();
 	_dom.Parse(str.c_str());
 	// parse error cannot hanppen(checked before)
 	if (_dom.HasMember("Event") &&
@@ -54,109 +56,145 @@ bool MemoServer::MemoManager::SyncClient()
 	QVariantList var_list[4]{};
 	QSqlQuery query = _db.GetQuery();
 	const auto &query_vec = kEventTypeToSQLQueryStr.at(RecvEventType::SYNC_CLIENT);
-	
-	res = query.exec(query_vec.at(0)); // DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);
-	if (!res)
-	{
-		// log
-		assert(1 == 0);
-	}
 
-	res = query.prepare(query_vec.at(1)); // INSERT INTO memos VALUES (?, ?);
-	if (!res)
+	if (AccountManager::HasAccountID(data.id))
 	{
-		// log
-		assert(1 == 0);
-	}
 
-
-	{
-		QVariantList &ids = var_list[0], &titles = var_list[1];
-		for (int i = 0; i < data.memos.size(); i++)
+		res = query.exec(query_vec.at(0));
+		if (!res)
 		{
-			ids.push_back(data.memos[i].id);
-			titles.push_back(QString::fromStdString(data.memos[i].title));
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
 		}
-		query.addBindValue(ids);
-		query.addBindValue(titles);
-	}
 
-	res = query.execBatch();
-	if (!res)
-	{
-		// log
-		assert(1 == 0);
-	}
-
-	res = query.prepare(query_vec.at(2)); // INSERT INTO id_memo VALUES (?, ?);
-	if (!res)
-	{
-		// log
-		assert(1 == 0);
-	}
-
-	{
-		QVariantList &ids = var_list[0], &memo_ids = var_list[1];
-		ids.clear(), memo_ids.clear();
-
-		for (int i = 0; i < data.memos.size(); i++)
+		res = query.exec(query_vec.at(1)); // DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);
+		if (!res)
 		{
-			ids.push_back(QString::fromStdString(_id));
-			memo_ids.push_back(data.memos[i].id);
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
 		}
-		query.addBindValue(ids);
-		query.addBindValue(memo_ids);
-	}
 
-	res = query.execBatch();
-	if (!res)
-	{
-		// log
-		assert(1 == 0);
-	}
-
-	for (int i = 0; i < data.memos.size(); i++)
-	{
-		auto &recs = data.memos[i].recs;
-		for (int j = 0; j < recs.size(); j++)
+		res = query.prepare(query_vec.at(2)); // INSERT INTO memos VALUES (?, ?);
+		if (!res)
 		{
-			query.prepare(query_vec[3]); // INSERT INTO records VALUES (?, ?, ?, ?);
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
+		}
 
-			QVariantList &memo_ids = var_list[0],
-				&record_ids = var_list[1],
-				&due_dates = var_list[2],
-				&record_texts = var_list[3];
-			memo_ids.clear(), record_ids.clear(), due_dates.clear(), record_texts.clear();
-			
-			memo_ids.push_back(data.memos[i].id);
-			record_ids.push_back(recs[j].id);
-			due_dates.push_back(QString::fromStdString(recs[j].date));
-			record_texts.push_back(QString::fromStdString(recs[j].text));
 
+		{
+			QVariantList &ids = var_list[0], &titles = var_list[1];
+			for (int i = 0; i < data.memos.size(); i++)
+			{
+				ids.push_back(data.memos[i].id);
+				titles.push_back(QString::fromStdString(data.memos[i].title));
+			}
+			std::cerr << var_list[0].size() << ", " << var_list[1].size() << std::endl;
+			query.addBindValue(ids);
+			query.addBindValue(titles);
+		}
+
+		
+ 		res = query.execBatch();
+		if (!res)
+		{
+			// log
+			qDebug() << var_list[0] << endl << var_list[1] << endl;
+			std::cerr << query.executedQuery().toStdString() << std::endl;
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
+		}
+
+		res = query.prepare(query_vec.at(3)); // INSERT INTO id_memo VALUES (?, ?);
+		if (!res)
+		{
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
+		}
+
+		{
+			QVariantList &ids = var_list[0], &memo_ids = var_list[1];
+			ids.clear(), memo_ids.clear();
+
+			for (int i = 0; i < data.memos.size(); i++)
+			{
+				ids.push_back(QString::fromStdString(_id));
+				memo_ids.push_back(data.memos[i].id);
+			}
+			query.addBindValue(ids);
 			query.addBindValue(memo_ids);
-			query.addBindValue(record_ids);
-			query.addBindValue(due_dates);
-			query.addBindValue(record_texts);
 		}
 
 		res = query.execBatch();
 		if (!res)
 		{
 			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
 			assert(1 == 0);
 		}
+
+
+		if (!query.prepare(query_vec[4])) // INSERT INTO records VALUES (?, ?, ?, ?);
+		{
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
+		}
+
+		for (auto &list : var_list)
+		{
+			list.clear();
+		}
+
+		QVariantList &memo_ids = var_list[0],
+			&record_ids = var_list[1],
+			&due_dates = var_list[2],
+			&record_texts = var_list[3];
+
+		for (int i = 0; i < data.memos.size(); i++)
+		{
+			auto &recs = data.memos[i].recs;
+			for (int j = 0; j < recs.size(); j++)
+			{
+				memo_ids.push_back(data.memos[i].id);
+				record_ids.push_back(recs[j].id);
+				due_dates.push_back(QString::fromStdString(recs[j].date));
+				record_texts.push_back(QString::fromStdString(recs[j].text));
+			}
+		}
+
+		query.addBindValue(memo_ids);
+		query.addBindValue(record_ids);
+		query.addBindValue(due_dates);
+		query.addBindValue(record_texts);
+
+		res = query.execBatch();
+		if (!res)
+		{
+			// log
+			std::cerr << query.lastError().text().toStdString() << std::endl;
+			assert(1 == 0);
+		}
+
+		auto &allocator = _dom.GetAllocator();
+		_dom.SetObject().AddMember("EventGroup", Value("Data"), allocator)
+			.AddMember("Event", Value("SyncReply"), allocator)
+			.AddMember("SyncResult", Value(res), allocator);
+
+		rapidjson::StringBuffer str_buf;
+		rapidjson::Writer<rapidjson::StringBuffer> writer(str_buf);
+		_dom.Accept(writer);
+		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(str_buf.GetString()), str_buf.GetSize());
 	}
-
-	auto &allocator = _dom.GetAllocator();
-	_dom.SetObject().AddMember("EventGroup", Value("Data"), allocator)
-		.AddMember("Event", Value("SyncReply"), allocator)
-		.AddMember("SyncResult", Value(res), allocator);
-	
-	rapidjson::StringBuffer str_buf;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(str_buf);
-	_dom.Accept(writer);
-	_res_str = base64_encode(reinterpret_cast<const unsigned char *>(str_buf.GetString()), str_buf.GetSize());
-
+	else
+	{
+		_res_str = "{\"EventGroup\":\"Data\",\"Event\":\"SyncReply\",\"SyncResult\": false}";
+		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
+	}
 	return res;
 }
 
@@ -171,59 +209,78 @@ bool MemoServer::MemoManager::SyncServer()
 	data.id = _id;
 	// query.setForwardOnly(true);
 
-	res = query.exec(query_vec.at(0)); // SELECT memo_id FROM id_memo;
+	res = query.exec(query_vec.at(0));
 	if (!res)
 	{
 		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
 		assert(1 == 0);
 	}
 
-	while (query.next())
+	res = query.exec(query_vec.at(1)); // SELECT memo_id FROM id_memo;
+	if (!res)
 	{
-		data.memos.emplace_back();
-		data.memos.back().id = query.value(0).toInt();
+		// log
+		std::cerr << query.lastError().text().toStdString() << std::endl;
+		assert(1 == 0);
 	}
 
-	for (int i = 0; i < data.memos.size(); i++)
+	if (query.size())
 	{
-		query.prepare(query_vec[1]); // SELECT memo_title FROM memos WHERE memo_id = ?;
-		query.addBindValue(data.memos[i].id);
-		res = query.exec();
-		if (!res)
-		{
-			// log
-			assert(1 == 0);
-		}
-
 		while (query.next())
 		{
-			data.memos[i].title = query.value(0).toString().toStdString();
+			data.memos.emplace_back();
+			data.memos.back().id = query.value(0).toInt();
 		}
-	}
 
-	for (int i = 0; i < data.memos.size(); i++)
+		for (int i = 0; i < data.memos.size(); i++)
+		{
+			query.prepare(query_vec[2]); // SELECT memo_title FROM memos WHERE memo_id = ?;
+			query.addBindValue(data.memos[i].id);
+			res = query.exec();
+			if (!res)
+			{
+				// log
+				std::cerr << query.lastError().text().toStdString() << std::endl;
+				assert(1 == 0);
+			}
+
+			while (query.next())
+			{
+				data.memos[i].title = query.value(0).toString().toStdString();
+			}
+		}
+
+		for (int i = 0; i < data.memos.size(); i++)
+		{
+			query.prepare(query_vec[3]); // SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?;
+			query.addBindValue(data.memos[i].id);
+			res = query.exec();
+			if (!res)
+			{
+				// log
+				std::cerr << query.lastError().text().toStdString() << std::endl;
+				assert(1 == 0);
+			}
+
+			while (query.next())
+			{
+				data.memos[i].recs.push_back({
+					query.value(0).toInt(),
+					query.value(1).toString().toStdString(),
+					query.value(2).toString().toStdString()
+											 });
+			}
+		}
+
+		_res_str = data.GetString("SyncData");
+		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
+	}
+	else
 	{
-		query.prepare(query_vec[2]); // SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?;
-		query.addBindValue(data.memos[i].id);
-		res = query.exec();
-		if (!res)
-		{
-			// log
-			assert(1 == 0);
-		}
-
-		while (query.next())
-		{
-			data.memos[i].recs.push_back({
-				query.value(0).toInt(),
-				query.value(1).toString().toStdString(),
-				query.value(2).toString().toStdString()
-										 });
-		}
+		_res_str = "{\"EventGroup\":\"Data\",\"Event\":\"SyncReply\",\"SyncResult\": false}";
+		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size()); 
 	}
-
-	_res_str = data.GetString("SyncData");
-	_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
 
 	return res;
 }
@@ -237,6 +294,7 @@ std::string MemoServer::MemoData::GetString(const std::string &event) const
 	rapidjson::Document::AllocatorType &allocator = dom.GetAllocator();
 	std::string res;
 
+	dom.SetObject();
 	dom.AddMember("EventGroup", Value("Data"), allocator);
 	dom.AddMember("Event", Value().SetString(event.c_str(), allocator), allocator);
 	dom.AddMember("ID", Value().SetString(event.c_str(), allocator), allocator);
@@ -269,6 +327,12 @@ bool MemoServer::MemoData::GenData(const rapidjson::Document &dom)
 {
 	using rapidjson::Value;
 	bool res = true;
+
+	//rapidjson::StringBuffer str_buf;
+	//rapidjson::Writer<rapidjson::StringBuffer> writer(str_buf);
+	//dom.Accept(writer);
+	//std::cerr << str_buf.GetString() << std::endl;
+
 	if (dom.HasMember("Memos") && dom.HasMember("ID"))
 	{
 		// TODO : error handling
@@ -281,9 +345,12 @@ bool MemoServer::MemoData::GenData(const rapidjson::Document &dom)
 			auto &obj = dom["Memos"][i];
 			auto &memo = memos[i];
 			
-			assert(obj.HasMember("MemoID") && obj.HasMember("MemoTitle") &&
-				   obj.HasMember("Records") && obj["MemoID"].IsInt() &&
-				   obj["MemoTitle"].IsString() && obj["Records"].IsObject());
+			assert(obj.HasMember("MemoID"));
+			assert(obj.HasMember("MemoTitle"));
+			assert(obj.HasMember("Records")); 
+			assert(obj["MemoID"].IsInt());
+			assert(obj["MemoTitle"].IsString()); 
+			assert(obj["Records"].IsArray());
 			
 			memo.id = obj["MemoID"].GetInt();
 			memo.title = obj["MemoTitle"].GetString();
@@ -292,14 +359,17 @@ bool MemoServer::MemoData::GenData(const rapidjson::Document &dom)
 			{
 				{
 					auto &test = obj["Records"][j];
-					assert(test.HasMember("RecID") && test.HasMember("Text") &&
-						   test.HasMember("DueDate") && test["RecID"].IsInt() &&
-						   test["Text"].IsString() && test["DueDate"].IsString());
+					assert(test.HasMember("RecID"));
+					assert(test.HasMember("Text"));
+					assert(test.HasMember("DueDate"));
+					assert(test["RecID"].IsInt());
+					assert(test["Text"].IsString());
+					assert(test["DueDate"].IsString());
 				}
 
-				memo.recs[j].id = obj["Records"][j].GetInt();
-				memo.recs[j].text = obj["Records"][j].GetString();
-				memo.recs[j].date = obj["Records"][j].GetString();
+				memo.recs[j].id = obj["Records"][j]["RecID"].GetInt();
+				memo.recs[j].text = obj["Records"][j]["Text"].GetString();
+				memo.recs[j].date = obj["Records"][j]["DueDate"].GetString();
 			}
 		}
 	}

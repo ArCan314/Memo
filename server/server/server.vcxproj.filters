@@ -45,6 +45,9 @@
     <ClInclude Include="db_access.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="my_socket.cpp">
@@ -66,6 +69,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="db_access.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -120,6 +120,7 @@ bool MemoServer::AccountManager::CreateAccount()
 	res = query.exec();
 	if (!res)
 	{
+		std::cerr << query.lastError().text().toStdString() << std::endl;
 		// already has user names _id.
 		res = false;
 	}

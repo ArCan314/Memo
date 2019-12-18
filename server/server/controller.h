@@ -5,17 +5,21 @@
 #include <mutex>
 #include <map>
 #include <memory>
+#include <string>
 
 #include "global.h"
 #include "semaphore.h"
 #include "user_management.h"
+#include "log.h"
 #include "../include/cpp-base64/base64.h"
 
 #define RAPIDJSON_HAS_STDSTRING 1
 #include "../include/rapidjson/document.h"
+#include "../include/rapidjson/error/error.h"
 
 namespace MemoServer
 {
+
 class Controller
 {
 public:
@@ -25,6 +29,7 @@ public:
 	{
 		std::lock_guard<std::mutex> lock(_queue_mtx);
 		std::string json_str(base64_decode(recv_str)); // TODO : check if the string has invalid base64 characters
+		std::cerr << "decode as: " << json_str << std::endl;
 
 		RegPointer res(new RegType(0, json_str));
 		// auto res = std::make_shared<RegistType>(Semaphore(0), json_str);
@@ -33,19 +38,15 @@ public:
 		return res;
 	}
 
-	bool RegHandle(const ComponentType comp_type, JobQueue<RegPointer> *handle)
+	void RegHandle(const ComponentType comp_type, JobQueue<RegPointer> *handle)
 	{
-		if (!_handle_map.count(comp_type))
-		{
-			// log
-			_handle_map[comp_type] = handle;
-			return true;
-		}
-		else
-		{
-			// log
-			return false;
-		}
+		Log::WriteLog(LogLevel::DEBUG,
+					  __Str("Registing handle of a ")
+					  .append(kCompTypeToStr.at(comp_type))
+					  .append(" at address ")
+					  .append(NumStr(reinterpret_cast<int64_t>(handle)))
+					  .append("."));
+		_handle_map[comp_type] = handle;
 	}
 
 	bool Dispatch(RegPointer &regist_ptr)
@@ -53,8 +54,10 @@ public:
 		bool res = true;
 		rapidjson::Document dom;
 		dom.Parse(regist_ptr->second.c_str());
+		// rapidjson::ParseErrorCode ec = dom.Parse(regist_ptr->second.c_str(), rapidjson::kParseValidateEncodingFlag).GetParseError();
 		if (dom.HasParseError() || !dom.IsObject() || !dom.HasMember(kEventGroupStr))
 		{
+			// std::cerr << "JSON parse error :" << rapidjson::GetParseErrorFunc(ec) << std::endl;
 			// log
 			res = false;
 		}

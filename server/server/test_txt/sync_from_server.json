@@ -1,8 +1,7 @@
-{"EventGroup": "Data","Event": "SyncFromServer","ID": "id"} 
+﻿{"EventGroup":"Data","Event":"SyncFromServer","ID":"id"} 
 
 ewogICAgIkV2ZW50R3JvdXAiOiAiRGF0YSIsCiAgICAiRXZlbnQiOiAiU3luY0Zyb21TZXJ2ZXIiLAogICAgIklEIjogImlkIgp9IA==
 
 {"EventGroup": "Data","Event": "SyncFromServer","ID": "test_id"} 
 
 eyJFdmVudEdyb3VwIjogIkRhdGEiLCJFdmVudCI6ICJTeW5jRnJvbVNlcnZlciIsIklEIjogInRlc3RfaWQifSA=
-

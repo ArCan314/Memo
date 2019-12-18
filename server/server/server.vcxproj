@@ -165,6 +165,7 @@
     <ClInclude Include="db_access.h" />
     <ClInclude Include="global_include.h" />
     <ClInclude Include="job_queue.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="memo_management.h" />
     <ClInclude Include="semaphore.h" />
     <ClInclude Include="server.h" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="db_access.cpp" />
+    <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="memo_management.cpp" />
     <ClCompile Include="my_socket.cpp" />

@@ -1,3 +1,5 @@
 {"EventGroup": "Account","Event": "CreateAccount","ID": "test_id","Pswd": "test_pswd"}
 
 ewogICAgIkV2ZW50R3JvdXAiOiAiQWNjb3VudCIsCiAgICAiRXZlbnQiOiAiQ3JlYXRlQWNjb3VudCIsCiAgICAiSUQiOiAidGVzdF9pZCIsCiAgICAiUHN3ZCI6ICJ0ZXN0X3Bzd2QiCn0=
+
+{"EventGroup": "Account","Event": "CreateAccount","ID": "阿斯蒂芬","Pswd": "test_pswd"}

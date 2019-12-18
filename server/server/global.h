@@ -20,6 +20,11 @@ constexpr char kEventTypeStr[] = "Event";
 enum class RecvEventType { LOG_IN, LOG_OUT, CREATE_ACCOUNT, SYNC_SERVER, SYNC_CLIENT };
 enum class SendEventType { RE, SYNC_DATA, SYNC_RE };
 enum class ComponentType { ACCOUNT_MANAGER_POOL, DATA_MANAGER_POOL };
+const std::map<ComponentType, std::string> kCompTypeToStr =
+{
+	{ComponentType::ACCOUNT_MANAGER_POOL, "AccountResourcePool"},
+	{ComponentType::DATA_MANAGER_POOL, "DataResourcePool"}
+};
 
 const std::map<std::string, ComponentType>
 kEventGroupToCompType =

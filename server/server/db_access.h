@@ -8,6 +8,8 @@
 #include <QtSql/qsqlquery.h>
 #include <QtSql/qsqlerror.h>
 
+#include "log.h"
+
 namespace MemoServer
 {
 
@@ -22,15 +24,17 @@ public:
 		_db.setHostName("localhost");
 		_db.setUserName("me");
 		_db.setPassword("whatever");
-		// _db.open();
-		// std::cerr << _db.lastError().text().toStdString() << std::endl;
 	}
 
 	bool OpenConnection()
 	{
 		bool res = _db.open();
 		if (!res)
-			std::cerr << _db.lastError().text().toStdString() << std::endl;
+		{
+			WRITE_LOG(LogLevel::ERROR,
+						  __Str("Cannot connect to the database, error message: ")
+						  .append(_db.lastError().text().toStdString()));
+		}
 		return res;
 	}
 

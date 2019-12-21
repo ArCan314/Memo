@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -13,6 +12,7 @@
 #include "user_management.h"
 #include "db_access.h"
 #include "semaphore.h"
+#include "log.h"
 
 void RunServer(boost::asio::io_context &io_context, MemoServer::Controller *ctrler)
 {
@@ -61,6 +61,10 @@ int main(int argc, char *argv[])
 {
 	QCoreApplication core(argc, argv);
 
+	// MemoServer::Log::SetOption(MemoServer::LogOption::OutputToStdout, true);
+#undef ERROR
+	MemoServer::Log::InitLog(MemoServer::LogLevel::ERROR);
+
 	MemoServer::DBAccess test("123456");
 	test.OpenConnection();
 
@@ -78,10 +82,10 @@ int main(int argc, char *argv[])
 	std::thread ctrler(RunController, std::ref(ctrler_ptr), std::ref(ctrler_prepared), std::ref(ctrler_end));
 	ctrler_prepared.Wait();
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 16; i++)
 		servers.push_back(std::thread(RunServer, std::ref(io_context), ctrler_ptr));
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 16; i++)
 		servers[i].join();
 
 	ctrler_end.Signal();

@@ -151,7 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="mini-client.cpp" />
+    <ClCompile Include="mini-client.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="preasure_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\static_lib\StaticLib1.vcxproj">

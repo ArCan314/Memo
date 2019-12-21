@@ -38,7 +38,7 @@ static const std::map<LogLevel, std::string> kLogLevelToStr =
 void Log::InitLog(const LogLevel max_log_level)
 {
 	std::lock_guard<std::mutex> lock(mtx);
-	if (is_inited)
+	if (!is_inited)
 	{
 		std::stringstream ss;
 		std::time_t current_time = std::time(nullptr);
@@ -55,6 +55,8 @@ void Log::InitLog(const LogLevel max_log_level)
 		{
 			dbg_level = EnumToInt(max_log_level);
 			is_inited = true;
+			log_ofs << "Log start, max dbg level is " << kLogLevelToStr.at(max_log_level) << std::endl;
+			log_ofs.flush();
 		}
 	}
 }
@@ -72,7 +74,7 @@ void Log::SetOption(const LogOption option, const int value)
 	}
 }
 
-bool Log::WriteLog(const LogLevel level, const std::string &log)
+bool Log::WriteLog(const LogLevel level, const std::string &log, const char *file_name, const char *func_name, int line)
 {
 	std::lock_guard<std::mutex> lock(mtx);
 	if (EnumToInt(level) > dbg_level)
@@ -104,8 +106,13 @@ bool Log::WriteLog(const LogLevel level, const std::string &log)
 	const std::string &dbg_level_str = kLogLevelToStr.at(level);
 
 	if (is_output_to_stdout)
-		std::cout << log_id_str << timestamp << current_thread_id << dbg_level_str << ": " << log << std::endl;
-	log_ofs << log_id_str << timestamp << current_thread_id << dbg_level_str << ": " << log << std::endl;
+		std::cout << log_id_str << timestamp << current_thread_id << dbg_level_str <<
+			" " << file_name << "," << func_name << "(" << line << "): " << "\n" <<
+			log << "\n" << std::endl;
+	log_ofs << log_id_str << timestamp << current_thread_id << dbg_level_str <<
+		" " << file_name << "," << func_name << "(" << line << "): " << "\n" <<
+		log << "\n" << std::endl;
+	log_ofs.flush();
 
 	return true;
 }

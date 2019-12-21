@@ -8,8 +8,8 @@ bool MemoServer::MemoManager::Parse(const std::string &str)
 {
 	bool res = true;
 	// _dom.Clear();
+	rapidjson::Document().Swap(_dom);
 	_dom.Parse(str.c_str());
-	// parse error cannot hanppen(checked before)
 	if (_dom.HasMember("Event") &&
 		_dom["Event"].IsString() &&
 		kRecvStrToEventType.count(_dom["Event"].GetString()))
@@ -22,36 +22,40 @@ bool MemoServer::MemoManager::Parse(const std::string &str)
 			if (!_dom.HasMember("ID"))
 			{
 				res = false;
-				// log
 				break;
 			}
 			_id = _dom["ID"].GetString();
 			break;
 		default:
-			// log
 			assert(1 == 0);
 			break;
 		}
 	}
 	else
 	{
-		// log
 		res = false;
 	}
 	return res;
 }
 
+static void SetFailedReply(std::string &rep)
+{
+	rep = "{\"EventGroup\":\"Data\",\"Event\":\"SyncReply\",\"SyncResult\": false}";
+}
+
 bool MemoServer::MemoManager::SyncClient()
 {
 	using rapidjson::Value;
-	bool res;
+	bool res = true;
 	MemoData data;
 
 	res = data.GenData(_dom);
 	if (!res)
 	{
-		// log
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Failed to parse the query."));
+		SetFailedReply(_res_str);
+		return false;
 	}
 	QVariantList var_list[4]{};
 	QSqlQuery query = _db.GetQuery();
@@ -63,25 +67,31 @@ bool MemoServer::MemoManager::SyncClient()
 		res = query.exec(query_vec.at(0));
 		if (!res)
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::INFO,
+					  __Str("Cannot execute db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 		res = query.exec(query_vec.at(1)); // DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);
 		if (!res)
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::INFO,
+					  __Str("Cannot execute db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 		res = query.prepare(query_vec.at(2)); // INSERT INTO memos VALUES (?, ?);
 		if (!res)
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::WARN,
+					  __Str("Cannot prepare db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 
@@ -92,7 +102,7 @@ bool MemoServer::MemoManager::SyncClient()
 				ids.push_back(data.memos[i].id);
 				titles.push_back(QString::fromStdString(data.memos[i].title));
 			}
-			std::cerr << var_list[0].size() << ", " << var_list[1].size() << std::endl;
+			// std::cerr << var_list[0].size() << ", " << var_list[1].size() << std::endl;
 			query.addBindValue(ids);
 			query.addBindValue(titles);
 		}
@@ -101,19 +111,21 @@ bool MemoServer::MemoManager::SyncClient()
  		res = query.execBatch();
 		if (!res)
 		{
-			// log
-			qDebug() << var_list[0] << endl << var_list[1] << endl;
-			std::cerr << query.executedQuery().toStdString() << std::endl;
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::INFO,
+					  __Str("Cannot execute db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 		res = query.prepare(query_vec.at(3)); // INSERT INTO id_memo VALUES (?, ?);
 		if (!res)
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::WARN,
+					  __Str("Cannot prepare db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 		{
@@ -132,17 +144,21 @@ bool MemoServer::MemoManager::SyncClient()
 		res = query.execBatch();
 		if (!res)
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::WARN,
+					  __Str("Cannot prepare db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 
 		if (!query.prepare(query_vec[4])) // INSERT INTO records VALUES (?, ?, ?, ?);
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::WARN,
+					  __Str("Cannot prepare db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 		for (auto &list : var_list)
@@ -175,9 +191,11 @@ bool MemoServer::MemoManager::SyncClient()
 		res = query.execBatch();
 		if (!res)
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::INFO,
+					  __Str("Cannot execute db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
 		}
 
 		auto &allocator = _dom.GetAllocator();
@@ -188,12 +206,11 @@ bool MemoServer::MemoManager::SyncClient()
 		rapidjson::StringBuffer str_buf;
 		rapidjson::Writer<rapidjson::StringBuffer> writer(str_buf);
 		_dom.Accept(writer);
-		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(str_buf.GetString()), str_buf.GetSize());
+		_res_str = str_buf.GetString();
 	}
 	else
 	{
-		_res_str = "{\"EventGroup\":\"Data\",\"Event\":\"SyncReply\",\"SyncResult\": false}";
-		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
+		SetFailedReply(_res_str);
 	}
 	return res;
 }
@@ -212,17 +229,19 @@ bool MemoServer::MemoManager::SyncServer()
 	res = query.exec(query_vec.at(0));
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	res = query.exec(query_vec.at(1)); // SELECT memo_id FROM id_memo;
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	if (query.size())
@@ -240,9 +259,10 @@ bool MemoServer::MemoManager::SyncServer()
 			res = query.exec();
 			if (!res)
 			{
-				// log
-				std::cerr << query.lastError().text().toStdString() << std::endl;
-				assert(1 == 0);
+				WRITE_LOG(LogLevel::INFO,
+						  __Str("Cannot execute db query, error msg: ")
+						  .append(query.lastError().text().toStdString()));
+				return false;
 			}
 
 			while (query.next())
@@ -258,9 +278,10 @@ bool MemoServer::MemoManager::SyncServer()
 			res = query.exec();
 			if (!res)
 			{
-				// log
-				std::cerr << query.lastError().text().toStdString() << std::endl;
-				assert(1 == 0);
+				WRITE_LOG(LogLevel::INFO,
+						  __Str("Cannot execute db query, error msg: ")
+						  .append(query.lastError().text().toStdString()));
+				return false;
 			}
 
 			while (query.next())
@@ -274,12 +295,10 @@ bool MemoServer::MemoManager::SyncServer()
 		}
 
 		_res_str = data.GetString("SyncData");
-		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
 	}
 	else
 	{
 		_res_str = "{\"EventGroup\":\"Data\",\"Event\":\"SyncReply\",\"SyncResult\": false}";
-		_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size()); 
 	}
 
 	return res;

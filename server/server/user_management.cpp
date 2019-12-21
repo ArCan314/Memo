@@ -11,8 +11,6 @@ bool MemoServer::AccountManager::HasAccountID(const QString &id)
 	DBAccess db("has_id_check");
 	if (!db.OpenConnection())
 	{
-		// log
-		std::cerr << db.dbg_get().lastError().text().toStdString() << std::endl;
 		assert(1 == 0);
 	}
 
@@ -20,24 +18,24 @@ bool MemoServer::AccountManager::HasAccountID(const QString &id)
 
 	if (!query.exec("USE memo_data;"))
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::ERROR,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
 	}
 
 	if (!query.prepare("SELECT * FROM accounts WHERE id = ?"))
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::WARN,
+				  __Str("Cannot prepare db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
 	}
 
 	query.addBindValue(id);
 	if (!query.exec())
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
 	}
 
 	return query.size();
@@ -52,6 +50,7 @@ bool MemoServer::AccountManager::Parse(const std::string &str)
 {
 	bool res = true;
 	// _dom.Clear();
+	rapidjson::Document().Swap(_dom);
 	_dom.Parse(str.c_str());
 	// parse error cannot hanppen(checked before)
 	if (_dom.HasMember("Event") &&
@@ -66,7 +65,6 @@ bool MemoServer::AccountManager::Parse(const std::string &str)
 			if (!_dom.HasMember("Pswd"))
 			{
 				res = false;
-				// log
 				break;
 			}
 			_pswd = _dom["Pswd"].GetString();
@@ -74,20 +72,18 @@ bool MemoServer::AccountManager::Parse(const std::string &str)
 			if (!_dom.HasMember("ID"))
 			{
 				res = false;
-				// log
 				break;
 			}
 			_id = _dom["ID"].GetString();
 			break;
 		default:
-			// log
-			assert(1 == 0);
+
+			assert(1 == 0); // program should not enter this entry
 			break;
 		}
 	}
 	else
 	{
-		// log
 		res = false;
 	}
 	return res;
@@ -101,17 +97,19 @@ bool MemoServer::AccountManager::CreateAccount()
 	res = query.exec(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT)[0]);
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::CREATE_ACCOUNT)[1]);
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::WARN,
+				  __Str("Cannot prepare db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	query.addBindValue(_id.c_str());
@@ -120,9 +118,9 @@ bool MemoServer::AccountManager::CreateAccount()
 	res = query.exec();
 	if (!res)
 	{
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		// already has user names _id.
-		res = false;
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
 	}
 
 	return res;
@@ -152,17 +150,19 @@ bool MemoServer::AccountManager::LogIn()
 	res = query.exec(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_IN)[0]);
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_IN)[1]);
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::WARN,
+				  __Str("Cannot prepare db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	query.addBindValue(_id.c_str());
@@ -171,9 +171,10 @@ bool MemoServer::AccountManager::LogIn()
 	res = query.exec();
 	if (!res)
 	{
-		// log
-		std::cerr << query.lastError().text().toStdString() << std::endl;
-		assert(1 == 0);
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
 	}
 
 	if (query.isSelect() && query.isActive() && query.size() == 1)
@@ -183,14 +184,18 @@ bool MemoServer::AccountManager::LogIn()
 			res = true;
 		else
 		{
-			// log
-			std::cerr << query.lastError().text().toStdString() << std::endl;
+			WRITE_LOG(LogLevel::INFO,
+					  __Str("user failed to log in, id: ")
+					  .append(_id));
+
 			res = false;
 		}
 	}
 	else
 	{
-		// log
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
 	}
 
 	return res;

@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "controller.h"
+#include "log.h"
 
 
 namespace MemoServer
@@ -28,6 +29,7 @@ public:
 
 	void Start()
 	{
+		WRITE_LOG(LogLevel::DEBUG, __Str("Start server session."));
 		ReadClientData();
 	}
 
@@ -51,38 +53,60 @@ private:
 
 	void Proceed(const std::size_t len)
 	{
+		WRITE_LOG(LogLevel::DEBUG,
+					  __Str("Receive data from source ")
+					  .append(_socket.remote_endpoint().address().to_string())
+					  .append(", data: ")
+					  .append(_buf));
+
 		std::size_t reg_pos;
-		std::cerr << "Receive: " << _buf << std::endl;
 		RegPointer reg_ptr = _ctrler->Register(_buf, reg_pos);
 		bool is_recv_str_valid = _ctrler->Dispatch(reg_ptr);
 		if (is_recv_str_valid)
 		{
+			WRITE_LOG(LogLevel::DEBUG,
+						  __Str("The received string is a valid json string, string: ")
+						  .append(reg_ptr->second));
+
 			reg_ptr->first.Wait();
 			_respond = reg_ptr->second;
 			
 		}
 		else
 		{
-			static const char *invalid_json_query = "SU5WQUxJRCBKU09OIFFVRVJZLg==";
+			WRITE_LOG(LogLevel::INFO,
+						  __Str("The received string is not a valid json string, string: ")
+						  .append(reg_ptr->second));
+			
+			static const char *invalid_json_query = "SU5WQUxJRCBKU09OIFFVRVJZLg=="; // base64 of "INVALID JSON QUERY"
 			reg_ptr->second = invalid_json_query;
-			// log
-			// _respond = error json
 		}
-		_ctrler->Unregister(reg_pos);
+		// _ctrler->Unregister(reg_pos);
 
 		_respond.swap(reg_ptr->second);
-		std::cerr << "Result: " << _respond << std::endl;
+		
 		Respond();
 	}
 
 	void Respond()
 	{
+		WRITE_LOG(LogLevel::DEBUG,
+					  __Str("Respond to ")
+					  .append(_socket.remote_endpoint().address().to_string())
+					  .append(" with data ")
+					  .append(_respond));
+
 		auto self(shared_from_this());
 		boost::asio::async_write(_socket, boost::asio::buffer(_respond, _respond.length()),
 								 boost::asio::bind_executor(_strand, [this, self](const boost::system::error_code ec, std::size_t write_len)
 								 {
 									 if (!ec)
 									 {
+										 WRITE_LOG(LogLevel::DEBUG,
+													   __Str("Respond to ")
+													   .append(_socket.remote_endpoint().address().to_string())
+													   .append(" successfully."));
+
 										 ReadClientData();
 									 }
 								 }));
@@ -111,6 +135,8 @@ private:
 
 	void Accept(Controller * ctrler)
 	{
+		WRITE_LOG(LogLevel::DEBUG, __Str("Start server"));
+
 		_acceptor.async_accept(
 			[this, ctrler](const boost::system::error_code ec, tcp::socket socket)
 			{

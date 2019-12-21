@@ -4,6 +4,7 @@
 #include <QtCore\qstring.h>
 
 #include "db_access.h"
+#include "log.h"
 
 
 using MemoServer::DBAccess;
@@ -46,18 +47,22 @@ static const std::vector<QString> init_stmts =
 	");"
 };
 
-
+namespace MemoServer
+{
 static bool InitDB()
 {
 	std::lock_guard<std::mutex> lock(mtx_init);
 	bool res = true;
 	if (!has_init)
 	{
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Initializing database."));
+
 		DBAccess init_db{ "db_init_con" };
 		if (!(res = init_db.OpenConnection()))
 		{
-			// log
-			std::cerr << init_db.dbg_get().lastError().text().toStdString() << std::endl;
+			WRITE_LOG(LogLevel::ERROR,
+					  __Str("Failed to connect to the database."));
 			return false;
 		}
 
@@ -67,8 +72,12 @@ static bool InitDB()
 			res = tmp_qry.exec(stmt);
 			if (!res)
 			{
-				// log
-				std::cerr << tmp_qry.lastError().text().toStdString() << std::endl;
+				WRITE_LOG(LogLevel::ERROR,
+						  __Str("Failed to execute sql query statement: ")
+						  .append(stmt.toStdString())
+						  .append("\n\tError message: ")
+						  .append(tmp_qry.lastError().text().toStdString()));
+
 				break;
 			}
 		}
@@ -81,7 +90,8 @@ static bool InitDB()
 	return res;
 }
 
-bool MemoServer::InitDataBase()
+bool InitDataBase()
 {
 	return InitDB();
 }
+}; // namespace MemoServer

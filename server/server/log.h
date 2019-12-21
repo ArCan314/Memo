@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 
+#define WRITE_LOG(level, msg) do{Log::WriteLog(level, msg, __FILE__ , __FUNCTION__ ,  __LINE__ );}while(0)
+
 namespace MemoServer
 {
 enum class LogLevel
@@ -42,7 +44,7 @@ class Log
 public:
 	static void InitLog(const LogLevel max_log_level);
 	static void SetOption(const LogOption option, const int value);
-	static bool WriteLog(const LogLevel level, const std::string &log);
+	static bool WriteLog(const LogLevel level, const std::string &log, const char *file_name, const char *func_name, int line);
 	static void CloseLog();
 };
 };

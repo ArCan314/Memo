@@ -41,14 +41,16 @@ public:
 		res = _db.OpenConnection();
 		if (!res)
 		{
-			// log
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::ERROR,
+					  __Str("Failed to connect to the database."));
+
+			return; // add error handling
 		}
 
 		while (true)
 		{
 			RegPointer job = _jobs.Pop();
-			bool res;
+			bool res = false;
 			if (Parse(job->second))
 			{
 				switch (_type)
@@ -60,32 +62,42 @@ public:
 					res = LogIn();
 					break;
 				case RecvEventType::LOG_OUT:
+					WRITE_LOG(LogLevel::ERROR,
+							  __Str("The switch statement shouldn't enter this entry."));
+
 					// res = LogOut();
 					break;
 				default:
+					WRITE_LOG(LogLevel::ERROR,
+							  __Str("The switch statement shouldn't enter this entry."));
+					
 					assert(1 == 0);
 					break;
 				}
+
+				// _dom.Clear();
+				_dom.SetObject();
+				_dom.AddMember("EventGroup", rapidjson::Value("Account"), _dom.GetAllocator());
+				_dom.AddMember("Event", rapidjson::Value("Reply"), _dom.GetAllocator());
+				_dom.AddMember("Result", rapidjson::Value(res), _dom.GetAllocator());
+
+				rapidjson::StringBuffer str_buf;
+				_writer.Reset(str_buf);
+				_dom.Accept(_writer);
+				_res_str = str_buf.GetString();
 			}
 			else
 			{
-				// log
+				WRITE_LOG(LogLevel::WARN,
+						  __Str("Failed to parse: ")
+						  .append(job->second));
+
+				_res_str = "{\"EventGroup\":\"Account\",\"Event\":\"Reply\",\"Result\":false}";
 			}
 
-			// _dom.Clear();
-			_dom.SetObject();
-			_dom.AddMember("EventGroup", rapidjson::Value("Account"), _dom.GetAllocator());
-			_dom.AddMember("Event", rapidjson::Value("Reply"), _dom.GetAllocator());
-			_dom.AddMember("Result", rapidjson::Value(res), _dom.GetAllocator());
+			_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
 
-			rapidjson::StringBuffer str_buf;
-			_writer.Reset(str_buf);
-			_dom.Accept(_writer);
-			std::string res_str = str_buf.GetString();
-
-			res_str = base64_encode(reinterpret_cast<const unsigned char *>(res_str.c_str()), res_str.size());
-
-			job->second.swap(res_str);
+			job->second.swap(_res_str);
 			job->first.Signal();
 		}
 	}
@@ -102,6 +114,7 @@ private:
 	rapidjson::Document _dom;
 	rapidjson::Writer<rapidjson::StringBuffer> _writer;
 	RecvEventType _type;
+	std::string _res_str;
 
 	bool Parse(const std::string &str);
 
@@ -121,11 +134,18 @@ public:
 		: _manager_handles(pool_size), _max_manager(pool_size), _manager_threads(pool_size),
 		  _current(0), _prepared(0)
 	{
+		WRITE_LOG(LogLevel::DEBUG,
+				  __Str("Initialize resource pool of AccountManager."));
+
 		std::string db_name_base("mysql_db_user_");
 		for (std::size_t i = 0; i < pool_size; i++)
 		{
 			_manager_threads[i] = std::move(std::thread(&AccountManagerPool::RunOneManager, this, i, db_name_base + std::to_string(i)));
 		}
+
+		WRITE_LOG(LogLevel::DEBUG,
+				  __Str("Initialize resource pool of AccountManager done, resource number: ")
+				  .append(NumStr(pool_size)));
 	};
 
 	void Start()

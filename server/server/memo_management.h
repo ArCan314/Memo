@@ -10,6 +10,8 @@
 #include "global.h"
 #include "job_queue.h"
 #include "db_access.h"
+#include "log.h"
+
 
 #include "../include/cpp-base64/base64.h"
 
@@ -59,8 +61,10 @@ public:
 		res = _db.OpenConnection();
 		if (!res)
 		{
-			// log
-			assert(1 == 0);
+			WRITE_LOG(LogLevel::ERROR,
+					  __Str("Failed to connect to the database."));
+
+			return; // add error handling
 		}
 
 		while (true)
@@ -78,15 +82,24 @@ public:
 					res = SyncServer();
 					break;
 				default:
+					WRITE_LOG(LogLevel::ERROR,
+							  __Str("The switch statement shouldn't enter this entry."));
+
 					assert(1 == 0);
 					break;
 				}
 			}
 			else
 			{
-				// log
+				WRITE_LOG(LogLevel::WARN,
+						  __Str("Failed to parse: ")
+						  .append(job->second));
+
+				_res_str = "{\"EventGroup\":\"Data\",\"Event\":\"SyncReply\",\"SyncResult\": false}";
 			}
 
+			_res_str = base64_encode(reinterpret_cast<const unsigned char *>(_res_str.c_str()), _res_str.size());
+			
 			job->second.swap(_res_str);
 			job->first.Signal();
 			_res_str.clear();
@@ -120,11 +133,18 @@ public:
 		: _manager_handles(pool_size), _max_manager(pool_size), _manager_threads(pool_size),
 		_current(0), _prepared(0)
 	{
+		WRITE_LOG(LogLevel::DEBUG,
+				  __Str("Initialize resource pool of MemoManager."));
+
 		std::string db_name_base("mysql_db_data_");
 		for (std::size_t i = 0; i < pool_size; i++)
 		{
 			_manager_threads[i] = std::move(std::thread(&MemoManagerPool::RunOneManager, this, i, db_name_base + std::to_string(i)));
 		}
+
+		WRITE_LOG(LogLevel::DEBUG,
+				  __Str("Initialize resource pool of MemoManager done, resource number: ")
+				  .append(NumStr(pool_size)));
 	};
 
 	void Start()
@@ -144,6 +164,7 @@ public:
 	{
 		return &_jobs;
 	}
+
 private:
 	std::vector<JobQueue<RegPointer> *> _manager_handles;
 	std::vector<std::thread> _manager_threads;

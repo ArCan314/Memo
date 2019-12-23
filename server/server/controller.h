@@ -113,7 +113,7 @@ public:
 	//}
 
 private:
-	static constexpr int kQueueLen = 64;
+	static constexpr int kQueueLen = 1024;
 	RegPointer _reg_queue[kQueueLen];
 	int _queue_now = 0;
 	std::mutex _queue_mtx;

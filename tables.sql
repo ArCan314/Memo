@@ -18,45 +18,62 @@ SELECT COUNT(*) FROM accounts WHERE id = ? AND pswd = ?;
 -- CREATE_ACCOUNT,
 INSERT INTO accounts(id, pswd) VALUES (?, ?);
 
-CREATE TABLE IF NOT EXISTS memos(
+CREATE TABLE IF NOT EXISTS records(
+    id VARCHAR(36) NOT NULL,
+    record_id INT NOT NULL,
+    due_date DATE,
+    record_text VARCHAR(80) NOT NULL,
+    is_done BOOLEAN NOT NULL,
+    PRIMARY KEY (id, record_id),
+    CONSTRAINT records_accounts_ref FOREIGN KEY (id) REFERENCES accounts (id) ON DELETE CASCADE
+); -- second
+
+/* CREATE TABLE IF NOT EXISTS memos(
     memo_id INT NOT NULL,
     memo_title VARCHAR(20),
     PRIMARY KEY (memo_id)
-); -- first
+); -- first */
 
-CREATE TABLE IF NOT EXISTS records(
+/* CREATE TABLE IF NOT EXISTS records(
     memo_id INT NOT NULL,
     record_id INT NOT NULL,
     due_date DATE,
     record_text VARCHAR(80) NOT NULL,
     PRIMARY KEY (memo_id, record_id),
     CONSTRAINT records_memo_ref FOREIGN KEY (memo_id) REFERENCES memos (memo_id) ON DELETE CASCADE
-); -- second
+); -- second */
 
-CREATE TABLE IF NOT EXISTS id_memo(
+/* CREATE TABLE IF NOT EXISTS id_memo(
     id VARCHAR(36) NOT NULL,
     memo_id INT NOT NULL,
     PRIMARY KEY(id, memo_id),
     CONSTRAINT id_memo_id_ref FOREIGN KEY (id) REFERENCES accounts (id),
     CONSTRAINT id_memo_memo_ref FOREIGN KEY (memo_id) REFERENCES memos (memo_id) ON DELETE CASCADE
-); -- third
+); -- third */
 
 -- data
 
 -- SYNC_FROM_SERVER
-SELECT memo_id FROM id_memo; -- get ids
+/* SELECT memo_id FROM id_memo; -- get ids
 
 SELECT memo_title FROM memos WHERE memo_id = ?; -- get titles
 
-SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?; -- get records
+SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?; -- get records */
+
+SELECT record_id, due_date, record_text, is_done FROM records WHERE id = ?; -- get records */
 
 -- SELECT * FROM id_memo NATURAL JOIN memos NATURAL JOIN records WHERE id = ?;
 
 -- SYNC_FROM_CLIENT
-DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);
+/* DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);
 
 INSERT INTO memos VALUES (?, ?);
-INSERT INTO id_memo VALUES (?, ?);
+INSERT INTO id_memo VALUES (?, ?); */
+
+DELETE FROM records WHERE id = ?;
+
+INSERT INTO records VALUES (?, ?, ?, ?, ?);
+
 -- INSERT INTO ? VALUES (?, ?); -- BatchExec
 
 -- memo_id, record_id, due_date, record_text

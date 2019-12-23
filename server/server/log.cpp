@@ -14,7 +14,7 @@ namespace MemoServer
 {
 
 static const std::string log_dir = "./";
-static const std::string log_ext = ".log.txt";
+static const std::string log_ext = ".log";
 static std::string log_path;
 
 static std::mutex mtx; // 避免流失去同步

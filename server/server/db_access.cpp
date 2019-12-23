@@ -23,27 +23,14 @@ static const std::vector<QString> init_stmts =
 	"	PRIMARY KEY(id)"\
 	");",
 
-	"CREATE TABLE IF NOT EXISTS memos("\
-	"	memo_id INT NOT NULL,"\
-	"	memo_title VARCHAR(20),"\
-	"	PRIMARY KEY(memo_id)"\
-	");",
-
 	"CREATE TABLE IF NOT EXISTS records("\
-	"	memo_id INT NOT NULL,"\
-	"	record_id INT NOT NULL,"\
-	"	due_date DATE,"\
-	"	record_text VARCHAR(80) NOT NULL,"\
-	"	PRIMARY KEY(memo_id, record_id),"\
-	"	CONSTRAINT records_memo_ref FOREIGN KEY(memo_id) REFERENCES memos(memo_id) ON DELETE CASCADE"\
-	");",
-
-	"CREATE TABLE IF NOT EXISTS id_memo("\
-	"	id VARCHAR(36) NOT NULL,"\
-	"	memo_id INT NOT NULL,"\
-	"	PRIMARY KEY(id, memo_id),"\
-	"	CONSTRAINT id_memo_id_ref FOREIGN KEY(id) REFERENCES accounts(id),"\
-	"	CONSTRAINT id_memo_memo_ref FOREIGN KEY(memo_id) REFERENCES memos(memo_id) ON DELETE CASCADE"\
+	"id VARCHAR(36) NOT NULL,"\
+	"record_id INT NOT NULL,"\
+	"due_date DATE,"\
+	"record_text VARCHAR(80) NOT NULL,"\
+	"is_done BOOLEAN NOT NULL,"\
+	"PRIMARY KEY(id, record_id),"\
+	"CONSTRAINT records_accounts_ref FOREIGN KEY(id) REFERENCES accounts(id) ON DELETE CASCADE"\
 	");"
 };
 

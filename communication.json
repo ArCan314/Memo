@@ -32,17 +32,12 @@
     "ID": "id",
     // SyncFromClient
     "ID": "id",
-    "Memos": [
+    "Records": [
         {
-            "MemoID": int,
-            "MemoTitle": "title",
-            "Records": [
-                {
-                    "RecID": int,
-                    "Text": "text",
-                    "DueDate": "time_str(XXXX-XX-XX)"
-                }, ...
-            ]
+            "RecID": int,
+            "Text": "text",
+            "DueDate": "time_str(XXXX-XX-XX)",
+            "Done": bool
         }, ...
     ]
 }
@@ -57,17 +52,12 @@
     "SyncResult": bool,
     // SyncData
     "ID": "id",
-    "Memos": [
+    "Records": [
         {
-            "MemoID": int,
-            "MemoTitle": "title",
-            "Records": [
-                {
-                    "RecID": int,
-                    "Text": "text",
-                    "DueDate": "time_str(XXXX-XX-XX)"
-                }, ...
-            ]
+            "RecID": int,
+            "Text": "text",
+            "DueDate": "time_str(XXXX-XX-XX)",
+            "Done": bool
         }, ...
     ]
 }

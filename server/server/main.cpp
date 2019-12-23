@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -61,9 +63,10 @@ int main(int argc, char *argv[])
 {
 	QCoreApplication core(argc, argv);
 
-	// MemoServer::Log::SetOption(MemoServer::LogOption::OutputToStdout, true);
+	MemoServer::Log::SetOption(MemoServer::LogOption::OutputToStdout, true);
 #undef ERROR
-	MemoServer::Log::InitLog(MemoServer::LogLevel::ERROR);
+	MemoServer::Log::InitLog(MemoServer::LogLevel::DEBUG);
+#define ERROR 0
 
 	MemoServer::DBAccess test("123456");
 	test.OpenConnection();

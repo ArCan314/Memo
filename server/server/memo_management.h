@@ -31,19 +31,13 @@ struct MemoRec
 	int id{ 0 };
 	std::string date{ "" };
 	std::string text{ "" };
-};
-
-struct Memo
-{
-	int id{ 0 };
-	std::string title{ "" };
-	std::vector<MemoRec> recs;
+	bool done{ false };
 };
 
 struct MemoData
 {
 	std::string id{ "1" };
-	std::vector<Memo> memos;
+	std::vector<MemoRec> recs;
 	std::string GetString(const std::string &event) const;
 	bool GenData(const rapidjson::Document &dom);
 };

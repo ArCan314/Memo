@@ -57,7 +57,6 @@ bool MemoServer::MemoManager::SyncClient()
 		SetFailedReply(_res_str);
 		return false;
 	}
-	QVariantList var_list[4]{};
 	QSqlQuery query = _db.GetQuery();
 	const auto &query_vec = kEventTypeToSQLQueryStr.at(RecvEventType::SYNC_CLIENT);
 
@@ -74,7 +73,7 @@ bool MemoServer::MemoManager::SyncClient()
 			return false;
 		}
 
-		res = query.exec(query_vec.at(1)); // DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);
+		res = query.prepare(query_vec.at(1)); // DELETE FROM records WHERE id = ?;
 		if (!res)
 		{
 			WRITE_LOG(LogLevel::INFO,
@@ -84,7 +83,19 @@ bool MemoServer::MemoManager::SyncClient()
 			return false;
 		}
 
-		res = query.prepare(query_vec.at(2)); // INSERT INTO memos VALUES (?, ?);
+		query.addBindValue(QString::fromStdString(data.id));
+
+		res = query.exec();
+		if (!res)
+		{
+			WRITE_LOG(LogLevel::INFO,
+					  __Str("Cannot execute db query, error msg: ")
+					  .append(query.lastError().text().toStdString()));
+			SetFailedReply(_res_str);
+			return false;
+		}
+
+		res = query.prepare(query_vec.at(2)); // INSERT INTO records VALUES (?, ?, ?, ?, ?);
 		if (!res)
 		{
 			WRITE_LOG(LogLevel::WARN,
@@ -96,99 +107,25 @@ bool MemoServer::MemoManager::SyncClient()
 
 
 		{
-			QVariantList &ids = var_list[0], &titles = var_list[1];
-			for (int i = 0; i < data.memos.size(); i++)
+			QVariantList texts, record_ids, due_dates, dones, id;
+			for (int i = 0; i < data.recs.size(); i++)
 			{
-				ids.push_back(data.memos[i].id);
-				titles.push_back(QString::fromStdString(data.memos[i].title));
+				texts.push_back(QString::fromStdString(data.recs[i].text));
+				record_ids.push_back(data.recs[i].id);
+				due_dates.push_back(QString::fromStdString(data.recs[i].date));
+				dones.push_back(data.recs[i].done);
+				id.push_back(QString::fromStdString(data.id));
+				
 			}
 			// std::cerr << var_list[0].size() << ", " << var_list[1].size() << std::endl;
-			query.addBindValue(ids);
-			query.addBindValue(titles);
+			query.addBindValue(id);
+			query.addBindValue(record_ids);
+			query.addBindValue(due_dates);
+			query.addBindValue(texts);
+			query.addBindValue(dones);
 		}
 
-		
  		res = query.execBatch();
-		if (!res)
-		{
-			WRITE_LOG(LogLevel::INFO,
-					  __Str("Cannot execute db query, error msg: ")
-					  .append(query.lastError().text().toStdString()));
-			SetFailedReply(_res_str);
-			return false;
-		}
-
-		res = query.prepare(query_vec.at(3)); // INSERT INTO id_memo VALUES (?, ?);
-		if (!res)
-		{
-			WRITE_LOG(LogLevel::WARN,
-					  __Str("Cannot prepare db query, error msg: ")
-					  .append(query.lastError().text().toStdString()));
-			SetFailedReply(_res_str);
-			return false;
-		}
-
-		{
-			QVariantList &ids = var_list[0], &memo_ids = var_list[1];
-			ids.clear(), memo_ids.clear();
-
-			for (int i = 0; i < data.memos.size(); i++)
-			{
-				ids.push_back(QString::fromStdString(_id));
-				memo_ids.push_back(data.memos[i].id);
-			}
-			query.addBindValue(ids);
-			query.addBindValue(memo_ids);
-		}
-
-		res = query.execBatch();
-		if (!res)
-		{
-			WRITE_LOG(LogLevel::WARN,
-					  __Str("Cannot prepare db query, error msg: ")
-					  .append(query.lastError().text().toStdString()));
-			SetFailedReply(_res_str);
-			return false;
-		}
-
-
-		if (!query.prepare(query_vec[4])) // INSERT INTO records VALUES (?, ?, ?, ?);
-		{
-			WRITE_LOG(LogLevel::WARN,
-					  __Str("Cannot prepare db query, error msg: ")
-					  .append(query.lastError().text().toStdString()));
-			SetFailedReply(_res_str);
-			return false;
-		}
-
-		for (auto &list : var_list)
-		{
-			list.clear();
-		}
-
-		QVariantList &memo_ids = var_list[0],
-			&record_ids = var_list[1],
-			&due_dates = var_list[2],
-			&record_texts = var_list[3];
-
-		for (int i = 0; i < data.memos.size(); i++)
-		{
-			auto &recs = data.memos[i].recs;
-			for (int j = 0; j < recs.size(); j++)
-			{
-				memo_ids.push_back(data.memos[i].id);
-				record_ids.push_back(recs[j].id);
-				due_dates.push_back(QString::fromStdString(recs[j].date));
-				record_texts.push_back(QString::fromStdString(recs[j].text));
-			}
-		}
-
-		query.addBindValue(memo_ids);
-		query.addBindValue(record_ids);
-		query.addBindValue(due_dates);
-		query.addBindValue(record_texts);
-
-		res = query.execBatch();
 		if (!res)
 		{
 			WRITE_LOG(LogLevel::INFO,
@@ -235,7 +172,18 @@ bool MemoServer::MemoManager::SyncServer()
 		return false;
 	}
 
-	res = query.exec(query_vec.at(1)); // SELECT memo_id FROM id_memo;
+	res = query.prepare(query_vec.at(1)); // SELECT record_id, due_date, record_text, is_done FROM records WHERE id = ?;
+	if (!res)
+	{
+		WRITE_LOG(LogLevel::WARN,
+				  __Str("Cannot prepare db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
+	}
+
+	query.addBindValue(QString::fromStdString(data.id));
+
+	res = query.exec();
 	if (!res)
 	{
 		WRITE_LOG(LogLevel::INFO,
@@ -248,50 +196,11 @@ bool MemoServer::MemoManager::SyncServer()
 	{
 		while (query.next())
 		{
-			data.memos.emplace_back();
-			data.memos.back().id = query.value(0).toInt();
-		}
-
-		for (int i = 0; i < data.memos.size(); i++)
-		{
-			query.prepare(query_vec[2]); // SELECT memo_title FROM memos WHERE memo_id = ?;
-			query.addBindValue(data.memos[i].id);
-			res = query.exec();
-			if (!res)
-			{
-				WRITE_LOG(LogLevel::INFO,
-						  __Str("Cannot execute db query, error msg: ")
-						  .append(query.lastError().text().toStdString()));
-				return false;
-			}
-
-			while (query.next())
-			{
-				data.memos[i].title = query.value(0).toString().toStdString();
-			}
-		}
-
-		for (int i = 0; i < data.memos.size(); i++)
-		{
-			query.prepare(query_vec[3]); // SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?;
-			query.addBindValue(data.memos[i].id);
-			res = query.exec();
-			if (!res)
-			{
-				WRITE_LOG(LogLevel::INFO,
-						  __Str("Cannot execute db query, error msg: ")
-						  .append(query.lastError().text().toStdString()));
-				return false;
-			}
-
-			while (query.next())
-			{
-				data.memos[i].recs.push_back({
-					query.value(0).toInt(),
-					query.value(1).toString().toStdString(),
-					query.value(2).toString().toStdString()
-											 });
-			}
+			data.recs.emplace_back();
+			data.recs.back().id = query.value(0).toInt();
+			data.recs.back().date = query.value(1).toString().toStdString();
+			data.recs.back().text = query.value(2).toString().toStdString();
+			data.recs.back().done = query.value(3).toBool();
 		}
 
 		_res_str = data.GetString("SyncData");
@@ -317,27 +226,35 @@ std::string MemoServer::MemoData::GetString(const std::string &event) const
 	dom.AddMember("EventGroup", Value("Data"), allocator);
 	dom.AddMember("Event", Value().SetString(event.c_str(), allocator), allocator);
 	dom.AddMember("ID", Value().SetString(event.c_str(), allocator), allocator);
-	dom.AddMember("Memos", Value().SetArray(), allocator);
+	dom.AddMember("Records", Value().SetArray(), allocator);
 
-	for (const auto &memo : memos)
+	for (const auto &rec : recs)
 	{
-		Value memo_obj(rapidjson::kObjectType);
-		memo_obj.AddMember("MemoID", Value(memo.id), allocator);
-		memo_obj.AddMember("MemoTitle", Value(memo.title.c_str(), allocator), allocator);
-		memo_obj.AddMember("Records", Value(rapidjson::kArrayType), allocator);
-		for (const auto &rec : memo.recs)
-		{
-			Value rec_obj(rapidjson::kObjectType);
-			rec_obj.AddMember("RecID", Value(rec.id), allocator);
-			rec_obj.AddMember("Text", Value(rec.text.c_str(), allocator), allocator);
-			rec_obj.AddMember("DueDate", Value(rec.date.c_str(), allocator), allocator);
-			memo_obj["Records"].PushBack(std::move(rec_obj), allocator);
-		}
-		dom["Memos"].PushBack(std::move(memo_obj), allocator);
+		Value rec_obj(rapidjson::kObjectType);
+		rec_obj.AddMember("RecID", Value(rec.id), allocator);
+		rec_obj.AddMember("Text", Value(rec.text.c_str(), allocator), allocator);
+		rec_obj.AddMember("DueDate", Value(rec.date.c_str(), allocator), allocator);
+		rec_obj.AddMember("Done", Value(rec.done), allocator);
 	}
 
-	dom.Accept(writer);
+	//for (const auto &memo : memos)
+	//{
+	//	Value memo_obj(rapidjson::kObjectType);
+	//	memo_obj.AddMember("MemoID", Value(memo.id), allocator);
+	//	memo_obj.AddMember("MemoTitle", Value(memo.title.c_str(), allocator), allocator);
+	//	memo_obj.AddMember("Records", Value(rapidjson::kArrayType), allocator);
+	//	for (const auto &rec : memo.recs)
+	//	{
+	//		Value rec_obj(rapidjson::kObjectType);
+	//		rec_obj.AddMember("RecID", Value(rec.id), allocator);
+	//		rec_obj.AddMember("Text", Value(rec.text.c_str(), allocator), allocator);
+	//		rec_obj.AddMember("DueDate", Value(rec.date.c_str(), allocator), allocator);
+	//		memo_obj["Records"].PushBack(std::move(rec_obj), allocator);
+	//	}
+	//	dom["Memos"].PushBack(std::move(memo_obj), allocator);
+	//}
 
+	dom.Accept(writer);
 
 	return str_buf.GetString();
 }
@@ -352,45 +269,58 @@ bool MemoServer::MemoData::GenData(const rapidjson::Document &dom)
 	//dom.Accept(writer);
 	//std::cerr << str_buf.GetString() << std::endl;
 
-	if (dom.HasMember("Memos") && dom.HasMember("ID"))
+	if (dom.HasMember("Records") && dom.HasMember("ID"))
 	{
 		// TODO : error handling
 
 		id = dom["ID"].GetString();
-		memos.resize(dom["Memos"].Size());
+		recs.resize(dom["Records"].Size());
 
-		for (int i = 0; i < memos.size(); i++)
+		for (int i = 0; i < recs.size(); i++)
 		{
-			auto &obj = dom["Memos"][i];
-			auto &memo = memos[i];
-			
-			assert(obj.HasMember("MemoID"));
-			assert(obj.HasMember("MemoTitle"));
-			assert(obj.HasMember("Records")); 
-			assert(obj["MemoID"].IsInt());
-			assert(obj["MemoTitle"].IsString()); 
-			assert(obj["Records"].IsArray());
-			
-			memo.id = obj["MemoID"].GetInt();
-			memo.title = obj["MemoTitle"].GetString();
-			memo.recs.resize(obj["Records"].Size());
-			for (int j = 0; j < memo.recs.size(); j++)
-			{
-				{
-					auto &test = obj["Records"][j];
-					assert(test.HasMember("RecID"));
-					assert(test.HasMember("Text"));
-					assert(test.HasMember("DueDate"));
-					assert(test["RecID"].IsInt());
-					assert(test["Text"].IsString());
-					assert(test["DueDate"].IsString());
-				}
+			auto &obj = dom["Records"][i];
+			auto &rec = recs[i];
 
-				memo.recs[j].id = obj["Records"][j]["RecID"].GetInt();
-				memo.recs[j].text = obj["Records"][j]["Text"].GetString();
-				memo.recs[j].date = obj["Records"][j]["DueDate"].GetString();
-			}
+			// add error handling
+
+			rec.id = obj["RecID"].GetInt();
+			rec.text = obj["Text"].GetString();
+			rec.date = obj["DueDate"].GetString();
+			rec.done = obj["Done"].GetBool();
 		}
+
+		//for (int i = 0; i < memos.size(); i++)
+		//{
+		//	auto &obj = dom["Memos"][i];
+		//	auto &memo = memos[i];
+		//	
+		//	assert(obj.HasMember("MemoID"));
+		//	assert(obj.HasMember("MemoTitle"));
+		//	assert(obj.HasMember("Records")); 
+		//	assert(obj["MemoID"].IsInt());
+		//	assert(obj["MemoTitle"].IsString()); 
+		//	assert(obj["Records"].IsArray());
+		//	
+		//	memo.id = obj["MemoID"].GetInt();
+		//	memo.title = obj["MemoTitle"].GetString();
+		//	memo.recs.resize(obj["Records"].Size());
+		//	for (int j = 0; j < memo.recs.size(); j++)
+		//	{
+		//		{
+		//			auto &test = obj["Records"][j];
+		//			assert(test.HasMember("RecID"));
+		//			assert(test.HasMember("Text"));
+		//			assert(test.HasMember("DueDate"));
+		//			assert(test["RecID"].IsInt());
+		//			assert(test["Text"].IsString());
+		//			assert(test["DueDate"].IsString());
+		//		}
+
+		//		memo.recs[j].id = obj["Records"][j]["RecID"].GetInt();
+		//		memo.recs[j].text = obj["Records"][j]["Text"].GetString();
+		//		memo.recs[j].date = obj["Records"][j]["DueDate"].GetString();
+		//	}
+		//}
 	}
 	else
 	{

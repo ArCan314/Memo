@@ -11,8 +11,8 @@ enum class LogLevel
 {
 	ERROR = 0,
 	WARN,
-	DEBUG,
-	INFO
+	INFO,
+	DEBUG
 };
 
 enum class LogOption

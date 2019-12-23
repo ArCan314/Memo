@@ -81,9 +81,7 @@ kEventTypeToSQLQueryStr =
 		RecvEventType::SYNC_SERVER,
 		{
 			"USE memo_data;",
-			"SELECT memo_id FROM id_memo;",
-			"SELECT memo_title FROM memos WHERE memo_id = ?;",
-			"SELECT record_id, due_date, record_text FROM records WHERE memo_id = ?;"
+			"SELECT record_id, due_date, record_text, is_done FROM records WHERE id = ?;"
 		}
 	},
 
@@ -91,10 +89,8 @@ kEventTypeToSQLQueryStr =
 		RecvEventType::SYNC_CLIENT,
 		{
 			"USE memo_data;",
-			"DELETE FROM memos WHERE memo_id IN (SELECT memo_id FROM id_memo);", // delete all posible records
-			"INSERT INTO memos VALUES(?, ?);",
-			"INSERT INTO id_memo VALUES (?, ?);",
-			"INSERT INTO records VALUES (?, ?, ?, ?);" // insert records
+			"DELETE FROM records WHERE id = ?;", // delete all posible records
+			"INSERT INTO records VALUES (?, ?, ?, ?, ?);" // insert records
 		}
 	}
 };

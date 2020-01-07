@@ -172,6 +172,7 @@
     <ClInclude Include="semaphore.h" />
     <ClInclude Include="server.h" />
     <ClInclude Include="user_management.h" />
+    <ClInclude Include="resource_pool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="db_access.cpp" />

@@ -15,6 +15,7 @@
 #include "db_access.h"
 #include "semaphore.h"
 #include "log.h"
+#include "resource_pool.h"
 
 void RunServer(boost::asio::io_context &io_context, MemoServer::Controller *ctrler)
 {
@@ -30,12 +31,8 @@ void RunServer(boost::asio::io_context &io_context, MemoServer::Controller *ctrl
 
 }
 
-void RunAccountPool(MemoServer::AccountManagerPool &pool)
-{
-	pool.Start();
-}
-
-void RunMemoPool(MemoServer::MemoManagerPool &pool)
+template <typename T>
+void RunResoucePool(MemoServer::ResourcePool<T> &pool)
 {
 	pool.Start();
 }
@@ -45,14 +42,14 @@ void RunController(MemoServer::Controller *&ctrler_ptr, MemoServer::Semaphore &p
 	std::vector<std::thread> pools;
 
 	MemoServer::Controller controller;
-	MemoServer::AccountManagerPool account_pool;
-	MemoServer::MemoManagerPool memo_pool;
+	MemoServer::ResourcePool<MemoServer::AccountManager> account_pool;
+	MemoServer::ResourcePool<MemoServer::MemoManager> memo_pool;
 
 	controller.RegHandle(MemoServer::ComponentType::ACCOUNT_MANAGER_POOL, account_pool.GetHandle());
 	controller.RegHandle(MemoServer::ComponentType::DATA_MANAGER_POOL, memo_pool.GetHandle());
 
-	pools.emplace_back(RunAccountPool, std::ref(account_pool));
-	pools.emplace_back(RunMemoPool, std::ref(memo_pool));
+	pools.emplace_back(RunResoucePool<MemoServer::AccountManager>, std::ref(account_pool));
+	pools.emplace_back(RunResoucePool<MemoServer::MemoManager>, std::ref(memo_pool));
 
 	ctrler_ptr = &controller;
 	prepared.Signal();

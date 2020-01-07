@@ -8,7 +8,7 @@ class TcpSocket : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString host READ getHost WRITE setHost NOTIFY hostChanged)
-    Q_PROPERTY(quint16 port READ getPort WRITE setPort NOTIFY portChanged)
+    Q_PROPERTY(unsigned port READ getPort WRITE setPort NOTIFY portChanged)
     Q_PROPERTY(QAbstractSocket::SocketState state READ getState WRITE setState NOTIFY stateChanged)
 
 signals:
@@ -60,7 +60,7 @@ public:
         _host = host;
     }
 
-    quint16 getPort()
+    unsigned getPort()
     {
         return _port;
     }
@@ -109,7 +109,7 @@ private:
     QTcpSocket *_socket = nullptr;
     QAbstractSocket::SocketState _state = QAbstractSocket::UnconnectedState;
     QString _host;
-    quint16 _port;
+    unsigned _port;
 
 
     int _timeout_ms = 30000;

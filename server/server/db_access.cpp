@@ -27,7 +27,7 @@ static const std::vector<QString> init_stmts =
 	"id VARCHAR(36) NOT NULL,"\
 	"record_id INT NOT NULL,"\
 	"due_date DATE,"\
-	"record_text VARCHAR(80) NOT NULL,"\
+	"record_text VARCHAR(250) NOT NULL,"\
 	"is_done BOOLEAN NOT NULL,"\
 	"PRIMARY KEY(id, record_id),"\
 	"CONSTRAINT records_accounts_ref FOREIGN KEY(id) REFERENCES accounts(id) ON DELETE CASCADE"\

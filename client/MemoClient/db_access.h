@@ -19,16 +19,20 @@ public:
         "create table if not exists records("
         "record_id int primary key not null,"
         "due_date text default \"\","
-        "record_text nvarchar(240) not null,"
+        "record_text nvarchar(240) default \"\","
         "is_done boolean not null default false);"
     };
     const QString kAddRec = "insert into records values (?, ?, ?, false);";
     const QString kGetMaxID = "select max(record_id) from records;";
     const QString kGetSize = "select count(*) from records;";
-    const QString kSetAttr = "update records set ? = ? where record_id = ?;";
-    const QString kGetAttr = "select ? from records where record_id = ?;";
+    const QString kSetAttr = "update records set %1 = ? where record_id = ?;";
+    const QString kGetAttr = "select %1 from records where record_id = ?;";
     const QString kRemoveRec = "delete from records where record_id = ?;";
     const QString kUpdateID = "update records set record_id = record_id - 1 where record_id > ?;";
+    const QString kGetIdNum = "select count(*) from user;";
+    const QString kSetId = "insert into user values (?);";
+    const QString kGetId = "select id from user;";
+    const QString kRemoveId = "delete from user;";
 public:
     DBAccess(QObject *parent = nullptr) : QObject(parent), _db_con(QSqlDatabase::addDatabase("QSQLITE"))
     {
@@ -127,6 +131,7 @@ public slots:
     QString getText(const int rec_id)
     {
         QVariant res = getAttr(rec_id, "record_text");
+        qDebug() << res;
         if (res.isNull())
         {
             return "";
@@ -151,6 +156,7 @@ public slots:
         if (!query.exec())
         {
             qDebug() << query.lastError();
+            _db_con.rollback();
             return false;
         }
 
@@ -168,42 +174,31 @@ public slots:
         return true;
     }
 
-
-
-private:
-    bool _is_inited = false;
-    QSqlDatabase _db_con;
-    int _max_id;
-
-    bool setAttr(const int rec_id, QString attr_name, QVariant val)
+    bool setID(const QString &id)
     {
         QSqlQuery query;
-        query.prepare(kSetAttr);
-        query.addBindValue(attr_name);
-        query.addBindValue(val);
-        query.addBindValue(rec_id);
+        int id_num = getIdNum();
+        if (id_num > 0)
+        {
+            if (!removeId())
+            {
+                return false;
+            }
+        }
+        else if (id_num == -1)
+        {
+            return false;
+        }
+
+        query.prepare(kSetId);
+        query.addBindValue(id);
+
         if (!query.exec())
         {
             qDebug() << query.lastError();
             return false;
         }
         return true;
-    }
-
-    QVariant getAttr(const int rec_id, QString attr_name)
-    {
-        QSqlQuery query;
-        query.prepare(kGetAttr);
-        query.addBindValue(attr_name);
-        query.addBindValue(rec_id);
-        if (!query.exec())
-        {
-            qDebug() << query.lastError();
-            return QVariant();
-        }
-
-        query.next();
-        return query.value(0);
     }
 
     int getMaxID() // return negative number when query fails
@@ -217,11 +212,90 @@ private:
                 qDebug() << query.lastError();
                 return -1;
             }
+
+            query.next();
+            return query.value(0).toInt();
         }
         else
         {
             return 0;
         }
+    }
+
+    QString getId()
+    {
+        QSqlQuery query;
+        if (!query.exec(kGetId))
+        {
+            qDebug() << query.lastError();
+            return "";
+        }
+        query.next();
+        return query.value(0).toString();
+    }
+
+
+private:
+    bool _is_inited = false;
+    QSqlDatabase _db_con;
+    int _max_id;
+
+    int getIdNum()
+    {
+        QSqlQuery query;
+        if (!query.exec(kGetIdNum))
+        {
+            qDebug() << query.lastError();
+            return -1;
+        }
+
+        query.next();
+        return query.value(0).toInt();
+    }
+
+    bool removeId()
+    {
+        QSqlQuery query;
+        if (!query.exec(kRemoveId))
+        {
+            qDebug() << query.lastError();
+            return false;
+        }
+        return true;
+    }
+
+    bool setAttr(const int rec_id, QString attr_name, QVariant val)
+    {
+        QSqlQuery query;
+        query.prepare(kSetAttr.arg(attr_name));
+        // query.addBindValue(attr_name);
+        query.addBindValue(val);
+        query.addBindValue(rec_id);
+        if (!query.exec())
+        {
+            // qDebug() << attr_name << "\n" << val << "\n" << rec_id << "\n" << query.lastQuery();
+            // qDebug() << query.executedQuery();
+            qDebug() << query.lastError();
+            return false;
+        }
+        return true;
+    }
+
+    QVariant getAttr(const int rec_id, QString attr_name)
+    {
+        QSqlQuery query;
+        query.prepare(kGetAttr.arg(attr_name));
+        // query.addBindValue(attr_name);
+        query.addBindValue(rec_id);
+        if (!query.exec())
+        {
+            qDebug() << query.lastError();
+
+            return QVariant();
+        }
+        qDebug() << query.executedQuery();
+        query.next();
+        return query.value(0);
     }
 
     int getSize() // return negative number when query fails.

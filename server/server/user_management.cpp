@@ -156,6 +156,27 @@ bool MemoServer::AccountManager::LogIn()
 		return false;
 	}
 
+	query.prepare("SELECT COUNT(id) FROM accounts WHERE id = ?;");
+	query.addBindValue(QString::fromStdString(_id));
+	if (!query.exec())
+	{
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot execute db query, error msg: ")
+				  .append(query.lastError().text().toStdString()));
+		return false;
+	}
+
+	query.next();
+	int has_this_user = query.value(0).toInt();
+	if (!has_this_user)
+	{
+		WRITE_LOG(LogLevel::INFO,
+				  __Str("Cannot find id: ")
+				  .append(_id)
+				  .append(" in database, creating account for this id."));
+		return CreateAccount();
+	}
+
 	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_IN)[1]);
 	if (!res)
 	{

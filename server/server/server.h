@@ -23,7 +23,7 @@ public:
 		: _strand(io_context),
 		  _socket(std::move(socket)),
 		  _ctrler(ctrler),
-		  _buf_vec(10240)
+		  _buf_vec(65500)
 	{
 	}
 
@@ -106,7 +106,7 @@ private:
 													   __Str("Respond to ")
 													   .append(_socket.remote_endpoint().address().to_string())
 													   .append(" successfully."));
-
+										 _socket.cancel();
 										 ReadClientData();
 									 }
 								 }));

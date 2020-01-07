@@ -225,7 +225,7 @@ std::string MemoServer::MemoData::GetString(const std::string &event) const
 	dom.SetObject();
 	dom.AddMember("EventGroup", Value("Data"), allocator);
 	dom.AddMember("Event", Value().SetString(event.c_str(), allocator), allocator);
-	dom.AddMember("ID", Value().SetString(event.c_str(), allocator), allocator);
+	dom.AddMember("ID", Value().SetString(id.c_str(), allocator), allocator);
 	dom.AddMember("Records", Value().SetArray(), allocator);
 
 	for (const auto &rec : recs)
@@ -235,6 +235,7 @@ std::string MemoServer::MemoData::GetString(const std::string &event) const
 		rec_obj.AddMember("Text", Value(rec.text.c_str(), allocator), allocator);
 		rec_obj.AddMember("DueDate", Value(rec.date.c_str(), allocator), allocator);
 		rec_obj.AddMember("Done", Value(rec.done), allocator);
+		dom["Records"].PushBack(rec_obj, allocator);
 	}
 
 	//for (const auto &memo : memos)

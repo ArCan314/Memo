@@ -16,8 +16,8 @@ using namespace boost::asio;
 
 static const char *kHost = "localhost";
 static const char *kPort = "12345";
-
-std::string random_strs[102400];
+static constexpr std::size_t kRanVecSize = 102400;
+std::string random_strs[kRanVecSize];
 
 std::string GenRandomStr()
 {
@@ -39,7 +39,7 @@ std::string GenRandomStr()
 
 void InitRandomVec()
 {
-	for (int i = 0; i < 10240; i++)
+	for (int i = 0; i < kRanVecSize; i++)
 	{
 		random_strs[i] = GenRandomStr();
 	}
@@ -47,11 +47,11 @@ void InitRandomVec()
 
 std::string GenRandom()
 {
-	//std::default_random_engine dre(std::clock() +
-	//							   std::hash<std::thread::id>()(std::this_thread::get_id()));
-	//std::uniform_int_distribution<int> uid(0, 10240 - 1);
-	//return random_strs[uid(dre)];
-	return GenRandomStr();
+	std::default_random_engine dre(std::clock() +
+								   std::hash<std::thread::id>()(std::this_thread::get_id()));
+	std::uniform_int_distribution<int> uid(0, 10240 - 1);
+	return random_strs[uid(dre)];
+	// return GenRandomStr();
 }
 
 std::string GenLogIn()
@@ -130,7 +130,7 @@ std::string GenStr()
 	return res;
 }
 
-constexpr int max_request = 100000;
+constexpr int max_request = 20000;
 
 void RunRandomSender()
 {
@@ -210,10 +210,12 @@ private:
 
 int main()
 {
+	std::cout << "Init Random Vec" << std::endl;
 	InitRandomVec();
 	std::vector<std::thread> tvec;
-	constexpr int max_tvec_size = 12;
+	constexpr int max_tvec_size = 4;
 	Timer tm;
+	std::cout << "Start timer" << std::endl;
 	tm.start();
 	for (int i = 0; i < max_tvec_size; i++)
 	{

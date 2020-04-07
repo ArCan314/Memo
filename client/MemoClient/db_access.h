@@ -23,16 +23,16 @@ public:
         "is_done boolean not null default false);"
     };
     const QString kAddRec = "insert into records values (?, ?, ?, false);";
-    const QString kGetMaxID = "select max(record_id) from records;";
-    const QString kGetSize = "select count(*) from records;";
+    const QString kGetMaxId = "select max(record_id) from records;";
+    const QString kGetRecSize = "select count(*) from records;";
     const QString kSetAttr = "update records set %1 = ? where record_id = ?;";
     const QString kGetAttr = "select %1 from records where record_id = ?;";
     const QString kRemoveRec = "delete from records where record_id = ?;";
     const QString kUpdateID = "update records set record_id = record_id - 1 where record_id > ?;";
-    const QString kGetIdNum = "select count(*) from user;";
+    const QString kGetUserSize = "select count(*) from user;";
     const QString kSetId = "insert into user values (?);";
     const QString kGetId = "select id from user;";
-    const QString kRemoveId = "delete from user;";
+    const QString kDeleteUser = "delete from user;";
 public:
     DBAccess(QObject *parent = nullptr) : QObject(parent), _db_con(QSqlDatabase::addDatabase("QSQLITE"))
     {
@@ -56,7 +56,7 @@ public:
             return;
         }
 
-        _max_id = getMaxID();
+        _max_id = getMaxId();
         if (_max_id < 0)
         {
             return;
@@ -174,13 +174,13 @@ public slots:
         return true;
     }
 
-    bool setID(const QString &id)
+    bool setId(const QString &id)
     {
         QSqlQuery query;
-        int id_num = getIdNum();
+        int id_num = getUserSize();
         if (id_num > 0)
         {
-            if (!removeId())
+            if (!deleteUser())
             {
                 return false;
             }
@@ -201,13 +201,13 @@ public slots:
         return true;
     }
 
-    int getMaxID() // return negative number when query fails
+    int getMaxId() // return negative number when query fails
     {
         QSqlQuery query;
-        int size = getSize();
+        int size = getRecSize();
         if (size)
         {
-            if (!query.exec(kGetMaxID))
+            if (!query.exec(kGetMaxId))
             {
                 qDebug() << query.lastError();
                 return -1;
@@ -240,10 +240,10 @@ private:
     QSqlDatabase _db_con;
     int _max_id;
 
-    int getIdNum()
+    int getUserSize()
     {
         QSqlQuery query;
-        if (!query.exec(kGetIdNum))
+        if (!query.exec(kGetUserSize))
         {
             qDebug() << query.lastError();
             return -1;
@@ -253,10 +253,10 @@ private:
         return query.value(0).toInt();
     }
 
-    bool removeId()
+    bool deleteUser()
     {
         QSqlQuery query;
-        if (!query.exec(kRemoveId))
+        if (!query.exec(kDeleteUser))
         {
             qDebug() << query.lastError();
             return false;
@@ -298,10 +298,10 @@ private:
         return query.value(0);
     }
 
-    int getSize() // return negative number when query fails.
+    int getRecSize() // return negative number when query fails.
     {
         QSqlQuery query;
-        if (!query.exec(kGetSize))
+        if (!query.exec(kGetRecSize))
         {
             qDebug() << query.lastError();
             return -1;

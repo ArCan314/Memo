@@ -81,7 +81,7 @@ private:
 			static const char *invalid_json_query = "SU5WQUxJRCBKU09OIFFVRVJZLg=="; // base64 of "INVALID JSON QUERY"
 			reg_ptr->second = invalid_json_query;
 		}
-		// _ctrler->Unregister(reg_pos);
+		_ctrler->Unregister(reg_pos);
 
 		_respond.swap(reg_ptr->second);
 		

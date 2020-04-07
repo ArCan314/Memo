@@ -36,12 +36,6 @@
     <ClInclude Include="memo_management.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="component_abstract.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="global_include.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="db_access.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -51,18 +45,15 @@
     <ClInclude Include="resource_pool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="abstract_management.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="abstract_component.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="my_socket.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="server_test.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="xdevapi_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="user_management.cpp">
@@ -77,8 +68,5 @@
     <ClCompile Include="log.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

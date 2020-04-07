@@ -1,7 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QApplication>
 
 #include "tcp_socket.h"
 #include "db_access.h"

@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server\server.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "static_lib", "static_lib\StaticLib1.vcxproj", "{5A3F3D1C-F4C4-4B0D-BBB7-C530D74D2AA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server_test", "server_test\server_test.vcxproj", "{2625D955-AE4C-4EDA-B3F6-E6415022757C}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mini-client", "mini-client\mini-client.vcxproj", "{5D260DC6-EF98-4E31-8461-A0CE5BE87C76}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5A3F3D1C-F4C4-4B0D-BBB7-C530D74D2AA3} = {5A3F3D1C-F4C4-4B0D-BBB7-C530D74D2AA3}
@@ -38,14 +36,6 @@ Global
 		{5A3F3D1C-F4C4-4B0D-BBB7-C530D74D2AA3}.Release|x64.Build.0 = Release|x64
 		{5A3F3D1C-F4C4-4B0D-BBB7-C530D74D2AA3}.Release|x86.ActiveCfg = Release|Win32
 		{5A3F3D1C-F4C4-4B0D-BBB7-C530D74D2AA3}.Release|x86.Build.0 = Release|Win32
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Debug|x64.ActiveCfg = Debug|x64
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Debug|x64.Build.0 = Debug|x64
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Debug|x86.ActiveCfg = Debug|Win32
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Debug|x86.Build.0 = Debug|Win32
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Release|x64.ActiveCfg = Release|x64
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Release|x64.Build.0 = Release|x64
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Release|x86.ActiveCfg = Release|Win32
-		{2625D955-AE4C-4EDA-B3F6-E6415022757C}.Release|x86.Build.0 = Release|Win32
 		{5D260DC6-EF98-4E31-8461-A0CE5BE87C76}.Debug|x64.ActiveCfg = Debug|x64
 		{5D260DC6-EF98-4E31-8461-A0CE5BE87C76}.Debug|x64.Build.0 = Debug|x64
 		{5D260DC6-EF98-4E31-8461-A0CE5BE87C76}.Debug|x86.ActiveCfg = Debug|Win32

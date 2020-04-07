@@ -1,0 +1,1424 @@
+<!DOCTYPE html><html><head>
+      <title>report</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\Za\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.5.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+
+      
+      <script type="text/javascript" src="file:///c:\Users\Za\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.5.1\node_modules\@shd101wyy\mume\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      
+      
+      
+
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5%E5%AE%9E%E8%B7%B5%E4%BD%9C%E4%B8%9A%E6%8A%A5%E5%91%8A">&#x7A0B;&#x5E8F;&#x8BBE;&#x8BA1;&#x5B9E;&#x8DF5;&#x5B9E;&#x8DF5;&#x4F5C;&#x4E1A;&#x62A5;&#x544A;</h1>
+
+<hr>
+<h2 class="mume-header" id="1-%E4%BD%9C%E4%B8%9A%E8%A6%81%E6%B1%82%E5%8F%8A%E5%86%85%E5%AE%B9">1. &#x4F5C;&#x4E1A;&#x8981;&#x6C42;&#x53CA;&#x5185;&#x5BB9;</h2>
+
+<ol>
+<li>&#x7A0B;&#x5E8F;&#x9898;&#x76EE;&#xFF1A;&#x4E00;&#x4E2A;&#x89C4;&#x8303;&#x7684;&#x8F6F;&#x4EF6;&#x539F;&#x578B;&#x7CFB;&#x7EDF;</li>
+<li>&#x63CF;&#x8FF0;&#xFF1A;&#x8F6F;&#x4EF6;&#x539F;&#x578B;&#x7CFB;&#x7EDF;&#x662F;&#x9A8C;&#x8BC1;&#x6280;&#x672F;&#x53EF;&#x884C;&#x6027;&#x7684;&#x4E00;&#x7C7B;&#x91CD;&#x8981;&#x7684;&#x5E94;&#x7528;&#x8F6F;&#x4EF6;&#xFF0C;&#x5728;&#x65B0;&#x4EA7;&#x54C1;&#x7814;&#x53D1;&#x548C;&#x79D1;&#x7814;&#x6D3B;&#x52A8;&#x4E2D;&#x88AB;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#x3002;&#x5B83;&#x662F;&#x4ECB;&#x4E8E;&#x8F6F;&#x4EF6;&#x5355;&#x4E00;&#x6280;&#x672F;&#x4F5C;&#x4E1A;&#x548C;&#x8F6F;&#x4EF6;&#x4EA7;&#x54C1;&#x4E4B;&#x95F4;&#x7684;&#x4E00;&#x79CD;&#x8F6F;&#x4EF6;&#x5F62;&#x6001;&#xFF0C;&#x5BF9;&#x4E8E;&#x7EFC;&#x5408;&#x5229;&#x7528;&#x7A0B;&#x5E8F;&#x8BBE;&#x8BA1;&#x5355;&#x9879;&#x6280;&#x80FD;&#x63D0;&#x51FA;&#x4E86;&#x8F83;&#x9AD8;&#x8981;&#x6C42;&#x3002;&#x901A;&#x8FC7;&#x672C;&#x4F5C;&#x4E1A;&#xFF0C;&#x8003;&#x5BDF;&#x5B66;&#x751F;&#x89C4;&#x8303;&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x3001;&#x5408;&#x7406;&#x8BBE;&#x8BA1;&#x7A0B;&#x5E8F;&#x3001;&#x7075;&#x6D3B;&#x5E94;&#x7528;&#x6280;&#x672F;&#x3001;&#x534F;&#x540C;&#x7EC4;&#x7EC7;&#x5408;&#x4F5C;&#x7B49;&#x65B9;&#x9762;&#x7684;&#x7EFC;&#x5408;&#x80FD;&#x529B;&#x3002;</li>
+<li>&#x8981;&#x6C42;
+<ul>
+<li>&#x57FA;&#x672C;&#x529F;&#x80FD;&#x8981;&#x6C42;&#xFF1A;&#xFF08;60&#x5206;&#xFF09;
+<ul>
+<li>&#x9488;&#x5BF9;&#x4E00;&#x4E2A;&#x4E3B;&#x9898;&#xFF08;&#x5982;&#xFF1A;&#x8BFE;&#x7A0B;&#x8868;&#x3001;&#x9009;&#x8BFE;&#x3001;&#x5907;&#x5FD8;&#x5F55;&#x3001;&#x70B9;&#x9910;&#x7B49;&#xFF09;&#xFF0C;&#x5728;&#x6A21;&#x62DF;&#x5668;&#x6216;&#x7269;&#x7406;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x5177;&#x6709;&#x5B9E;&#x7528;&#x4EF7;&#x503C;&#x7684;&#x672C;&#x5730;&#x529F;&#x80FD;&#x8F6F;&#x4EF6;&#x3002;</li>
+<li>&#x4FDD;&#x8BC1;&#x53D8;&#x91CF;&#x540D;&#x547D;&#x540D;&#x3001;&#x65B9;&#x6CD5;&#x547D;&#x4EE4;&#x3001;&#x7C7B;&#x547D;&#x540D;&#x3001;&#x4EE3;&#x7801;&#x5757;&#x5206;&#x5272;&#x3001;&#x6CE8;&#x91CA;&#x7B49;&#x65B9;&#x9762;&#x6EE1;&#x8DB3;&#x8BFE;&#x5802;&#x4E0A;&#x8BB2;&#x6388;&#x7684;&#x7F16;&#x7801;&#x98CE;&#x683C;&#x8981;&#x6C42;&#x3002;&#xFF08;40&#x5206;&#xFF09;</li>
+<li>&#x5305;&#x542B;&#x7A0B;&#x5E8F;&#x8BBE;&#x8BA1;&#x6587;&#x6863;&#xFF0C;&#x8BF4;&#x660E;&#x7A0B;&#x5E8F;&#x7684;&#x4E3B;&#x8981;&#x529F;&#x80FD;&#x3001;&#x7ED3;&#x6784;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x4E86;&#x7279;&#x5B9A;&#x7684;&#x7B97;&#x6CD5;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x7ED9;&#x51FA;&#x7B97;&#x6CD5;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x63CF;&#x8FF0;&#x3002;&#xFF08;10&#x5206;&#xFF09;</li>
+<li>&#x5305;&#x542B;&#x7A0B;&#x5E8F;&#x6D4B;&#x8BD5;&#x6587;&#x6863;&#xFF0C;&#x8BF4;&#x660E;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x3001;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#x3001;&#x6D4B;&#x8BD5;&#x5DE5;&#x5177;&#x3001;&#x6D4B;&#x8BD5;&#x4F8B;&#x548C;&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#x3002;&#xFF08;10&#x5206;&#xFF09;</li>
+</ul>
+</li>
+<li>&#x754C;&#x9762;&#x8981;&#x6C42;&#xFF08;10&#x5206;&#xFF09;
+<ul>
+<li>&#x6240;&#x5B9E;&#x73B0;&#x7684;&#x7A0B;&#x5E8F;&#x6EE1;&#x8DB3;&#x8BFE;&#x5802;&#x8BB2;&#x6388;&#x7684;&#x754C;&#x9762;&#x8981;&#x6C42;&#x3002;&#x5177;&#x5907;&#x826F;&#x597D;&#x7684;&#x6A21;&#x5757;&#x63A5;&#x53E3;&#xFF0C;&#x4F7F;&#x6A21;&#x5757;&#x80FD;&#x591F;&#x5728;&#x5176;&#x4ED6;&#x9879;&#x76EE;&#x4E2D;&#x8F83;&#x4E3A;&#x5BB9;&#x6613;&#x7684;&#x590D;&#x7528;&#xFF08;10&#x5206;&#xFF09;&#x3002;</li>
+<li>&#x5177;&#x5907;&#x826F;&#x597D;&#x7684;&#x4EBA;&#x673A;&#x4EA4;&#x4E92;&#x754C;&#x9762;&#xFF0C;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x7B26;&#x5408;&#x7528;&#x6237;&#x76F4;&#x89C9;&#xFF0C;&#x4E0E;&#x4E3B;&#x6D41;&#x7A0B;&#x5E8F;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x4E00;&#x81F4;&#x3002;&#x56FE;&#x5F62;&#x754C;&#x9762;&#x9700;&#x6EE1;&#x8DB3;&#x754C;&#x9762;&#x7B80;&#x6D01;&#x3001;&#x5143;&#x7D20;&#x53CD;&#x5DEE;&#x5BF9;&#x7167;&#x3001;&#x7A7A;&#x767D;&#x5206;&#x5272;&#x3001;&#x5E73;&#x8861;&#x6070;&#x5F53;&#x3001;&#x5143;&#x7D20;&#x5BF9;&#x9F50;&#x7B49;&#x8981;&#x6C42;&#x3002;&#xFF08;10&#x5206;&#xFF09;</li>
+</ul>
+</li>
+<li>&#x5E76;&#x53D1;&#x8BA1;&#x7B97;&#x8981;&#x6C42;&#xFF08;10&#x5206;&#xFF09;
+<ul>
+<li>&#x6240;&#x5B9E;&#x73B0;&#x7684;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;&#x591A;&#x8FDB;&#x7A0B;/&#x591A;&#x7EBF;&#x7A0B;&#x7B49;&#x5E76;&#x53D1;&#x8BA1;&#x7B97;&#x6280;&#x672F;&#x5B8C;&#x6210;&#x67D0;&#x9879;&#x5B9E;&#x9645;&#x529F;&#x80FD;&#xFF08;&#x4F8B;&#x5982;&#xFF1A;&#x591A;&#x7528;&#x6237;&#x540C;&#x65F6;&#x5728;&#x7EBF;&#x64CD;&#x4F5C;&#x6216;&#x6570;&#x636E;&#x5F02;&#x6B65;&#x66F4;&#x65B0;&#x7B49;&#xFF09;&#x3002;</li>
+</ul>
+</li>
+<li>&#x5065;&#x58EE;&#x6027;&#x8981;&#x6C42;&#xFF08;10&#x5206;&#xFF09;
+<ul>
+<li>&#x6240;&#x5B9E;&#x73B0;&#x7684;&#x7A0B;&#x5E8F;&#x5728;&#x7528;&#x6237;&#x8F93;&#x5165;&#x9519;&#x8BEF;&#x6570;&#x636E;&#x3001;&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x4E2D;&#x65AD;&#x3001;&#x9F20;&#x6807;&#x968F;&#x610F;&#x70B9;&#x51FB;&#x62D6;&#x62FD;&#x7B49;&#x5F02;&#x5E38;&#x60C5;&#x51B5;&#x4E0B; &#x51FA;&#x73B0;&#x5F02;&#x5E38;&#x9000;&#x51FA;&#x3001;&#x6302;&#x8D77;&#x3001;&#x8F93;&#x51FA;&#x5185;&#x90E8;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x7B49;&#x60C5;&#x51B5;&#xFF0C;&#x80FD;&#x591F;&#x63D0;&#x4F9B;&#x7528;&#x6237;&#x6613;&#x4E8E;&#x7406;&#x89E3;&#x548C;&#x63A5;&#x53D7;&#x7684;&#x53CD;&#x5E94;&#x3002;</li>
+</ul>
+</li>
+<li>&#x6269;&#x5C55;&#x6027;&#x8981;&#x6C42;&#xFF08;10&#x5206;&#xFF09;
+<ul>
+<li>&#x5B9E;&#x73B0;&#x7684;&#x7A0B;&#x5E8F;&#x6B63;&#x786E;&#x7684;&#x5E94;&#x7528;&#x4E86;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#xFF0C;&#x5408;&#x7406;&#x7684;&#x4F7F;&#x7528;&#x4E86;&#x5E76;&#x53D1;&#x3001;&#x6301;&#x4E45;&#x5316;&#x3001;&#x8D44;&#x6E90;&#x6C60;&#x7B49;&#x6280;&#x672F;&#xFF0C;&#x67B6;&#x6784;&#x5408;&#x7406;&#xFF0C;&#x4E3A;&#x672A;&#x6765;&#x529F;&#x80FD;&#x548C;&#x6027;&#x80FD;&#x7684;&#x6269;&#x5C55;&#x505A;&#x4E86;&#x76F8;&#x5E94;&#x51C6;&#x5907;&#x3002;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 class="mume-header" id="2-%E7%A8%8B%E5%BA%8F%E5%8A%9F%E8%83%BD">2. &#x7A0B;&#x5E8F;&#x529F;&#x80FD;</h2>
+
+<p>&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x5907;&#x5FD8;&#x5F55;&#x8F6F;&#x4EF6;&#xFF0C;&#x5E26;&#x6709;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x7AEF;&#x3002;</p>
+<ul>
+<li>&#x529F;&#x80FD;&#xFF1A;
+<ul>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#xFF1A;
+<ul>
+<li>&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5907;&#x5FD8;&#xFF0C;&#x6BCF;&#x6761;&#x5907;&#x5FD8;&#x7684;&#x957F;&#x5EA6;&#x4E0D;&#x8D85;&#x8FC7;200&#x5B57;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x7F16;&#x8F91;&#x5907;&#x5FD8;&#xFF0C;&#x5728;&#x5907;&#x5FD8;&#x5C55;&#x5F00;&#x540E;&#x8F6C;&#x6362;&#x4E3A;&#x53EF;&#x4F9B;&#x7F16;&#x8F91;&#x7684;&#x72B6;&#x6001;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x6807;&#x8BB0;&#x5907;&#x5FD8;&#xFF0C;&#x8868;&#x793A;&#x5907;&#x5FD8;&#x4E8B;&#x9879;&#x5DF2;&#x5B8C;&#x6210;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x5220;&#x9664;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x5907;&#x5FD8;&#xFF0C;&#x6216;&#x8005;&#x4E00;&#x6B21;&#x6027;&#x5220;&#x9664;&#x5168;&#x90E8;&#x7684;&#x5907;&#x5FD8;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x5C06;&#x672C;&#x5730;&#x7684;&#x5907;&#x5FD8;&#x4E0A;&#x4F20;&#x81F3;&#x670D;&#x52A1;&#x7AEF;&#xFF0C;&#x4EE5;&#x5B9E;&#x73B0;&#x5907;&#x5FD8;&#x5728;&#x4E0D;&#x540C;&#x8BBE;&#x5907;&#x95F4;&#x7684;&#x4F20;&#x9012;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x5C06;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x5907;&#x5FD8;&#x4E0B;&#x8F7D;&#x81F3;&#x672C;&#x5730;&#xFF0C;&#x4EE5;&#x5B9E;&#x73B0;&#x5907;&#x5FD8;&#x7684;&#x540C;&#x6B65;&#x3002;</li>
+<li>&#x63D0;&#x4F9B;&#x8D26;&#x6237;&#x767B;&#x5F55;&#x529F;&#x80FD;&#xFF0C;&#x4EE5;&#x4FBF;&#x4F7F;&#x7528;&#x540C;&#x6B65;&#x529F;&#x80FD;&#x3002;</li>
+</ul>
+</li>
+<li>&#x670D;&#x52A1;&#x7AEF;
+<ul>
+<li>&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#xFF0C;&#x5B58;&#x50A8;&#x4E0D;&#x540C;&#x8D26;&#x6237;&#x7684;&#x5907;&#x5FD8;&#xFF0C;&#x5E76;&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x9700;&#x8981;&#x65F6;&#x63D0;&#x4F9B;&#x5DF2;&#x4E0A;&#x4F20;&#x7684;&#x5907;&#x5FD8;&#x3002;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 class="mume-header" id="3-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">3. &#x7A0B;&#x5E8F;&#x8BBE;&#x8BA1;</h2>
+
+<h3 class="mume-header" id="31-%E5%AE%A2%E6%88%B7%E7%AB%AF">3.1. &#x5BA2;&#x6237;&#x7AEF;</h3>
+
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x4F7F;&#x7528;<code>QML</code>+<code>C++</code>&#x7F16;&#x5199;&#xFF0C;&#x5176;&#x4E2D;<code>QML</code>&#x7528;&#x4E8E;&#x63CF;&#x8FF0;UI&#x548C;&#x90E8;&#x5206;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#xFF0C;<code>C++</code>&#x8D1F;&#x8D23;&#x6570;&#x636E;&#x5E93;&#x7684;&#x8BBF;&#x95EE;&#x7BA1;&#x7406;&#x4EE5;&#x53CA;&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x7F51;&#x7EDC;&#x4F20;&#x8F93;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x63A5;&#x53E3;&#x7ED9;<code>QML</code>&#x4F7F;&#x7528;&#x3002;</p>
+<p>&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;&#x5230;&#x7684;&#x5E93;:</p>
+<ul>
+<li><a href="https://www.qt.io/">Qt(5.12)</a></li>
+</ul>
+<h4 class="mume-header" id="311-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84">3.1.1 &#x7A0B;&#x5E8F;&#x7ED3;&#x6784;</h4>
+
+<div class="mermaid">graph LR
+    subgraph QML
+        B(&quot;&#x7528;&#x6237;&#x754C;&#x9762;&quot;)
+    end
+    subgraph CPP
+        C(&#x6570;&#x636E;&#x5E93;&#x63A7;&#x5236;)
+        D(socket&#x8FDE;&#x63A5;)
+    end
+    B---C
+    B---D
+    D---E((&#x670D;&#x52A1;&#x7AEF;))
+</div><h4 class="mume-header" id="312-%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2">3.1.2. &#x7528;&#x6237;&#x754C;&#x9762;</h4>
+
+<p>&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;<br>
+<img src="images/ui.png" alt="ui"></p>
+<ul>
+<li>&#x5DE5;&#x5177;&#x680F;<br>
+<img src="images/menubar.png" alt="menu-bar">
+<ul>
+<li>&#x70B9;&#x51FB;<code>Add</code>&#x6309;&#x94AE;&#xFF0C;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x4E00;&#x6761;&#x8BB0;&#x5F55;&#x81F3;&#x6570;&#x636E;&#x5E93;&#x5E76;&#x663E;&#x793A;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>DelSel</code>&#x6309;&#x94AE;&#xFF0C;&#x53EF;&#x4EE5;&#x53BB;&#x9664;&#x6240;&#x6709;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x5907;&#x5FD8;&#xFF0C;&#x540C;&#x65F6;&#x4ECE;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53BB;&#x9664;&#x90A3;&#x4E9B;&#x5907;&#x5FD8;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>DelAll</code>&#x6309;&#x94AE;&#xFF0C;&#x53EF;&#x4EE5;&#x53BB;&#x9664;&#x6240;&#x6709;&#x5907;&#x5FD8;&#xFF0C;&#x540C;&#x65F6;&#x4ECE;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53BB;&#x9664;&#x6240;&#x6709;&#x5907;&#x5FD8;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>SyncTo</code>&#x6309;&#x94AE;&#xFF0C;&#x53EF;&#x4EE5;&#x4E0A;&#x4F20;&#x5907;&#x5FD8;&#x81F3;&#x670D;&#x52A1;&#x7AEF;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>SyncFrom</code>&#x6309;&#x94AE;&#xFF0C;&#x53EF;&#x4EE5;&#x4E0B;&#x8F7D;&#x5907;&#x5FD8;&#x81F3;&#x672C;&#x5730;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>LogIn</code>&#x6309;&#x94AE;&#xFF0C;&#x53EF;&#x4EE5;&#x767B;&#x5F55;&#x6216;&#x6CE8;&#x518C;&#x8D26;&#x6237;&#x3002;<br>
+<img src="images/log_in_ui.png" alt="log-in-ui">
+<ul>
+<li>&#x6A21;&#x6001;&#x754C;&#x9762;&#x3002;</li>
+<li><code>Account</code>&#x6807;&#x7B7E;&#x540E;&#x53EF;&#x8F93;&#x5165;&#x8D26;&#x6237;ID&#xFF0C;&#x8F93;&#x5165;&#x6846;&#x5E26;&#x6709;&#x6587;&#x672C;&#x8FC7;&#x6EE4;&#x3002;</li>
+<li><code>Password</code>&#x6807;&#x7B7E;&#x540E;&#x53EF;&#x8F93;&#x5165;&#x8D26;&#x6237;&#x5BC6;&#x7801;&#xFF0C;&#x8F93;&#x5165;&#x6846;&#x5E26;&#x6709;&#x6587;&#x672C;&#x8FC7;&#x6EE4;&#x53CA;&#x5BC6;&#x7801;&#x9690;&#x85CF;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>LogIn</code>&#x6309;&#x94AE;&#xFF0C;&#x68C0;&#x67E5;&#x8F93;&#x5165;&#x680F;&#x5185;&#x5BB9;&#xFF0C;&#x8C03;&#x7528;<code>C++</code>&#x63A5;&#x53E3;&#x8FDE;&#x63A5;&#x670D;&#x52A1;&#x7AEF;&#x3002;</li>
+<li>&#x70B9;&#x51FB;<code>Cancel</code>&#x6309;&#x94AE;&#xFF0C;&#x9000;&#x51FA;&#x6B64;&#x7A97;&#x53E3;&#x3002;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>&#x5907;&#x5FD8;&#x754C;&#x9762;<br>
+<img src="images/memo_ui.png" alt="memo-ui">
+<ul>
+<li>&#x70B9;&#x51FB;&#x5DE6;&#x4FA7;&#x9009;&#x6846;&#xFF0C;&#x53EF;&#x4EE5;&#x6807;&#x8BB0;&#x5907;&#x5FD8;&#x5DF2;&#x5B8C;&#x6210;&#x3002;</li>
+<li>&#x70B9;&#x51FB;&#x53F3;&#x4FA7;&#x6309;&#x94AE;&#xFF08;&#x7BAD;&#x5934;&#xFF09;&#x53EF;&#x4EE5;&#x5C55;&#x5F00;&#x5907;&#x5FD8;&#x4EE5;&#x4F9B;&#x67E5;&#x770B;&#x6216;&#x7F16;&#x8F91;&#x3002;</li>
+<li>&#x5C55;&#x5F00;&#x540E;&#x7684;&#x5907;&#x5FD8;&#x53F3;&#x4E0B;&#x89D2;&#x663E;&#x793A;&#x5F53;&#x524D;&#x8FD8;&#x53EF;&#x8F93;&#x5165;&#x7684;&#x5B57;&#x7B26;&#x6570;&#x91CF;&#x3002;</li>
+</ul>
+</li>
+</ul>
+<h4 class="mume-header" id="313-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86">3.1.3. &#x6570;&#x636E;&#x5E93;&#x7BA1;&#x7406;</h4>
+
+<h5 class="mume-header" id="3131-%E6%95%B0%E6%8D%AE%E5%BA%93">3.1.3.1. &#x6570;&#x636E;&#x5E93;</h5>
+
+<p>&#x4F7F;&#x7528;<code>Qt</code>&#x63D0;&#x4F9B;&#x7684;<code>sqlite</code>&#x6570;&#x636E;&#x5E93;&#x3002;</p>
+<p>&#x4E0B;&#x4E3A;&#x8868;&#x7ED3;&#x6784;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token keyword">user</span><span class="token punctuation">(</span>
+    id          NVARCHAR<span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> records<span class="token punctuation">(</span>
+    record_id   <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    record_text NVARCHAR<span class="token punctuation">(</span><span class="token number">240</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+    is_done     <span class="token keyword">BOOLEAN</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>&#x5B9A;&#x4E49;&#x4E86;<code>user</code>&#x8868;&#x548C;<code>records</code>&#x8868;&#xFF0C;<code>user</code>&#x8868;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x5F53;&#x524D;&#x767B;&#x5F55;&#x7684;&#x7528;&#x6237;&#xFF0C;<code>records</code>&#x8868;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x5907;&#x5FD8;&#x8BB0;&#x5F55;&#xFF0C;<code>record_id</code>&#x4E3A;&#x8BB0;&#x5F55;&#x7684;&#x7F16;&#x53F7;&#xFF0C;&#x8BE5;&#x7F16;&#x53F7;&#x603B;&#x662F;&#x7531; 1 &#x5F00;&#x59CB;&#x9012;&#x589E;&#x5230;&#x6700;&#x540E;&#x4E00;&#x6761;&#x8BB0;&#x5F55;&#x3002;</p>
+<h5 class="mume-header" id="3132-%E7%A7%81%E6%9C%89%E6%88%90%E5%91%98">3.1.3.2. &#x79C1;&#x6709;&#x6210;&#x5458;</h5>
+
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">bool</span> _is_inited
+QSqlDatabase _db_con
+<span class="token keyword">int</span> _max_id
+
+<span class="token keyword">int</span> <span class="token function">getUserSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">bool</span> <span class="token function">deleteUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">bool</span> <span class="token function">setAttr</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">,</span> QString attr_name<span class="token punctuation">,</span> QVariant val<span class="token punctuation">)</span>
+QVariant <span class="token function">getAttr</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">,</span> QString attr_name<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">getRecSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><ul>
+<li><code>_is_inited</code>&#xFF1A;&#x5B58;&#x50A8;&#x521D;&#x59CB;&#x5316;&#x7ED3;&#x679C;&#xFF0C;&#x4F9B;&#x8C03;&#x7528;&#x8005;&#x5224;&#x65AD;&#x7A0B;&#x5E8F;&#x662F;&#x5426;&#x6B63;&#x786E;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4EE5;&#x51B3;&#x5B9A;&#x7A0B;&#x5E8F;&#x662F;&#x5426;&#x7EE7;&#x7EED;&#x8FD0;&#x884C;&#x3002;</li>
+<li><code>_db_con</code>&#xFF1A;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#xFF0C;&#x7528;&#x4E8E;&#x8BBF;&#x95EE;&#x6570;&#x636E;&#x5E93;&#x3002;</li>
+<li><code>_max_id</code>&#xFF1A;&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x8BB0;&#x5F55;&#x7684;&#x6700;&#x5927;ID&#x53F7;&#x3002;</li>
+<li><code>int getUserSize()</code>&#xFF1A;&#x83B7;&#x53D6;&#x5F53;&#x524D;<code>user</code>&#x8868;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x7528;&#x4E8E;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5E94;&#x8BE5;&#x6E05;&#x9664;&#x8868;&#xFF08;&#x6790;&#x6784;&#x65F6;&#xFF09;&#x3002;</li>
+<li><code>bool deleteUser()</code>&#xFF1A;&#x6E05;&#x9664;<code>user</code>&#x8868;&#xFF0C;&#x8FD4;&#x56DE;&#x6E05;&#x9664;&#x662F;&#x5426;&#x6210;&#x529F;&#x3002;</li>
+<li><code>bool setAttr(const int rec_id, QString attr_name, QVariant val)</code>&#xFF1A;&#x8BBE;&#x5B9A;&#x8BB0;&#x5F55;&#x7F16;&#x53F7;&#x4E3A;<code>rec_id</code>&#x7684;&#x8BB0;&#x5F55;&#x7684;&#x5C5E;&#x6027;<code>attr_name</code>&#x7684;&#x503C;&#x4E3A;<code>val</code>&#x3002;</li>
+<li><code>QVariant getAttr(const int rec_id, QString attr_name)</code>&#xFF1A;&#x83B7;&#x53D6;&#x8BB0;&#x5F55;&#x7F16;&#x53F7;&#x4E3A;<code>rec_id</code>&#x7684;&#x8BB0;&#x5F55;&#x7684;&#x5C5E;&#x6027;<code>attr_name</code>&#x7684;&#x503C;&#x3002;</li>
+<li><code>int getRecSize()</code>&#xFF1A;&#x83B7;&#x53D6;<code>records</code>&#x8868;&#x7684;&#x5927;&#x5C0F;&#xFF0C;</li>
+</ul>
+<h5 class="mume-header" id="3133-%E6%8E%A5%E5%8F%A3">3.1.3.3. &#x63A5;&#x53E3;</h5>
+
+<p>&#x516C;&#x6709;&#x63A5;&#x53E3;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">public</span><span class="token operator">:</span>
+<span class="token keyword">bool</span> <span class="token function">isInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><ul>
+<li><code>bool isInit() const</code>&#xFF1A;&#x7528;&#x4E8E;&#x83B7;&#x53D6;&#x5B9E;&#x4F8B;&#x521D;&#x59CB;&#x5316;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x679C;&#x521D;&#x59CB;&#x5316;&#x5931;&#x8D25;&#xFF0C;&#x5219;&#x9000;&#x51FA;&#x7A0B;&#x5E8F;&#x3002;</li>
+</ul>
+<p>&#x69FD;&#x51FD;&#x6570;&#xFF0C;&#x4F9B;<code>QML</code>&#x8BBF;&#x95EE;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">public</span> slots<span class="token operator">:</span>
+<span class="token keyword">bool</span> <span class="token function">addRecord</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>due_date<span class="token punctuation">,</span> <span class="token keyword">const</span> QString <span class="token operator">&amp;</span>rec_text<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">setIsDone</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">bool</span> is_done<span class="token punctuation">)</span>
+<span class="token keyword">bool</span> <span class="token function">setText</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">,</span> <span class="token keyword">const</span> QString <span class="token operator">&amp;</span>text<span class="token punctuation">)</span>
+QString <span class="token function">getDueDate</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">)</span>
+<span class="token keyword">bool</span> <span class="token function">getIsDone</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">)</span>
+QString <span class="token function">getText</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">)</span>
+<span class="token keyword">bool</span> <span class="token function">removeRecord</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> rec_id<span class="token punctuation">)</span>
+<span class="token keyword">bool</span> <span class="token function">setID</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>id<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">getMaxId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+QString <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><ul>
+<li><code>bool addRecord(const QString &amp;due_date, const QString &amp;rec_text)</code>&#xFF1A;&#x6DFB;&#x52A0;&#x4E00;&#x6761;&#x8BB0;&#x5F55;&#xFF0C;&#x81EA;&#x52A8;&#x5B89;&#x6392;&#x8BB0;&#x5F55;&#x7F16;&#x53F7;&#x3002;</li>
+<li><code>bool setIsDone(const int rec_id,const bool is_done)</code></li>
+<li><code>bool setText(const int rec_id, const QString &amp;text)</code>&#xFF1A;&#x8C03;&#x7528;<code>setAttr</code>&#x6765;&#x8BBE;&#x5B9A;&#x76F8;&#x5E94;&#x5C5E;&#x6027;&#x7684;&#x503C;&#x3002;</li>
+<li><code>bool setID(const QString &amp;id)</code>&#xFF1A;&#x8BBE;&#x5B9A;&#x5F53;&#x524D;&#x7528;&#x6237;&#x7684;ID&#x3002;</li>
+<li><code>bool getIsDone(const int rec_id)</code></li>
+<li><code>QString getText(const int rec_id)</code>&#xFF1A;&#x8C03;&#x7528;<code>getAttr</code>&#x6765;&#x83B7;&#x53D6;&#x76F8;&#x5E94;&#x5C5E;&#x6027;&#x7684;&#x503C;&#x3002;</li>
+<li><code>bool removeRecord(const int rec_id)</code>&#xFF1A;&#x79FB;&#x9664;&#x7ED9;&#x5B9A;&#x8BB0;&#x5F55;&#xFF0C;&#x5E76;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x7F16;&#x53F7;&#x3002;</li>
+<li><code>int getMaxId()</code>&#xFF1A;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x6700;&#x5927;&#x8BB0;&#x5F55;&#x7F16;&#x53F7;&#x3002;</li>
+</ul>
+<h5 class="mume-header" id="3134-%E5%88%9D%E5%A7%8B%E5%8C%96">3.1.3.4. &#x521D;&#x59CB;&#x5316;</h5>
+
+<div class="mermaid">graph TB
+    &#x8BBE;&#x5B9A;&#x6570;&#x636E;&#x5E93;&#x8DEF;&#x5F84;--&gt;&#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;
+    &#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;--&gt;&#x521D;&#x59CB;&#x5316;&#x6570;&#x636E;&#x5E93;&#x8868;
+    &#x521D;&#x59CB;&#x5316;&#x6570;&#x636E;&#x5E93;&#x8868;--&gt;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x6700;&#x5927;&#x8BB0;&#x5F55;&#x7F16;&#x53F7;
+</div><h4 class="mume-header" id="314-%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5">3.1.4. &#x7F51;&#x7EDC;&#x8FDE;&#x63A5;</h4>
+
+<h5 class="mume-header" id="3141-%E7%AE%80%E4%BB%8B">3.1.4.1 &#x7B80;&#x4ECB;</h5>
+
+<p>&#x5C01;&#x88C5;&#x4E86;<code>QTcpSocket</code>&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x963B;&#x585E;&#x8FDE;&#x63A5;&#xFF0C;&#x5E76;&#x4E14;&#x66B4;&#x9732;&#x7C7B;&#x81F3;<code>QML</code>&#x3002;</p>
+<h5 class="mume-header" id="3142-%E7%A7%81%E6%9C%89%E6%88%90%E5%91%98">3.1.4.2 &#x79C1;&#x6709;&#x6210;&#x5458;</h5>
+
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">QTcpSocket <span class="token operator">*</span>_socket <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+QAbstractSocket<span class="token operator">::</span>SocketState _state <span class="token operator">=</span> QAbstractSocket<span class="token operator">::</span>UnconnectedState<span class="token punctuation">;</span>
+QString _host<span class="token punctuation">;</span>
+<span class="token keyword">unsigned</span> _port<span class="token punctuation">;</span>
+<span class="token keyword">int</span> _timeout_ms <span class="token operator">=</span> <span class="token number">30000</span><span class="token punctuation">;</span>
+</pre><ul>
+<li><code>QTcpSocket *_socket</code>&#xFF1A;&#x7528;&#x4E8E;&#x8FDE;&#x63A5;&#x670D;&#x52A1;&#x7AEF;&#x3002;</li>
+<li><code>QAbstractSocket::SocketState _state</code>&#xFF1A;&#x66B4;&#x9732;&#x81F3;<code>QML</code>&#x4EE5;&#x4F9B;&#x5176;&#x83B7;&#x53D6;socket&#x72B6;&#x6001;&#x3002;</li>
+<li><code>QString _host;</code>&#xFF1A;&#x66B4;&#x9732;&#x81F3;<code>QML</code>&#xFF0C;&#x4F9B;&#x5176;&#x8BBE;&#x7F6E;&#x670D;&#x52A1;&#x7AEF;&#x57DF;&#x540D;&#x3002;</li>
+<li><code>unsigned _port;</code>&#xFF1A;&#x66B4;&#x9732;&#x81F3;<code>QML</code>&#xFF0C;&#x4F9B;&#x5176;&#x8BBE;&#x7F6E;&#x670D;&#x52A1;&#x7AEF;&#x7AEF;&#x53E3;&#x53F7;&#x3002;</li>
+<li><code>int _timeout_ms</code>&#xFF1A;&#x8D85;&#x65F6;&#x65F6;&#x957F;&#x3002;</li>
+</ul>
+<p>&#x4E0B;&#x4E3A;&#x66B4;&#x9732;&#x81F3;<code>QML</code>&#x7684;&#x5C5E;&#x6027;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token function">Q_PROPERTY</span><span class="token punctuation">(</span>QString host READ getHost WRITE setHost NOTIFY hostChanged<span class="token punctuation">)</span>
+<span class="token function">Q_PROPERTY</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> port READ getPort WRITE setPort NOTIFY portChanged<span class="token punctuation">)</span>
+<span class="token function">Q_PROPERTY</span><span class="token punctuation">(</span>QAbstractSocket<span class="token operator">::</span>SocketState state READ getState WRITE setState NOTIFY stateChanged<span class="token punctuation">)</span>
+</pre><p>&#x8868;&#x793A;&#x4E86;&#x6BCF;&#x79CD;&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x4F55;&#x79CD;&#x64CD;&#x4F5C;&#x65F6;&#x5E94;&#x5F53;&#x8C03;&#x7528;&#x54EA;&#x4E2A;&#x65B9;&#x6CD5;&#x4E0E;<code>C++</code>&#x901A;&#x4FE1;&#x3002;</p>
+<ul>
+<li><code>READ</code>&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x65F6;&#x901A;&#x8FC7;&#x7ED9;&#x5B9A;&#x65B9;&#x6CD5;&#x83B7;&#x53D6;&#x5C5E;&#x6027;&#x503C;&#x3002;</li>
+<li><code>WRITE</code>&#x8868;&#x793A;&#x66F4;&#x6539;&#x65F6;&#x901A;&#x8FC7;&#x7ED9;&#x5B9A;&#x65B9;&#x6CD5;&#x4FEE;&#x6539;&#x5C5E;&#x6027;&#x503C;&#x3002;</li>
+<li><code>NOTIFY</code>&#x8868;&#x793A;&#x5C5E;&#x6027;&#x66F4;&#x6539;&#x65F6;&#x53D1;&#x51FA;&#x7684;&#x4FE1;&#x53F7;(<code>signal</code>)&#x3002;</li>
+</ul>
+<h5 class="mume-header" id="3143-%E6%8E%A5%E5%8F%A3">3.1.4.3. &#x63A5;&#x53E3;</h5>
+
+<p>&#x516C;&#x6709;&#x63A5;&#x53E3;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">public</span><span class="token operator">:</span>
+QString <span class="token function">getHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">setHost</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>host<span class="token punctuation">)</span>
+<span class="token keyword">unsigned</span> <span class="token function">getPort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">setPort</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> port<span class="token punctuation">)</span>
+QAbstractSocket<span class="token operator">::</span>SocketState <span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">setState</span><span class="token punctuation">(</span>QAbstractSocket<span class="token operator">::</span>SocketState state<span class="token punctuation">)</span>
+</pre><p>&#x69FD;&#x51FD;&#x6570;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">public</span> slots<span class="token operator">:</span>
+<span class="token keyword">bool</span> <span class="token function">connect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>msg<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">setTimeOut</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> timeout_ms<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">disconnect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><ul>
+<li><code>bool connect()</code>&#xFF1A;&#x8FDE;&#x63A5;&#x81F3;<code>host:port</code>&#xFF0C;&#x963B;&#x585E;&#xFF0C;&#x8FD4;&#x56DE;&#x8FDE;&#x63A5;&#x7684;&#x7ED3;&#x679C;&#x3002;</li>
+<li><code>void write(const QString &amp;msg)</code>&#xFF1A;&#x5411;&#x670D;&#x52A1;&#x7AEF;&#x4F20;&#x8F93;<code>msg</code>&#xFF0C;&#x7F16;&#x7801;&#x4E3A;<code>base64</code>&#x4EE5;&#x4F20;&#x8F93;&#x975E;ascii&#x5B57;&#x7B26;&#x3002;</li>
+<li><code>void setTimeOut(const int timeout_ms)</code>&#xFF1A;&#x8BBE;&#x5B9A;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>void disconnect()</code>&#xFF1A;&#x65AD;&#x5F00;&#x8FDE;&#x63A5;&#xFF0C;&#x5728;&#x7A0B;&#x5E8F;&#x7EC8;&#x6B62;&#x65F6;&#x4F7F;&#x7528;&#x3002;</li>
+</ul>
+<h5 class="mume-header" id="3144-%E5%88%9D%E5%A7%8B%E5%8C%96">3.1.4.4. &#x521D;&#x59CB;&#x5316;</h5>
+
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token function">TcpSocket</span><span class="token punctuation">(</span>QObject <span class="token operator">*</span>parent <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">QObject</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _socket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">QTcpSocket</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        QObject<span class="token operator">::</span><span class="token function">connect</span><span class="token punctuation">(</span>_socket<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QAbstractSocket<span class="token operator">::</span>stateChanged<span class="token punctuation">,</span>
+                <span class="token punctuation">[</span><span class="token operator">=</span><span class="token punctuation">]</span><span class="token punctuation">(</span>QAbstractSocket<span class="token operator">::</span>SocketState state<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token function">setProperty</span><span class="token punctuation">(</span><span class="token string">&quot;state&quot;</span><span class="token punctuation">,</span> state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        QObject<span class="token operator">::</span><span class="token function">connect</span><span class="token punctuation">(</span>_socket<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QAbstractSocket<span class="token operator">::</span>readyRead<span class="token punctuation">,</span>
+                <span class="token punctuation">[</span><span class="token operator">=</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                     emit <span class="token function">read</span><span class="token punctuation">(</span>QString<span class="token operator">::</span><span class="token function">fromUtf8</span><span class="token punctuation">(</span><span class="token function">QByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fromBase64</span><span class="token punctuation">(</span>_socket<span class="token operator">-&gt;</span><span class="token function">readAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        QObject<span class="token operator">::</span><span class="token function">connect</span><span class="token punctuation">(</span>_socket<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QAbstractSocket<span class="token operator">::</span>connected<span class="token punctuation">,</span>
+                <span class="token punctuation">[</span><span class="token operator">=</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    emit <span class="token function">connected</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        QObject<span class="token operator">::</span><span class="token function">connect</span><span class="token punctuation">(</span>_socket<span class="token punctuation">,</span> <span class="token operator">&amp;</span>QAbstractSocket<span class="token operator">::</span>disconnected<span class="token punctuation">,</span>
+                <span class="token punctuation">[</span><span class="token operator">=</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                     emit <span class="token function">disconnected</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</pre><p>&#x9996;&#x5148;&#x521D;&#x59CB;&#x5316;<code>_socket</code>&#xFF0C;&#x4E4B;&#x540E;&#x8BBE;&#x5B9A;<code>_socket</code>&#x72B6;&#x6001;&#x53D1;&#x751F;&#x8F6C;&#x6362;&#x65F6;&#x6240;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<div class="mermaid">graph LR
+    A((QML))--&#x8C03;&#x7528;--&gt;B((C++ slots))
+    C((socket &#x72B6;&#x6001;&#x8F6C;&#x6362;))--&#x901A;&#x77E5;--&gt;A
+    B--&#x5BFC;&#x81F4;--&gt;C
+</div><h5 class="mume-header" id="3145-%E4%B8%8E%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E8%BF%9E%E6%8E%A5">3.1.4.5. &#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;</h5>
+
+<p>&#x89C1;&#x670D;&#x52A1;&#x7AEF;&#x6587;&#x6863;&#x6709;&#x5173;&#x5185;&#x5BB9;&#x3002;</p>
+<h3 class="mume-header" id="32-%E6%9C%8D%E5%8A%A1%E7%AB%AF">3.2. &#x670D;&#x52A1;&#x7AEF;</h3>
+
+<p>&#x670D;&#x52A1;&#x7AEF;&#x5305;&#x62EC;&#x4EE5;&#x4E0B;&#x7279;&#x6027;&#xFF1A;</p>
+<ul>
+<li>&#x7531;&#x4E0D;&#x540C;&#x7EC4;&#x4EF6;&#x7EC4;&#x5408;&#x6784;&#x6210;&#xFF0C;&#x7EC4;&#x4EF6;&#x95F4;&#x4EE5;&#x6D88;&#x606F;&#x961F;&#x5217;&#x4F20;&#x9012;&#x6D88;&#x606F;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x3002;</li>
+<li>&#x591A;&#x7EBF;&#x7A0B;&#x5E76;&#x53D1;&#x7684;&#x5F02;&#x6B65;&#x7F51;&#x7EDC;&#x5904;&#x7406;(<code>Boost.asio</code>)&#x3002;</li>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x901A;&#x4FE1;&#x91C7;&#x7528;&#x4EE5;<code>base64</code>&#x7F16;&#x7801;&#x7684;<code>JSON</code>&#x5B57;&#x7B26;&#x4E32;&#x3002;</li>
+<li>&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x73B0;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;</li>
+<li>&#x63A7;&#x5236;&#x5668;&#x63A5;&#x53D7;&#x7F51;&#x7EDC;&#x7EC4;&#x4EF6;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5C06;&#x6D88;&#x606F;&#x5206;&#x914D;&#x81F3;&#x8D1F;&#x8D23;&#x5904;&#x7406;&#x6B64;&#x7C7B;&#x6D88;&#x606F;&#x7684;&#x7EC4;&#x4EF6;&#x3002;</li>
+<li>&#x8D44;&#x6E90;&#x6C60;&#x7EC4;&#x4EF6;&#xFF0C;&#x63A5;&#x53D7;&#x63A7;&#x5236;&#x5668;&#x4F20;&#x6765;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x8FDB;&#x4E00;&#x6B65;&#x8C03;&#x5EA6;&#xFF08;Round-Robin&#xFF09;&#x81F3;&#x5176;&#x5B50;&#x7EC4;&#x4EF6;&#x3002;</li>
+<li>&#x7528;&#x6237;&#x7BA1;&#x7406;&#x7EC4;&#x4EF6;&#x4EE5;&#x53CA;&#x5907;&#x5FD8;&#x5B58;&#x50A8;&#x7BA1;&#x7406;&#x7EC4;&#x4EF6;&#xFF0C;&#x7531;&#x8D44;&#x6E90;&#x6C60;&#x7BA1;&#x7406;&#xFF0C;&#x6BCF;&#x4E2A;&#x7EC4;&#x4EF6;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x3002;</li>
+<li>&#x4F7F;&#x7528;&#x6570;&#x636E;&#x5E93;&#xFF08;MySql&#xFF09;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x3002;</li>
+<li>&#x652F;&#x6301;&#x5E76;&#x53D1;&#x5206;&#x7EA7;&#x522B;&#x7684;&#x65E0;&#x7F13;&#x51B2;&#x65E5;&#x5FD7;&#x3002;</li>
+<li>&#x7EC4;&#x4EF6;&#x901A;&#x8FC7;&#x63D0;&#x4F9B;&#x5176;&#x6D88;&#x606F;&#x961F;&#x5217;&#x6307;&#x9488;&#x6CE8;&#x518C;&#x81F3;&#x63A7;&#x5236;&#x5668;&#x4EE5;&#x4F9B;&#x5176;&#x8C03;&#x5EA6;&#x3002;</li>
+</ul>
+<p>&#x670D;&#x52A1;&#x7AEF;&#x4F7F;&#x7528;&#x4E86;&#x4EE5;&#x4E0B;&#x5E93;:</p>
+<ul>
+<li><a href="https://www.boost.org/">Boost(1.72.0)</a></li>
+<li><a href="https://www.qt.io/">Qt(5.12)</a></li>
+<li><a href="https://rapidjson.org/">rapidjson</a></li>
+<li><a href="https://github.com/okdshin/PicoSHA2">PicoSHA2</a></li>
+<li><a href="https://github.com/ReneNyffenegger/cpp-base64">cpp-base64</a></li>
+</ul>
+<h4 class="mume-header" id="321-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84">3.2.1. &#x7A0B;&#x5E8F;&#x7ED3;&#x6784;</h4>
+
+<div class="mermaid">graph LR
+    Client--&gt;Server
+    subgraph &#x7F51;&#x7EDC;
+        Server--&#x53D1;&#x8D77;--&gt;Sessions
+    end
+    Sessions--&#x8BF7;&#x6C42;&#x4EFB;&#x52A1;&#x5206;&#x914D;--&gt;&#x63A7;&#x5236;&#x5668;
+    &#x63A7;&#x5236;&#x5668;--&#x8C03;&#x5EA6;--&gt;Pool
+    subgraph &#x8D44;&#x6E90;&#x6C60;
+        Pool---&#x7528;&#x6237;&#x7BA1;&#x7406;
+        Pool---&#x5907;&#x5FD8;&#x5B58;&#x50A8;
+    end
+    &#x7528;&#x6237;&#x7BA1;&#x7406;---&#x6570;&#x636E;&#x5E93;
+    &#x5907;&#x5FD8;&#x5B58;&#x50A8;---&#x6570;&#x636E;&#x5E93;
+    Pool--&#x8FD4;&#x56DE;&#x7ED3;&#x679C;--&gt;Sessions
+    Sessions--&#x54CD;&#x5E94;--&gt;Client
+</div><h4 class="mume-header" id="322-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">3.2.2. &#x6D88;&#x606F;&#x961F;&#x5217;</h4>
+
+<p>&#x6240;&#x5B9E;&#x73B0;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x662F;&#x5E26;&#x7531;&#x4FE1;&#x53F7;&#x91CF;&#x63D0;&#x4F9B;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x673A;&#x5236;&#x7684;&#x961F;&#x5217;&#xFF0C;&#x9996;&#x5148;&#x662F;&#x4FE1;&#x53F7;&#x91CF;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Semaphore</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Semaphore</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">_count</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">Semaphore</span><span class="token punctuation">(</span><span class="token keyword">const</span> Semaphore <span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>
+    Semaphore <span class="token operator">&amp;</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Semaphore <span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">Signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">lock</span><span class="token punctuation">(</span>_mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _count<span class="token operator">++</span><span class="token punctuation">;</span>
+        _cv<span class="token punctuation">.</span><span class="token function">notify_one</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">lock</span><span class="token punctuation">(</span>_mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>_count <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _cv<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        _count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> _count<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>mutex _mtx<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>condition_variable _cv<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>&#x901A;&#x8FC7;&#x6761;&#x4EF6;&#x53D8;&#x91CF;&#x4EE5;&#x8FDB;&#x884C;&#x975E;&#x963B;&#x585E;&#x7684;&#x7B49;&#x5F85;&#xFF0C;&#x5728;&#x6BCF;&#x6B21;&#x8C03;&#x7528;<code>Signal</code>&#x65F6;&#xFF0C;&#x90FD;&#x4F1A;&#x5524;&#x9192;&#x5904;&#x4E8E;<code>Wait</code>&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x907F;&#x514D;&#x5FAA;&#x73AF;&#x68C0;&#x6D4B;<code>_count</code>&#x5BFC;&#x81F4;&#x7684;&#x6027;&#x80FD;&#x5F00;&#x9500;&#x3002;</p>
+<p>&#x63A5;&#x7740;&#x4F7F;&#x7528;&#x4FE1;&#x53F7;&#x91CF;&#x5B9E;&#x73B0;&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">&gt;</span>
+<span class="token keyword">class</span> <span class="token class-name">JobQueue</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">JobQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">_jobs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_semaphore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span><span class="token keyword">const</span> T <span class="token operator">&amp;</span>job<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token punctuation">{</span>
+            std<span class="token operator">::</span>lock_guard<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">lock</span><span class="token punctuation">(</span>_mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            _jobs<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>job<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        _semaphore<span class="token punctuation">.</span><span class="token function">Signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    T <span class="token function">Pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        T res<span class="token punctuation">;</span>
+        _semaphore<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">{</span>
+            std<span class="token operator">::</span>lock_guard<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">lock</span><span class="token punctuation">(</span>_mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            res <span class="token operator">=</span> _jobs<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            _jobs<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    JobQueue <span class="token operator">*</span><span class="token function">GetReg</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    std<span class="token operator">::</span>deque<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> _jobs<span class="token punctuation">;</span>
+    Semaphore _semaphore<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>mutex _mtx<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>&#x6BCF;&#x5F53;&#x7EBF;&#x7A0B;&#x9700;&#x8981;&#x6539;&#x53D8;&#xFF08;<code>Push</code>&#xFF0C;<code>Pop</code>&#xFF09;&#x65F6;&#xFF0C;&#x90FD;&#x5FC5;&#x987B;&#x5148;&#x83B7;&#x53D6;&#x9501;&#x4EE5;&#x8BBF;&#x95EE;&#x961F;&#x5217;&#xFF0C;&#x4E4B;&#x540E;&#x901A;&#x8FC7;&#x4FE1;&#x53F7;&#x91CF;&#x5728;&#x7EBF;&#x7A0B;&#x95F4;&#x4F20;&#x9012;&#x961F;&#x5217;&#x4E2D;&#x5143;&#x7D20;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x540C;&#x65F6;&#x901A;&#x8FC7;<code>GetReg</code>&#x4EE5;&#x4FBF;&#x7EC4;&#x4EF6;&#x83B7;&#x53D6;&#x5176;&#x6307;&#x9488;&#x3002;</p>
+<h4 class="mume-header" id="323-%E7%BB%84%E4%BB%B6">3.2.3. &#x7EC4;&#x4EF6;</h4>
+
+<p>&#x6BCF;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x90FD;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#x4EE5;&#x4E0B;&#x8981;&#x6C42;:</p>
+<ul>
+<li>&#x63D0;&#x4F9B;&#x5176;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6307;&#x9488;&#x6216;&#x5F15;&#x7528;&#xFF0C;&#x4F7F;&#x5F97;&#x63A7;&#x5236;&#x5668;&#x53EF;&#x4EE5;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x8C03;&#x5EA6;&#x3002;</li>
+<li>&#x6709;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;</li>
+</ul>
+<p>&#x5982;&#x6B64;&#x7531;&#x62BD;&#x8C61;&#x7C7B;&#x6240;&#x5B9A;&#x4E49;:</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> QueueType<span class="token operator">&gt;</span>
+<span class="token keyword">class</span> <span class="token class-name">AbstractComponent</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> QueueType <span class="token operator">*</span><span class="token function">GetHandle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><div class="mermaid">classDiagram
+    class ResourcePool{
+        +ResourcePool(std::size_t pool_size)
+        +void Start()
+        +JobQueue *GetHandle()
+        -std::vector _resource_handles;
+        -std::vector _resource_threads;
+        -JobQueue _jobs;
+        -std::size_t _current;
+        -std::size_t _max_resource;
+        -Semaphore _prepared;
+        -void RunOneResource(std::size_t index, const std::string db_name);
+    }
+
+    class AbstractComponent
+    AbstractComponent: #virtual QueueType *GetHandle() = 0
+
+    AbstractComponent &lt;|-- ResourcePool
+</div><p>&#x4E0D;&#x5BF9;&#x5176;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x9650;&#x5236;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x7531;&#x5B9A;&#x4E49;&#xFF0C;&#x4F46;&#x662F;&#x5FC5;&#x987B;&#x63D0;&#x4F9B;&#x8BBF;&#x95EE;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h5 class="mume-header" id="3231-%E8%B5%84%E6%BA%90%E6%B1%A0">3.2.3.1. &#x8D44;&#x6E90;&#x6C60;</h5>
+
+<p>&#x8D44;&#x6E90;&#x6C60;&#x7531;&#x62BD;&#x8C61;&#x7C7B;<code>AbstractComponent</code>&#x7EE7;&#x627F;&#x800C;&#x6765;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> ResourceType<span class="token operator">&gt;</span>
+<span class="token keyword">class</span> <span class="token class-name">ResourcePool</span> <span class="token operator">:</span> <span class="token keyword">public</span> AbstractComponent<span class="token operator">&lt;</span>JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;&gt;</span>
+</pre><p><code>ResourceType</code>&#x6307;&#x5B9A;&#x4E86;&#x8D44;&#x6E90;&#x7684;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x5176;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> ResourceType<span class="token operator">&gt;</span>
+<span class="token keyword">class</span> <span class="token class-name">ResourcePool</span> <span class="token operator">:</span> <span class="token keyword">public</span> AbstractComponent<span class="token operator">&lt;</span>JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;&gt;</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">ResourcePool</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t pool_size <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> <span class="token operator">*</span><span class="token function">GetHandle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token operator">&amp;</span>_jobs<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> <span class="token operator">*</span><span class="token operator">&gt;</span> _resource_handles<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>std<span class="token operator">::</span>thread<span class="token operator">&gt;</span> _resource_threads<span class="token punctuation">;</span>
+    JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> _jobs<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>size_t _current<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>size_t _max_resource<span class="token punctuation">;</span>
+    Semaphore _prepared<span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">RunOneResource</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t index<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token operator">::</span>string db_name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><ul>
+<li><code>std::vector&lt;JobQueue&lt;RegPointer&gt; *&gt; _resource_handles</code>&#xFF1A;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x5176;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x4EE5;&#x4F20;&#x9012;&#x6D88;&#x606F;&#x3002;</li>
+<li><code>std::vector&lt;std::thread&gt; _resource_threads</code>&#xFF1A;&#x5B58;&#x653E;&#x5176;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x7528;&#x4E8E;&#x4E3A;&#x5176;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x7533;&#x8BF7;&#x7EBF;&#x7A0B;&#x4EE5;&#x4F9B;&#x8FD0;&#x884C;&#x3002;</li>
+<li><code>JobQueue&lt;RegPointer&gt; _jobs</code>&#xFF1A;&#x8D44;&#x6E90;&#x6C60;&#x7684;&#x6D88;&#x606F;&#x7EC4;&#x4EF6;&#xFF0C;&#x6CE8;&#x518C;&#x81F3;&#x63A7;&#x5236;&#x5668;&#x3002;</li>
+<li><code>std::size_t _current</code>&#xFF1A;&#x8868;&#x793A;&#x5F53;&#x524D;&#x4EFB;&#x52A1;&#x5E94;&#x5F53;&#x8C03;&#x5EA6;&#x5230;&#x7684;&#x7EC4;&#x4EF6;&#x5728;<code>_resource_handles</code>&#x4E2D;&#x7684;&#x4E0B;&#x6807;&#x3002;</li>
+<li><code>std::size_t _max_resource</code>&#xFF1A;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x7ED9;&#x5B9A;&#xFF0C;&#x8868;&#x793A;&#x8D44;&#x6E90;&#x6C60;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x6570;&#x91CF;&#x3002;</li>
+<li><code>Semaphore _prepared</code>&#xFF1A;&#x5F53;&#x6240;&#x6709;&#x7684;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x90FD;&#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x4F7F;&#x7528;&#x8BE5;&#x4FE1;&#x53F7;&#x91CF;&#x901A;&#x77E5;&#x8D44;&#x6E90;&#x6C60;&#x5F00;&#x59CB;&#x63A5;&#x53D7;&#x63A7;&#x5236;&#x5668;&#x8C03;&#x5EA6;&#x3002;</li>
+</ul>
+<p>&#x5176;&#x521D;&#x59CB;&#x5316;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token function">ResourcePool</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t pool_size <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">_resource_handles</span><span class="token punctuation">(</span>pool_size<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_max_resource</span><span class="token punctuation">(</span>pool_size<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_resource_threads</span><span class="token punctuation">(</span>pool_size<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function">_current</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_prepared</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>default_random_engine <span class="token function">dre</span><span class="token punctuation">(</span>std<span class="token operator">::</span>chrono<span class="token operator">::</span>system_clock<span class="token operator">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">time_since_epoch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>uniform_int_distribution<span class="token operator">&lt;</span><span class="token operator">&gt;</span> <span class="token function">uid</span><span class="token punctuation">(</span><span class="token string">&apos;!&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;~&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>uniform_int_distribution<span class="token operator">&lt;</span><span class="token operator">&gt;</span> <span class="token function">uid_len</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>string append_str<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">uid_len</span><span class="token punctuation">(</span>dre<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        append_str<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token function">uid</span><span class="token punctuation">(</span>dre<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>string <span class="token function">db_name_base</span><span class="token punctuation">(</span>append_str<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&quot;mysql_db_data_&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>size_t i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> pool_size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _resource_threads<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>
+            std<span class="token operator">::</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ResourcePool<span class="token operator">&lt;</span>ResourceType<span class="token operator">&gt;</span><span class="token operator">::</span>RunOneResource<span class="token punctuation">,</span>
+            <span class="token keyword">this</span><span class="token punctuation">,</span>
+            i<span class="token punctuation">,</span>
+            db_name_base <span class="token operator">+</span> std<span class="token operator">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>&#x521D;&#x59CB;&#x5316;&#x65F6;&#x63A5;&#x53D7;&#x53C2;&#x6570;<code>pool_size</code>&#x4EE5;&#x63A7;&#x5236;&#x5176;&#x8D44;&#x6E90;&#x6570;&#x91CF;&#xFF0C;&#x4E4B;&#x540E;&#x751F;&#x6210;&#x4E00;&#x6BB5;&#x4F5C;&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x8FDE;&#x63A5;&#x540D;&#x79F0;&#xFF0C;&#x7531;&#x4E8E;&#x8D44;&#x6E90;&#x6C60;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x5B9E;&#x4F8B;&#xFF0C;&#x56E0;&#x6B64;&#x751F;&#x6210;&#x968F;&#x673A;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x6765;&#x907F;&#x514D;&#x4EA7;&#x751F;&#x76F8;&#x540C;&#x7684;&#x8FDE;&#x63A5;&#x540D;&#x79F0;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x4E3A;&#x6BCF;&#x4E2A;&#x7EC4;&#x4EF6;&#x7533;&#x8BF7;&#x7EBF;&#x7A0B;&#xFF0C;&#x7EBF;&#x7A0B;&#x5F00;&#x59CB;&#x65F6;&#x8C03;&#x7528;&#x65B9;&#x6CD5;<code>RunOneResource</code>:</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">RunOneResource</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t index<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token operator">::</span>string db_name<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    ResourceType <span class="token function">resource</span><span class="token punctuation">(</span>QString<span class="token operator">::</span><span class="token function">fromStdString</span><span class="token punctuation">(</span>db_name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _resource_handles<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> resource<span class="token punctuation">.</span><span class="token function">GetHandle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> _max_resource <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        _prepared<span class="token punctuation">.</span><span class="token function">Signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    resource<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// block at here</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x6B64;&#x65B9;&#x6CD5;&#x9996;&#x5148;&#x7533;&#x8BF7;&#x4E00;&#x4E2A;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#xFF0C;&#x4E4B;&#x540E;&#x5C06;&#x5176;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;&#x6307;&#x9488;&#x52A0;&#x5165;<code>_resource_handles</code>&#xFF0C;&#x968F;&#x540E;&#x8FDB;&#x5165;&#x8FD0;&#x884C;&#xFF0C;&#x907F;&#x514D;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x88AB;&#x91CA;&#x653E;&#x3002;<br>
+&#x5728;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;&#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x7531;&#x5176;&#x901A;&#x77E5;&#x8D44;&#x6E90;&#x6C60;&#x6240;&#x6709;&#x7EC4;&#x4EF6;&#x5DF2;&#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6BD5;&#xFF0C;&#x4F7F;&#x5F97;&#x8D44;&#x6E90;&#x6C60;&#x80FD;&#x591F;&#x8FD0;&#x884C;&#x65B9;&#x6CD5;<code>Start</code>:</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    _prepared<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        RegPointer job <span class="token operator">=</span> _jobs<span class="token punctuation">.</span><span class="token function">Pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _resource_handles<span class="token punctuation">[</span>_current<span class="token punctuation">]</span><span class="token operator">-&gt;</span><span class="token function">Push</span><span class="token punctuation">(</span>job<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>_current <span class="token operator">==</span> _max_resource<span class="token punctuation">)</span> <span class="token comment">// Round-Robin</span>
+            _current <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x8D44;&#x6E90;&#x6C60;&#x5728;&#x8FDB;&#x5165;<code>Start</code>&#x65F6;&#x9996;&#x5148;&#x8BD5;&#x56FE;&#x83B7;&#x53D6;&#x4FE1;&#x53F7;&#x91CF;&#xFF0C;&#x83B7;&#x53D6;&#x6210;&#x529F;&#x540E;&#x5373;&#x8868;&#x793A;&#x521D;&#x59CB;&#x5316;&#x5DF2;&#x5B8C;&#x6BD5;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#xFF0C;&#x6BCF;&#x5F53;&#x6709;&#x4EFB;&#x52A1;&#x7531;&#x63A7;&#x5236;&#x5668;&#x5206;&#x914D;&#x800C;&#x6765;&#xFF0C;&#x8D44;&#x6E90;&#x6C60;&#x4EE5;Round-Robin&#x7684;&#x65B9;&#x6CD5;&#x5C06;&#x4EFB;&#x52A1;&#x5206;&#x914D;&#x81F3;&#x6BCF;&#x4E2A;&#x7EC4;&#x4EF6;&#x3002;</p>
+<h4 class="mume-header" id="324-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5">3.2.4. &#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;</h4>
+
+<p>&#x7531;&#x4E8E;&#x7A0B;&#x5E8F;&#x9700;&#x8981;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#xFF0C;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;<code>Qt</code>&#x63D0;&#x4F9B;&#x7684;<code>QSqlDatabase</code>&#x6765;&#x8FDE;&#x63A5;&#x4EE5;&#x53CA;&#x521D;&#x59CB;&#x5316;&#x6570;&#x636E;&#x5E93;&#x3002;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">DBAccess</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">DBAccess</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>db_name<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">_db</span><span class="token punctuation">(</span>QSqlDatabase<span class="token operator">::</span><span class="token function">addDatabase</span><span class="token punctuation">(</span><span class="token string">&quot;QMYSQL&quot;</span><span class="token punctuation">,</span> db_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _db<span class="token punctuation">.</span><span class="token function">setHostName</span><span class="token punctuation">(</span><span class="token string">&quot;localhost&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _db<span class="token punctuation">.</span><span class="token function">setUserName</span><span class="token punctuation">(</span><span class="token string">&quot;me&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _db<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">&quot;whatever&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">bool</span> <span class="token function">OpenConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _db<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    QSqlQuery <span class="token function">GetQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">QSqlQuery</span><span class="token punctuation">(</span>_db<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    QSqlDatabase _db<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><div class="mermaid">classDiagram
+    class DBAccess{
+        +DBAccess(const QString &amp;db_name)
+        +bool OpenConnection()
+        +QSqlQuery GetQuery()
+        -QSqlDatabase _db;
+    }
+
+</div><p><code>GetQuery()</code>&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x63D0;&#x4F9B;&#x4F7F;&#x7528;&#x8BE5;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x7684;<code>QSqlQuery</code>&#x6765;&#x8FDB;&#x884C;<code>SQL</code>&#x64CD;&#x4F5C;&#x3002;<br>
+&#x7531;&#x4E8E;<code>QSqlDatabase</code>&#x65E0;&#x6CD5;&#x8DE8;&#x7EBF;&#x7A0B;&#x4F7F;&#x7528;&#xFF0C;&#x6BCF;&#x4E2A;&#x9700;&#x8981;&#x8BBF;&#x95EE;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7EC4;&#x4EF6;&#x90FD;&#x5FC5;&#x987B;&#x6709;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#xFF08;&#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x4E00;&#x4E2A;&#xFF09;&#x3002;</p>
+<h4 class="mume-header" id="325-%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6">3.2.5. &#x7BA1;&#x7406;&#x7EC4;&#x4EF6;</h4>
+
+<p>&#x7BA1;&#x7406;&#x7EC4;&#x4EF6;&#x662F;&#x6267;&#x884C;&#x5177;&#x4F53;&#x4E8B;&#x52A1;&#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x5728;&#x7EC4;&#x4EF6;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x5B83;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#x4EE5;&#x4E0B;&#x6761;&#x4EF6;&#xFF1A;</p>
+<ul>
+<li>&#x5FC5;&#x987B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;<code>void Start()</code>&#x7684;&#x65B9;&#x6CD5;&#x4EE5;&#x65E0;&#x9650;&#x5FAA;&#x73AF;&#x4ECE;&#x6D88;&#x606F;&#x961F;&#x5217;&#x4E2D;&#x53D6;&#x51FA;&#x4EFB;&#x52A1;&#x3002;</li>
+<li>&#x5FC5;&#x987B;&#x8FDE;&#x63A5;&#x81F3;&#x6570;&#x636E;&#x5E93;&#x4EE5;&#x5B9E;&#x73B0;&#x591A;&#x7EBF;&#x7A0B;&#x5E76;&#x53D1;&#x7684;&#x6570;&#x636E;&#x7BA1;&#x7406;&#xFF08;&#x5047;&#x8BBE;&#x6570;&#x636E;&#x5E93;&#x652F;&#x6301;&#xFF09;&#x3002;</li>
+<li>&#x7531;&#x4E8E;&#x6B64;&#x7A0B;&#x5E8F;&#x4E2D;&#x6D88;&#x606F;&#x4E3A;<code>JSON</code>&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x9700;&#x8981;&#x76F8;&#x5E94;&#x7684;Parser&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x89E3;&#x6790;&#x3002;</li>
+<li>&#x540C;&#x65F6;&#x9700;&#x8981;Writer&#x4EE5;&#x6784;&#x5EFA;&#x54CD;&#x5E94;<code>JSON</code>&#x5B57;&#x7B26;&#x4E32;&#x3002;</li>
+</ul>
+<p>&#x5B9A;&#x4E49;&#x4E3A;&#x62BD;&#x8C61;&#x7C7B;<code>AbstractManager</code>:</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">AbstractManager</span> <span class="token operator">:</span> <span class="token keyword">public</span> AbstractComponent<span class="token operator">&lt;</span>JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;&gt;</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">AbstractManager</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>db_name<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">_db</span><span class="token punctuation">(</span>db_name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_dom</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> <span class="token operator">*</span><span class="token function">GetHandle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">&amp;</span>_jobs<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">bool</span> <span class="token function">Parse</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>str<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> _jobs<span class="token punctuation">;</span>
+    DBAccess _db<span class="token punctuation">;</span>
+    rapidjson<span class="token operator">::</span>Document _dom<span class="token punctuation">;</span>
+    rapidjson<span class="token operator">::</span>Writer<span class="token operator">&lt;</span>rapidjson<span class="token operator">::</span>StringBuffer<span class="token operator">&gt;</span> _writer<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><div class="mermaid">classDiagram
+    class AbstractManager{
+        #virtual bool Parse(const std::string &amp;str)
+        +virtual void Start()
+        +JobQueue *GetHandle()
+        -JobQueue _jobs
+        -DBAccess _db
+        -rapidjson::Document _dom
+        -rapidjson::Writer _writer
+    }
+
+    class AbstractComponent
+    AbstractComponent: #virtual QueueType *GetHandle() = 0
+
+    class AccountManager{
+        +static bool HasAccountID(const QString &amp;id)
+        +static bool HasAccountID(const std::string &amp;id)
+        +void Start()
+        -std::string _id
+        -std::string _pswd
+        -RecvEventType _type
+        -std::string _res_str
+        -bool Parse(const std::string &amp;str)
+        -bool CreateAccount()
+        -bool LogIn()
+        -static std::string HashPswd(std::string &amp;pswd, const std::string &amp;id)
+        -static void AppendSalt(std::string &amp;pswd, const std::string &amp;id)
+    }
+
+    class MemoManager{
+        +void Start()
+        -RecvEventType _type;
+        -std::string _res_str;
+        -std::string _id
+        -bool Parse(const std::string &amp;str)
+        -bool SyncClient();
+        -bool SyncServer();
+    }
+
+    AbstractManager &lt;|-- MemoManager
+    AbstractComponent &lt;|-- AbstractManager
+    AbstractManager &lt;|-- AccountManager
+</div><p>&#x7A0B;&#x5E8F;&#x4E2D;&#x4F7F;&#x7528;<code>rapidjson</code>&#x5E93;&#x5BF9;<code>JSON</code>&#x5B57;&#x7B26;&#x4E32;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;</p>
+<h5 class="mume-header" id="3251-%E7%94%A8%E6%88%B7%E6%8E%A7%E5%88%B6%E7%AE%A1%E7%90%86">3.2.5.1. &#x7528;&#x6237;&#x63A7;&#x5236;&#x7BA1;&#x7406;</h5>
+
+<p>&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">AccountManager</span> <span class="token operator">:</span> <span class="token keyword">public</span> AbstractManager
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">AccountManager</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>db_name<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">AbstractManager</span><span class="token punctuation">(</span>db_name<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">bool</span> <span class="token function">HasAccountID</span><span class="token punctuation">(</span><span class="token keyword">const</span> QString <span class="token operator">&amp;</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">bool</span> <span class="token function">HasAccountID</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    std<span class="token operator">::</span>string _id<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>string _pswd<span class="token punctuation">;</span>
+    RecvEventType _type<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>string _res_str<span class="token punctuation">;</span>
+
+    <span class="token keyword">bool</span> <span class="token function">Parse</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>str<span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+
+    <span class="token keyword">bool</span> <span class="token function">CreateAccount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> <span class="token function">LogIn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">static</span> std<span class="token operator">::</span>string <span class="token function">HashPswd</span><span class="token punctuation">(</span>std<span class="token operator">::</span>string <span class="token operator">&amp;</span>pswd<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">AppendSalt</span><span class="token punctuation">(</span>std<span class="token operator">::</span>string <span class="token operator">&amp;</span>pswd<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><h6 class="mume-header" id="32511-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%BB%93%E6%9E%84">3.2.5.1.1. &#x6570;&#x636E;&#x5E93;&#x8868;&#x7ED3;&#x6784;</h6>
+
+<p>&#x7BA1;&#x7406;&#x7EC4;&#x4EF6;&#x9700;&#x8981;&#x8FDE;&#x63A5;&#x81F3;&#x6570;&#x636E;&#x5E93;&#x5E76;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x67E5;&#x8BE2;&#x3001;&#x4FEE;&#x6539;&#x64CD;&#x4F5C;&#x3002;&#x57FA;&#x4E8E;&#x7A0B;&#x5E8F;&#x529F;&#x80FD;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#x7684;&#x8868;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> accounts <span class="token punctuation">(</span>
+    id <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    pswd <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x7528;&#x6237;&#x7684;ID&#x4EE5;&#x53CA;&#x5BC6;&#x7801;&#x3002;</p>
+<h6 class="mume-header" id="32512-start%E6%96%B9%E6%B3%95">3.2.5.1.2. <code>Start</code>&#x65B9;&#x6CD5;</h6>
+
+<p>&#x6B64;&#x65B9;&#x6CD5;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A[&#x8FDE;&#x63A5;&#x6570;&#x636E;&#x5E93;]--&gt;B[&#x83B7;&#x53D6;&#x4EFB;&#x52A1;]
+    B--&gt;C[Parse&#x4EFB;&#x52A1;]
+    C--&gt;D[&#x5904;&#x7406;&#x4EFB;&#x52A1;]
+    D--&gt;E[&#x6784;&#x9020;&#x54CD;&#x5E94;&#x5B57;&#x7B26;&#x4E32;]
+    E--&gt;F[&#x901A;&#x77E5;Session]
+    F--&gt;B
+</div><h6 class="mume-header" id="32513-%E4%BB%BB%E5%8A%A1%E5%A4%84%E7%90%86">3.2.5.1.3. &#x4EFB;&#x52A1;&#x5904;&#x7406;</h6>
+
+<p>&#x4E0B;&#x5217;&#x51E0;&#x4E2A;&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x4EFB;&#x52A1;&#x7684;&#x5904;&#x7406;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">bool</span> <span class="token function">CreateAccount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">LogIn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p><code>CreateAccount</code>&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A{&#x5224;&#x65AD;&#x662F;&#x5426;&#x6709;&#x8BE5;&#x8D26;&#x6237;}--&#x662F;--&gt;B[&#x5904;&#x7406;&#x5BC6;&#x7801;]
+    B--&gt;C[&#x63D2;&#x5165;&#x8BB0;&#x5F55;]
+    A--&#x5426;--&gt;D[&#x8FD4;&#x56DE;&#x5931;&#x8D25;]
+    C--&#x63D2;&#x5165;&#x6210;&#x529F;--&gt;E[&#x8FD4;&#x56DE;&#x6210;&#x529F;]
+    C--&#x63D2;&#x5165;&#x5931;&#x8D25;--&gt;D
+</div><p><code>LogIn</code>&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A{&#x5224;&#x65AD;&#x662F;&#x5426;&#x6709;&#x8BE5;&#x8D26;&#x6237;}--&#x662F;--&gt;B[&#x5904;&#x7406;&#x5BC6;&#x7801;]
+    B--&gt;C[&#x63D2;&#x5165;&#x8BB0;&#x5F55;]
+    A--&#x5426;--&gt;D[&#x521B;&#x5EFA;&#x8D26;&#x6237;]
+    C--&#x63D2;&#x5165;&#x6210;&#x529F;--&gt;E[&#x8FD4;&#x56DE;&#x6210;&#x529F;]
+    C--&#x63D2;&#x5165;&#x5931;&#x8D25;--&gt;F[&#x8FD4;&#x56DE;&#x5931;&#x8D25;]
+    D--&#x521B;&#x5EFA;&#x6210;&#x529F;--&gt;E[&#x8FD4;&#x56DE;&#x6210;&#x529F;]
+    D--&#x521B;&#x5EFA;&#x5931;&#x8D25;--&gt;F[&#x8FD4;&#x56DE;&#x5931;&#x8D25;]
+</div><h6 class="mume-header" id="32514-%E5%AF%86%E7%A0%81%E5%A4%84%E7%90%86">3.2.5.1.4. &#x5BC6;&#x7801;&#x5904;&#x7406;</h6>
+
+<p>&#x5BC6;&#x7801;&#x4E0D;&#x5728;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x660E;&#x6587;&#x5B58;&#x50A8;&#xFF0C;&#x800C;&#x662F;&#x5B58;&#x50A8;&#x7ECF;&#x8FC7;&#x54C8;&#x5E0C;&#x540E;&#x7684;&#x5BC6;&#x7801;&#x3002;</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>a</mi><mi>s</mi><mi>h</mi><mo stretchy="false">(</mo><mi>P</mi><mo stretchy="false">)</mo><mo>=</mo><mi>S</mi><mi>H</mi><mi>A</mi><mn>256</mn><mo stretchy="false">(</mo><mi>P</mi><mi mathvariant="normal">&#x2223;</mi><mi>B</mi><mi>a</mi><mi>s</mi><mi>e</mi><mn>64</mn><mo stretchy="false">(</mo><mi>P</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Hash(P) = SHA256(P | Base64(P))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault">A</span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord">&#x2223;</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord">6</span><span class="mord">4</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<p>&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x4F7F;&#x7528;<code>SHA256</code>&#x4E3A;&#x57FA;&#x7840;&#xFF0C;&#x76D0;&#x4E3A;&#x5BC6;&#x7801;&#x7684;<code>base64</code>&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x4EE5;&#x51CF;&#x5C11;&#x5F69;&#x8679;&#x8868;&#x78B0;&#x649E;&#x3002;</p>
+<h5 class="mume-header" id="3252-%E5%A4%87%E5%BF%98%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86">3.2.5.2. &#x5907;&#x5FD8;&#x5B58;&#x50A8;&#x7BA1;&#x7406;</h5>
+
+<p>&#x4E0E;&#x7528;&#x6237;&#x63A7;&#x5236;&#x7BA1;&#x7406;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x8FC7;&#x9700;&#x8981;&#x589E;&#x52A0;&#x989D;&#x5916;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4EE5;&#x6784;&#x9020;&#x76F8;&#x5E94;&#x5B57;&#x7B26;&#x4E32;&#x548C;&#x5411;&#x8868;&#x4E2D;&#x63D2;&#x5165;&#x8BB0;&#x5F55;&#x3002;</p>
+<h6 class="mume-header" id="32521-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%BB%93%E6%9E%84">3.2.5.2.1. &#x6570;&#x636E;&#x5E93;&#x8868;&#x7ED3;&#x6784;</h6>
+
+<p>&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x8FC7;&#x9700;&#x8981;&#x5728;&#x8868;&#x4E2D;&#x4E0E;<code>accounts</code>&#x8868;&#x5EFA;&#x7ACB;&#x8054;&#x7CFB;&#xFF0C;&#x4ECE;&#x800C;&#x652F;&#x6301;&#x591A;&#x7528;&#x6237;&#x3002;</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> records<span class="token punctuation">(</span>
+    id <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    record_id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    due_date <span class="token keyword">DATE</span><span class="token punctuation">,</span>
+    record_text <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">250</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    is_done <span class="token keyword">BOOLEAN</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>id<span class="token punctuation">,</span> record_id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">CONSTRAINT</span> records_accounts_ref <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> accounts <span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword">ON</span> <span class="token keyword">DELETE</span> <span class="token keyword">CASCADE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h6 class="mume-header" id="32522-%E4%BB%BB%E5%8A%A1%E5%A4%84%E7%90%86">3.2.5.2.2. &#x4EFB;&#x52A1;&#x5904;&#x7406;</h6>
+
+<p>&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#x63D0;&#x4F9B;&#x4EFB;&#x52A1;&#x5904;&#x7406;&#x529F;&#x80FD;:</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">bool</span> <span class="token function">SyncClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">SyncServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>&#x5176;&#x529F;&#x80FD;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x76F8;&#x5E94;&#x529F;&#x80FD;&#x5BF9;&#x5E94;&#x3002;</p>
+<p><code>SyncClient</code>&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A[&#x5C06;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x6765;&#x7684;&#x6570;&#x636E;&#x9006;&#x5E8F;&#x5217;&#x5316;]--&gt;B
+    B[&#x5220;&#x9664;&#x6570;&#x636E;&#x5E93;&#x5BF9;&#x5E94;&#x8BB0;&#x5F55;]--&gt;C
+    C[&#x63D2;&#x5165;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x6765;&#x7684;&#x6570;&#x636E;]--&gt;D
+    D[&#x6784;&#x9020;&#x54CD;&#x5E94;&#x5B57;&#x7B26;&#x4E32;]
+</div><p><code>SyncServer</code>&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A[&#x4ECE;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x53D6;&#x51FA;&#x76F8;&#x5E94;&#x8BB0;&#x5F55;]--&gt;B
+    B[&#x6784;&#x9020;&#x8BB0;&#x5F55;&#x5BF9;&#x8C61;]--&gt;C
+    C[&#x5C06;&#x5BF9;&#x8C61;&#x8F6C;&#x4E3A;JSON&#x5B57;&#x7B26;&#x4E32;]
+</div><h4 class="mume-header" id="326-%E6%8E%A7%E5%88%B6%E5%99%A8">3.2.6. &#x63A7;&#x5236;&#x5668;</h4>
+
+<p>&#x63A7;&#x5236;&#x5668;&#x8D1F;&#x8D23;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x4E0E;&#x5176;&#x4ED6;&#x7EC4;&#x4EF6;&#x7684;&#x6C9F;&#x901A;&#x4EA4;&#x6D41;&#xFF1A;</p>
+<ul>
+<li>&#x4ECE;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x83B7;&#x53D6;&#x4EE5;<code>base64</code>&#x7F16;&#x7801;&#x7684;<code>JSON</code>&#x5B57;&#x7B26;&#x4E32;&#x5E76;&#x89E3;&#x7801;&#x3002;</li>
+<li>&#x7EC4;&#x4EF6;&#x66B4;&#x9732;&#x81EA;&#x5DF1;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x6307;&#x9488;&#x7ED9;&#x5B83;&#x3002;</li>
+<li>&#x4ECE;&#x89E3;&#x7801;&#x540E;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x4E2D;&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;&#x3002;</li>
+<li>&#x6839;&#x636E;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;&#x5206;&#x914D;&#x4EFB;&#x52A1;&#x3002;</li>
+</ul>
+<div class="mermaid">graph LR
+    &#x5BA2;&#x6237;&#x7AEF;--&#x53D1;&#x9001;--&gt;&#x7F51;&#x7EDC;&#x90E8;&#x5206;
+    &#x7F51;&#x7EDC;&#x90E8;&#x5206;--&#x4F20;&#x9012;/&#x6CE8;&#x518C;--&gt;&#x63A7;&#x5236;&#x5668;
+    &#x63A7;&#x5236;&#x5668;--&#x8C03;&#x5EA6;--&gt;&#x8D44;&#x6E90;&#x6C60;
+    &#x8D44;&#x6E90;&#x6C60;--&#x6CE8;&#x518C;--&gt;&#x63A7;&#x5236;&#x5668;
+    &#x8D44;&#x6E90;&#x6C60;--&#x5206;&#x914D;--&gt;&#x8D44;&#x6E90;&#x7EC4;&#x4EF6;
+    &#x8D44;&#x6E90;&#x7EC4;&#x4EF6;--&#x63D0;&#x9192;--&gt;&#x7F51;&#x7EDC;&#x90E8;&#x5206;
+    &#x7F51;&#x7EDC;&#x90E8;&#x5206;--&#x76F8;&#x5E94;--&gt;&#x5BA2;&#x6237;&#x7AEF;
+</div><h5 class="mume-header" id="3261-%E7%B1%BB%E8%AE%BE%E8%AE%A1">3.2.6.1. &#x7C7B;&#x8BBE;&#x8BA1;</h5>
+
+<p>&#x7C7B;&#x8BBE;&#x8BA1;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Controller</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Controller</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
+
+    RegPointer <span class="token function">Register</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>recv_str<span class="token punctuation">,</span> std<span class="token operator">::</span>size_t <span class="token operator">&amp;</span>reg_pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">RegHandle</span><span class="token punctuation">(</span><span class="token keyword">const</span> ComponentType comp_type<span class="token punctuation">,</span> JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> <span class="token operator">*</span>handle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">bool</span> <span class="token function">Dispatch</span><span class="token punctuation">(</span>RegPointer <span class="token operator">&amp;</span>regist_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">Unregister</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t reg_pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">static</span> <span class="token keyword">constexpr</span> <span class="token keyword">int</span> kQueueLen <span class="token operator">=</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>pair<span class="token operator">&lt;</span>RegPointer<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token operator">&gt;</span> _reg_queue<span class="token punctuation">[</span>kQueueLen<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// true means the resource is being used</span>
+    <span class="token keyword">int</span> _queue_now <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>mutex _queue_mtx<span class="token punctuation">;</span>
+
+    std<span class="token operator">::</span>map<span class="token operator">&lt;</span>ComponentType<span class="token punctuation">,</span> JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> <span class="token operator">*</span><span class="token operator">&gt;</span> _handle_map<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>&#x79C1;&#x6709;&#x6210;&#x5458;&#xFF1A;</p>
+<ul>
+<li><code>static constexpr int kQueueLen = 1024;</code>&#xFF1A;&#x8868;&#x793A;<code>_reg_queue</code>&#x7684;&#x957F;&#x5EA6;&#x3002;</li>
+<li><code>std::pair&lt;RegPointer, bool&gt; _reg_queue[kQueueLen];</code>&#xFF1A;&#x4F9B;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x6CE8;&#x518C;&#x5728;&#x63A7;&#x5236;&#x5668;&#x4E0A;&#xFF0C;&#x4E3A;&#x5176;&#x4EFB;&#x52A1;&#x5206;&#x914D;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#xFF0C;<code>bool</code>&#x8868;&#x793A;&#x6B64;&#x4EFB;&#x52A1;&#x662F;&#x5426;&#x5DF2;&#x5B8C;&#x6BD5;&#x3002;</li>
+<li><code>int _queue_now = 0;</code>&#xFF1A;&#x5F53;&#x524D;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x6CE8;&#x518C;&#x65F6;&#x4F1A;&#x7528;&#x5230;&#x7684;<code>_reg_queue</code>&#x7684;&#x4E0B;&#x6807;&#x3002;</li>
+<li><code>std::mutex _queue_mtx;</code>&#xFF1A;&#x63A7;&#x5236;&#x5BF9;<code>_reg_queue</code>&#x7684;&#x8BBF;&#x95EE;&#x3002;</li>
+<li><code>std::map&lt;ComponentType, JobQueue&lt;RegPointer&gt; *&gt; _handle_map;</code>&#xFF1A;&#x4F9B;&#x8D44;&#x6E90;&#x6C60;&#x6CE8;&#x518C;&#x5728;&#x63A7;&#x5236;&#x5668;&#x4E0A;&#xFF0C;&#x4EE5;&#x4F9B;&#x5176;&#x8C03;&#x5EA6;&#x3002;</li>
+</ul>
+<h5 class="mume-header" id="3262-%E7%BD%91%E7%BB%9C%E9%83%A8%E5%88%86%E4%B8%8E%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E4%BA%A4%E4%BA%92">3.2.6.2. &#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x4E0E;&#x63A7;&#x5236;&#x5668;&#x7684;&#x4EA4;&#x4E92;</h5>
+
+<p>&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x63A7;&#x5236;&#x5668;&#x7684;<code>Register</code>&#x65B9;&#x6CD5;&#x6765;&#x6CE8;&#x518C;&#xFF08;&#x63A7;&#x5236;&#x5668;&#x5206;&#x914D;&#x7A7A;&#x95F4;&#xFF09;&#x3002;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">RegPointer <span class="token function">Register</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>recv_str<span class="token punctuation">,</span> std<span class="token operator">::</span>size_t <span class="token operator">&amp;</span>reg_pos<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>string <span class="token function">json_str</span><span class="token punctuation">(</span><span class="token function">base64_decode</span><span class="token punctuation">(</span>recv_str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    RegPointer <span class="token function">res</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">RegType</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> json_str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">bool</span> is_fin <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>lock_guard<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">&gt;</span> <span class="token function">lock</span><span class="token punctuation">(</span>_queue_mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>is_fin<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>_reg_queue<span class="token punctuation">[</span>_queue_now<span class="token punctuation">]</span><span class="token punctuation">.</span>second<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            _reg_queue<span class="token punctuation">[</span>_queue_now<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> res<span class="token punctuation">,</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            reg_pos <span class="token operator">=</span> _queue_now<span class="token punctuation">;</span>
+
+            is_fin <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        _queue_now<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>_queue_now <span class="token operator">&gt;=</span> kQueueLen<span class="token punctuation">)</span>
+            _queue_now <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p><code>RegPointer</code>&#x4F7F;&#x7528;&#x667A;&#x80FD;&#x6307;&#x9488;&#x81EA;&#x52A8;&#x7BA1;&#x7406;&#x5176;&#x5185;&#x5B58;&#xFF0C;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">using</span> RegType <span class="token operator">=</span> std<span class="token operator">::</span>pair<span class="token operator">&lt;</span>Semaphore<span class="token punctuation">,</span> std<span class="token operator">::</span>string<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> RegPointer <span class="token operator">=</span> std<span class="token operator">::</span>shared_ptr<span class="token operator">&lt;</span>RegType<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+</pre><p>&#x6BCF;&#x5F53;&#x7F51;&#x7EDC;&#x7EC4;&#x4EF6;&#x8C03;&#x7528;<code>Register</code>&#xFF0C;&#x90FD;&#x4F1A;&#x4E3A;&#x5176;&#x5206;&#x914D;&#x4E00;&#x4E2A;<code>RegPointer</code>&#xFF0C;&#x5E76;&#x5728;&#x4E4B;&#x540E;&#x83B7;&#x53D6;&#x8BBF;&#x95EE;<code>_reg_queue</code>&#x7684;&#x9501;&#xFF0C;&#x83B7;&#x53D6;&#x4E4B;&#x540E;&#x4EE5;&#x8F6E;&#x8BE2;&#x7684;&#x65B9;&#x5F0F;&#x5BFB;&#x627E;&#x5DF2;&#x5B8C;&#x6210;&#x7684;&#x6216;&#x8005;&#x672A;&#x5206;&#x914D;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5C06;<code>RegPointer</code>&#x653E;&#x5728;&#x8BE5;&#x4F4D;&#x7F6E;&#x4E0A;&#x5E76;&#x6807;&#x8BB0;&#x8BE5;&#x4F4D;&#x7F6E;&#x7684;&#x4EFB;&#x52A1;&#x4E3A;&#x672A;&#x5B8C;&#x6210;&#xFF0C;&#x4E4B;&#x540E;&#x8FD4;&#x56DE;&#x8BE5;&#x4F4D;&#x7F6E;&#x7684;&#x503C;&#x3002;</p>
+<p>&#x5728;&#x6CE8;&#x518C;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x8C03;&#x7528;&#x63A7;&#x5236;&#x5668;&#x7684;<code>Dispatch</code>&#x65B9;&#x6CD5;&#xFF0C;&#x63D0;&#x4F9B;&#x83B7;&#x5F97;&#x7684;<code>RegPointer</code>&#xFF0C;&#x8BA9;&#x63A7;&#x5236;&#x5668;&#x4E3A;&#x5176;&#x4EFB;&#x52A1;&#x8FDB;&#x884C;&#x8C03;&#x5EA6;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">bool</span> <span class="token function">Dispatch</span><span class="token punctuation">(</span>RegPointer <span class="token operator">&amp;</span>regist_ptr<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">bool</span> res <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    rapidjson<span class="token operator">::</span>Document dom<span class="token punctuation">;</span>
+    dom<span class="token punctuation">.</span><span class="token function">Parse</span><span class="token punctuation">(</span>regist_ptr<span class="token operator">-&gt;</span>second<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>dom<span class="token punctuation">.</span><span class="token function">HasParseError</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span>dom<span class="token punctuation">.</span><span class="token function">IsObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span>dom<span class="token punctuation">.</span><span class="token function">HasMember</span><span class="token punctuation">(</span>kEventGroupStr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        res <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>string <span class="token function">group_str</span><span class="token punctuation">(</span>dom<span class="token punctuation">[</span>kEventGroupStr<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">GetString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>kEventGroupToCompType<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span>group_str<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            ComponentType type <span class="token operator">=</span> kEventGroupToCompType<span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span>group_str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            _handle_map<span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">Push</span><span class="token punctuation">(</span>regist_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+            res <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x9996;&#x5148;&#x63A7;&#x5236;&#x5668;&#x89E3;&#x6790;<code>JSON</code>&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x83B7;&#x53D6;&#x5176;&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;&#xFF0C;&#x4E4B;&#x540E;&#x6839;&#x636E;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;&#x5C06;&#x4EFB;&#x52A1;&#x5206;&#x914D;&#x7ED9;&#x8D1F;&#x8D23;&#x5904;&#x7406;&#x8BE5;&#x4EFB;&#x52A1;&#x7684;&#x7EC4;&#x4EF6;&#x3002;&#x5728;&#x7EC4;&#x4EF6;&#x5904;&#x7406;&#x5B8C;&#x4EFB;&#x52A1;&#x5E76;&#x901A;&#x77E5;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x540E;&#xFF0C;&#x7F51;&#x7EDC;&#x90E8;&#x5206;&#x8C03;&#x7528;<code>Unregister</code>&#x65B9;&#x6CD5;&#x6765;&#x6807;&#x8BB0;&#x4EFB;&#x52A1;&#x5DF2;&#x5B8C;&#x6210;&#x3002;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">Unregister</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t reg_pos<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    _reg_queue<span class="token punctuation">[</span>reg_pos<span class="token punctuation">]</span><span class="token punctuation">.</span>second <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A[&#x63A5;&#x6536;&#x4EFB;&#x52A1;]--&gt;B
+    B[&#x6CE8;&#x518C;]--&gt;C
+    C[&#x5206;&#x914D;]--&gt;D
+    D[&#x6807;&#x8BB0;&#x5B8C;&#x6210;]
+</div><h5 class="mume-header" id="3263-%E8%B5%84%E6%BA%90%E6%B1%A0%E4%B8%8E%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E4%BA%A4%E4%BA%92">3.2.6.3. &#x8D44;&#x6E90;&#x6C60;&#x4E0E;&#x63A7;&#x5236;&#x5668;&#x7684;&#x4EA4;&#x4E92;</h5>
+
+<p>&#x8D44;&#x6E90;&#x6C60;&#x901A;&#x8FC7;<code>RegHandle</code>&#x5C06;&#x81EA;&#x5DF1;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x6307;&#x9488;&#x66B4;&#x9732;&#x7ED9;&#x63A7;&#x5236;&#x5668;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">RegHandle</span><span class="token punctuation">(</span><span class="token keyword">const</span> ComponentType comp_type<span class="token punctuation">,</span> JobQueue<span class="token operator">&lt;</span>RegPointer<span class="token operator">&gt;</span> <span class="token operator">*</span>handle<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    _handle_map<span class="token punctuation">[</span>comp_type<span class="token punctuation">]</span> <span class="token operator">=</span> handle<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x63A7;&#x5236;&#x5668;&#x5C06;&#x5176;&#x5904;&#x7406;&#x7684;&#x4E8B;&#x52A1;&#x7C7B;&#x578B;&#x4E0E;&#x5176;&#x6D88;&#x606F;&#x961F;&#x5217;&#x6307;&#x9488;&#x76F8;&#x5173;&#x8054;&#xFF0C;&#x5F53;&#x6709;&#x4EFB;&#x52A1;&#x5206;&#x914D;&#x65F6;&#x5373;&#x8C03;&#x7528;&#x6D88;&#x606F;&#x961F;&#x5217;&#x7684;<code>Push</code>&#x65B9;&#x6CD5;&#x5C06;&#x4EFB;&#x52A1;&#x5206;&#x914D;&#x7ED9;&#x8D44;&#x6E90;&#x6C60;&#x3002;</p>
+<h4 class="mume-header" id="327-%E7%BD%91%E7%BB%9C%E5%A4%84%E7%90%86">3.2.7. &#x7F51;&#x7EDC;&#x5904;&#x7406;</h4>
+
+<p>&#x7F51;&#x7EDC;&#x5904;&#x7406;&#x8D1F;&#x8D23;&#x670D;&#x52A1;&#x7AEF;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x4E4B;&#x95F4;&#x7684;&#x6C9F;&#x901A;&#xFF0C;&#x7A0B;&#x5E8F;&#x4F7F;&#x7528;<code>Boost.asio</code>&#x6765;&#x5B9E;&#x73B0;&#x591A;&#x7EBF;&#x7A0B;&#x7684;&#x5F02;&#x6B65;&#x7F51;&#x7EDC;&#x5904;&#x7406;&#x3002;</p>
+<h5 class="mume-header" id="3271-server%E7%B1%BB">3.2.7.1. <code>Server</code>&#x7C7B;</h5>
+
+<p>&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Server</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Server</span><span class="token punctuation">(</span>boost<span class="token operator">::</span>asio<span class="token operator">::</span>io_context <span class="token operator">&amp;</span>io_context<span class="token punctuation">,</span> <span class="token keyword">short</span> port<span class="token punctuation">,</span> Controller <span class="token operator">*</span>ctrler<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">_io_context</span><span class="token punctuation">(</span>io_context<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token function">_acceptor</span><span class="token punctuation">(</span>io_context<span class="token punctuation">,</span> tcp<span class="token operator">::</span><span class="token function">endpoint</span><span class="token punctuation">(</span>tcp<span class="token operator">::</span><span class="token function">v4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> port<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">Accept</span><span class="token punctuation">(</span>ctrler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+
+    <span class="token keyword">void</span> <span class="token function">Accept</span><span class="token punctuation">(</span>Controller <span class="token operator">*</span> ctrler<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _acceptor<span class="token punctuation">.</span><span class="token function">async_accept</span><span class="token punctuation">(</span>
+            <span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">,</span> ctrler<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">const</span> boost<span class="token operator">::</span>system<span class="token operator">::</span>error_code ec<span class="token punctuation">,</span> tcp<span class="token operator">::</span>socket socket<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ec<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    std<span class="token operator">::</span>make_shared<span class="token operator">&lt;</span>ServerSession<span class="token operator">&gt;</span><span class="token punctuation">(</span>std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>socket<span class="token punctuation">)</span><span class="token punctuation">,</span> _io_context<span class="token punctuation">,</span> ctrler<span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token function">Accept</span><span class="token punctuation">(</span>ctrler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    boost<span class="token operator">::</span>asio<span class="token operator">::</span>io_context <span class="token operator">&amp;</span>_io_context<span class="token punctuation">;</span>
+    tcp<span class="token operator">::</span>acceptor _acceptor<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><div class="mermaid">graph TB
+    A[&#x521D;&#x59CB;&#x5316;]--&gt;B
+    B[&#x63A5;&#x53D7;&#x8FDE;&#x63A5;]--&gt;C
+    C[&#x521B;&#x5EFA;&#x4F1A;&#x8BDD;]--&#x4F1A;&#x8BDD;&#x7ED3;&#x675F;--&gt;B
+</div><p>&#x8BE5;&#x7C7B;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;<code>io_context</code>&#x4F5C;&#x4E3A;&#x4E0A;&#x4E0B;&#x6587;&#x8C03;&#x5EA6;&#x5668;&#xFF0C;&#x5E76;&#x4E14;&#x6307;&#x5B9A;&#x670D;&#x52A1;&#x7AEF;&#x76D1;&#x542C;&#x7684;&#x7AEF;&#x53E3;&#xFF0C;&#x4F20;&#x5165;&#x63A7;&#x5236;&#x5668;&#x6307;&#x9488;&#x4EE5;&#x4F9B;&#x540E;&#x7EED;&#x4F7F;&#x7528;&#x3002;<br>
+&#x5728;<code>Server</code>&#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;<code>Server</code>&#x8C03;&#x7528;<code>Accept</code>&#x65B9;&#x6CD5;&#x5F02;&#x6B65;&#x63A5;&#x53D7;&#x8FDE;&#x63A5;&#xFF0C;&#x63A5;&#x53D7;&#x8FDE;&#x63A5;&#x540E;&#x901A;&#x8FC7;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5F00;&#x59CB;&#x4E00;&#x4E2A;<code>Session</code>&#x4E13;&#x95E8;&#x8D1F;&#x8D23;&#x7BA1;&#x7406;&#x8BE5;&#x8FDE;&#x63A5;&#xFF0C;&#x5E76;&#x91CD;&#x590D;&#x8C03;&#x7528;<code>Accept</code>&#x65B9;&#x6CD5;&#x51C6;&#x5907;&#x63A5;&#x53D7;&#x4E0B;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x3002;</p>
+<h5 class="mume-header" id="3272-session%E7%B1%BB">3.2.7.2. <code>Session</code>&#x7C7B;</h5>
+
+<p>&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ServerSession</span> <span class="token operator">:</span> <span class="token keyword">public</span> std<span class="token operator">::</span>enable_shared_from_this<span class="token operator">&lt;</span>ServerSession<span class="token operator">&gt;</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">ServerSession</span><span class="token punctuation">(</span>tcp<span class="token operator">::</span>socket socket<span class="token punctuation">,</span> boost<span class="token operator">::</span>asio<span class="token operator">::</span>io_context <span class="token operator">&amp;</span>io_context<span class="token punctuation">,</span> Controller <span class="token operator">*</span>ctrler<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">_strand</span><span class="token punctuation">(</span>io_context<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token function">_socket</span><span class="token punctuation">(</span>std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>socket<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token function">_ctrler</span><span class="token punctuation">(</span>ctrler<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token function">_buf_vec</span><span class="token punctuation">(</span><span class="token number">65500</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">ReadClientData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">Proceed</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>size_t len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">Respond</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    tcp<span class="token operator">::</span>socket _socket<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">&gt;</span> _buf_vec<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>string _buf<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>string _respond<span class="token punctuation">;</span>
+    boost<span class="token operator">::</span>asio<span class="token operator">::</span>io_context<span class="token operator">::</span>strand _strand<span class="token punctuation">;</span>
+    Controller <span class="token operator">*</span>_ctrler<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>&#x8BE5;&#x7C7B;&#x5FC5;&#x987B;&#x7EE7;&#x627F;&#x81EA;<code>std::enable_shared_from_this&lt;T&gt;</code>&#xFF0C;&#x5426;&#x5219;&#x5728;&#x7C7B;&#x4E2D;&#x5F15;&#x7528;&#x81EA;&#x8EAB;&#x4F1A;&#x9020;&#x6210;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x7684;&#x589E;&#x52A0;&#xFF0C;&#x5BFC;&#x81F4;&#x5185;&#x5B58;&#x9519;&#x8BEF;&#x3002;</p>
+<p>&#x5728;<code>Session</code>&#x7C7B;&#x8C03;&#x7528;<code>Start</code>&#x65B9;&#x6CD5;&#x540E;&#xFF0C;&#x5F62;&#x6210;&#x5982;&#x4E0B;&#x4E00;&#x6761;&#x56DE;&#x8C03;&#x94FE;&#xFF1A;</p>
+<div class="mermaid">graph TB
+    A(start)--&gt;B
+    B(ReadClientData)--&gt;C
+    C(&quot;Proceed(&#x963B;&#x585E;)&quot;)--&gt;D
+    D(Respond)--&gt;B
+</div><ul>
+<li>
+<p><code>void Start()</code>&#xFF1A;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>ReadClientData</code>&#x3002;</p>
+</li>
+<li>
+<p><code>void ReadClientData()</code>&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">ReadClientData</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    _buf<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">auto</span> <span class="token function">self</span><span class="token punctuation">(</span><span class="token function">shared_from_this</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _socket<span class="token punctuation">.</span><span class="token function">async_receive</span><span class="token punctuation">(</span>boost<span class="token operator">::</span>asio<span class="token operator">::</span><span class="token function">buffer</span><span class="token punctuation">(</span>_buf_vec<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                          boost<span class="token operator">::</span>asio<span class="token operator">::</span><span class="token function">bind_executor</span><span class="token punctuation">(</span>_strand<span class="token punctuation">,</span>
+                          <span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">,</span> self<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">const</span> boost<span class="token operator">::</span>system<span class="token operator">::</span>error_code ec<span class="token punctuation">,</span> std<span class="token operator">::</span>size_t byte_transfered<span class="token punctuation">)</span>
+                          <span class="token punctuation">{</span>
+                              <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ec<span class="token punctuation">)</span>
+                              <span class="token punctuation">{</span>
+                                  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> byte_transfered<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                                      _buf<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>_buf_vec<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                  <span class="token function">Proceed</span><span class="token punctuation">(</span>byte_transfered<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                              <span class="token punctuation">}</span>
+                          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x7531;&#x4E8E;&#x5F02;&#x6B65;&#x7A0B;&#x5E8F;&#x4E0D;&#x5728;&#x8BED;&#x53E5;&#x4E0A;&#x963B;&#x585E;&#xFF0C;&#x4F1A;&#x76F4;&#x63A5;&#x7ED3;&#x675F;&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x6B64;&#x5411;<code>lambda</code>&#x51FD;&#x6570;&#x4E2D;&#x4F20;&#x5165;&#x6307;&#x5411;&#x81EA;&#x5DF1;&#x7684;&#x667A;&#x80FD;&#x6307;&#x9488;&#x4EE5;&#x4FDD;&#x8BC1;&#x5728;&#x88AB;&#x8C03;&#x7528;&#x65F6;&#x4ECD;&#x5904;&#x4E8E;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E2D;&#x3002;<br>
+&#x63A5;&#x53D7;&#x5BA2;&#x6237;&#x7AEF;&#x4F20;&#x8F93;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5728;&#x4F20;&#x8F93;&#x7ED3;&#x675F;&#x540E;&#x8C03;&#x7528;<code>Proceed</code>&#x3002;</p>
+</li>
+<li>
+<p><code>void Proceed(const std::size_t len)</code>&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">Proceed</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>size_t len<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>size_t reg_pos<span class="token punctuation">;</span>
+    RegPointer reg_ptr <span class="token operator">=</span> _ctrler<span class="token operator">-&gt;</span><span class="token function">Register</span><span class="token punctuation">(</span>_buf<span class="token punctuation">,</span> reg_pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> is_recv_str_valid <span class="token operator">=</span> _ctrler<span class="token operator">-&gt;</span><span class="token function">Dispatch</span><span class="token punctuation">(</span>reg_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>is_recv_str_valid<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        reg_ptr<span class="token operator">-&gt;</span>first<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _respond <span class="token operator">=</span> reg_ptr<span class="token operator">-&gt;</span>second<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>invalid_json_query <span class="token operator">=</span> <span class="token string">&quot;SU5WQUxJRCBKU09OIFFVRVJZLg==&quot;</span><span class="token punctuation">;</span> <span class="token comment">// base64 of &quot;INVALID JSON QUERY&quot;</span>
+        reg_ptr<span class="token operator">-&gt;</span>second <span class="token operator">=</span> invalid_json_query<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    _ctrler<span class="token operator">-&gt;</span><span class="token function">Unregister</span><span class="token punctuation">(</span>reg_pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    _respond<span class="token punctuation">.</span><span class="token function">swap</span><span class="token punctuation">(</span>reg_ptr<span class="token operator">-&gt;</span>second<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">Respond</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x6B64;&#x65B9;&#x6CD5;&#x4E3A;&#x56DE;&#x8C03;&#x94FE;&#x4E2D;&#x552F;&#x4E00;&#x7684;&#x963B;&#x585E;&#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x6CE8;&#x518C;&#x81F3;&#x63A7;&#x5236;&#x5668;&#x5E76;&#x8BF7;&#x6C42;&#x8C03;&#x5EA6;&#x4E4B;&#x540E;&#x5373;&#x901A;&#x8FC7;&#x4FE1;&#x53F7;&#x91CF;&#x6765;&#x5224;&#x65AD;&#x4EFB;&#x52A1;&#x662F;&#x5426;&#x5DF2;&#x5B8C;&#x6210;&#xFF0C;&#x5728;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;&#x524D;&#x4F1A;&#x4E00;&#x76F4;&#x963B;&#x585E;&#x5728;<code>reg_ptr-&gt;first.Wait()</code>&#xFF0C;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;&#x540E;&#x4EE4;&#x63A7;&#x5236;&#x5668;&#x6807;&#x8BB0;&#x4EFB;&#x52A1;&#x5DF2;&#x5B8C;&#x6210;&#xFF0C;&#x968F;&#x540E;&#x8C03;&#x7528;<code>Respond</code>&#x54CD;&#x5E94;&#x5BA2;&#x6237;&#x7AEF;&#x3002;</p>
+</li>
+<li>
+<p><code>void Respond()</code>&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">void</span> <span class="token function">Respond</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">auto</span> <span class="token function">self</span><span class="token punctuation">(</span><span class="token function">shared_from_this</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    boost<span class="token operator">::</span>asio<span class="token operator">::</span><span class="token function">async_write</span><span class="token punctuation">(</span>_socket<span class="token punctuation">,</span> boost<span class="token operator">::</span>asio<span class="token operator">::</span><span class="token function">buffer</span><span class="token punctuation">(</span>_respond<span class="token punctuation">,</span> _respond<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                             boost<span class="token operator">::</span>asio<span class="token operator">::</span><span class="token function">bind_executor</span><span class="token punctuation">(</span>_strand<span class="token punctuation">,</span>
+                             <span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">,</span> self<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">const</span> boost<span class="token operator">::</span>system<span class="token operator">::</span>error_code ec<span class="token punctuation">,</span> std<span class="token operator">::</span>size_t write_len<span class="token punctuation">)</span>
+                             <span class="token punctuation">{</span>
+                                 <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ec<span class="token punctuation">)</span>
+                                 <span class="token punctuation">{</span>
+                                     _socket<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                     <span class="token function">ReadClientData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                 <span class="token punctuation">}</span>
+                             <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x5C06;&#x54CD;&#x5E94;&#x5B57;&#x7B26;&#x4E32;&#x53D1;&#x9001;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;&#x5728;&#x53D1;&#x9001;&#x5B8C;&#x6BD5;&#x540E;&#x8C03;&#x7528;<code>ReadClientData</code>&#x7EE7;&#x7EED;&#x63A5;&#x6536;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x4FE1;&#x606F;&#x3002;</p>
+</li>
+</ul>
+<h5 class="mume-header" id="3273-%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E4%BA%A4%E4%BA%92%E6%A0%BC%E5%BC%8F">3.2.7.3. &#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4EA4;&#x4E92;&#x683C;&#x5F0F;</h5>
+
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x81F3;&#x670D;&#x52A1;&#x7AEF;&#xFF1A;</p>
+<ul>
+<li>
+<p>&#x767B;&#x5F55;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="json" class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;EventGroup&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Account&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Event&quot;</span><span class="token operator">:</span> <span class="token string">&quot;LogIn&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;ID&quot;</span><span class="token operator">:</span> <span class="token string">&quot;id&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Pswd&quot;</span><span class="token operator">:</span> <span class="token string">&quot;pswd in b64&quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>&#x4E0A;&#x4F20;&#x81F3;&#x670D;&#x52A1;&#x7AEF;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="json" class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;EventGroup&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Data&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Event&quot;</span><span class="token operator">:</span> <span class="token string">&quot;SyncFromClient&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;ID&quot;</span><span class="token operator">:</span> <span class="token string">&quot;id&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Records&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;RecID&quot;</span><span class="token operator">:</span> int<span class="token punctuation">,</span>
+            <span class="token property">&quot;Text&quot;</span><span class="token operator">:</span> <span class="token string">&quot;text&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;DueDate&quot;</span><span class="token operator">:</span> <span class="token string">&quot;time_str(XXXX-XX-XX)&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;Done&quot;</span><span class="token operator">:</span> bool
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> ...
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x540C;&#x6B65;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="json" class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;EventGroup&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Data&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Event&quot;</span><span class="token operator">:</span> <span class="token string">&quot;SyncFromServer&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;ID&quot;</span><span class="token operator">:</span> <span class="token string">&quot;id&quot;</span>
+</pre></li>
+</ul>
+<p>&#x670D;&#x52A1;&#x7AEF;&#x53D1;&#x56DE;&#x81F3;&#x5BA2;&#x6237;&#x7AEF;&#xFF1A;</p>
+<ul>
+<li>
+<p>&#x767B;&#x9646;&#x7ED3;&#x679C;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="json" class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;EventGroup&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Account&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Event&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Reply&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Result&quot;</span><span class="token operator">:</span> bool
+<span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>&#x540C;&#x6B65;&#x7ED3;&#x679C;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="json" class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;EventGroup&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Data&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Event&quot;</span><span class="token operator">:</span> <span class="token string">&quot;SyncReply&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;SyncResult&quot;</span><span class="token operator">:</span> bool<span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>&#x540C;&#x6B65;&#x6570;&#x636E;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="json" class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">&quot;EventGroup&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Data&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Event&quot;</span><span class="token operator">:</span> <span class="token string">&quot;SyncData&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;ID&quot;</span><span class="token operator">:</span> <span class="token string">&quot;id&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;Records&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;RecID&quot;</span><span class="token operator">:</span> int<span class="token punctuation">,</span>
+            <span class="token property">&quot;Text&quot;</span><span class="token operator">:</span> <span class="token string">&quot;text&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;DueDate&quot;</span><span class="token operator">:</span> <span class="token string">&quot;time_str(XXXX-XX-XX)&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;Done&quot;</span><span class="token operator">:</span> bool
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> ...
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</pre></li>
+</ul>
+<h4 class="mume-header" id="328-%E6%97%A5%E5%BF%97%E5%A4%84%E7%90%86">3.2.8. &#x65E5;&#x5FD7;&#x5904;&#x7406;</h4>
+
+<p>&#x65E5;&#x5FD7;&#x7C7B;&#x7531;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x6784;&#x6210;&#xFF0C;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Log</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">InitLog</span><span class="token punctuation">(</span><span class="token keyword">const</span> LogLevel max_log_level<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">SetOption</span><span class="token punctuation">(</span><span class="token keyword">const</span> LogOption option<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">bool</span> <span class="token function">WriteLog</span><span class="token punctuation">(</span>
+                <span class="token keyword">const</span> LogLevel level<span class="token punctuation">,</span>
+                <span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>log<span class="token punctuation">,</span>
+                <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>file_name<span class="token punctuation">,</span>
+                <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>func_name<span class="token punctuation">,</span>
+                <span class="token keyword">int</span> line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">CloseLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><ul>
+<li><code>static void InitLog(const LogLevel max_log_level)</code>&#xFF1A;&#x5728;&#x5199;&#x5165;&#x65E5;&#x5FD7;&#x524D;&#x9700;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x521D;&#x59CB;&#x5316;&#x65E5;&#x5FD7;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x65E5;&#x5FD7;&#x663E;&#x793A;&#x7684;&#x7EA7;&#x522B;&#x3002;</li>
+<li><code>static void SetOption(const LogOption option, const int value)</code>&#xFF1A;&#x63D0;&#x4F9B;&#x4E00;&#x4E9B;&#x8BBE;&#x7F6E;&#x7684;&#x9009;&#x9879;&#xFF0C;&#x7531;&#x4F7F;&#x7528;&#x8005;&#x8BBE;&#x7F6E;&#x3002;</li>
+<li><code>static bool WriteLog(const LogLevel level, const std::string &amp;log, const char *file_name, const char *func_name, int line)</code>&#xFF1A;&#x5199;&#x5165;&#x65E5;&#x5FD7;&#xFF0C;&#x4E0D;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x3002;</li>
+<li><code>static void CloseLog()</code>&#xFF1A;&#x5237;&#x65B0;&#x7F13;&#x51B2;&#x533A;&#x5E76;&#x5173;&#x95ED;&#x65E5;&#x5FD7;&#x3002;</li>
+</ul>
+<p>&#x65E5;&#x5FD7;&#x5171;&#x6709;&#x56DB;&#x4E2A;&#x7EA7;&#x522B;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">LogLevel</span>
+<span class="token punctuation">{</span>
+    ERROR <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    WARN<span class="token punctuation">,</span>
+    INFO<span class="token punctuation">,</span>
+    DEBUG
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>&#x8BBE;&#x5B9A;&#x4E86;&#x6253;&#x5370;&#x7684;&#x6700;&#x9AD8;&#x7EA7;&#x522B;&#x540E;&#xFF0C;&#x82E5;&#x5199;&#x5165;&#x65E5;&#x5FD7;&#x7684;&#x7EA7;&#x522B;&#x9AD8;&#x4E8E;&#x7ED9;&#x5B9A;&#x7684;&#x6700;&#x5927;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x5219;&#x4E0D;&#x5199;&#x5165;&#x3002;</p>
+<p>&#x7A0B;&#x5E8F;&#x901A;&#x8FC7;&#x5B8F;&#x51FD;&#x6570;&#x6765;&#x8C03;&#x7528;<code>WriteLog</code>&#x5199;&#x5165;&#x65E5;&#x5FD7;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">define</span> WRITE_LOG(level, msg) do{Log::WriteLog(level, msg, __FILE__ , __FUNCTION__ ,  __LINE__ );}while(0)</span>
+</pre><p>&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x8BE5;&#x5B8F;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x6253;&#x5370;&#x6E90;&#x6587;&#x4EF6;&#x540D;&#x79F0;&#xFF0C;&#x51FD;&#x6570;&#x4EE5;&#x53CA;&#x884C;&#x53F7;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+<h2 class="mume-header" id="4-%E7%A8%8B%E5%BA%8F%E7%BC%96%E8%AF%91">4. &#x7A0B;&#x5E8F;&#x7F16;&#x8BD1;</h2>
+
+<p>&#x7F16;&#x8BD1;&#x5BA2;&#x6237;&#x7AEF;&#x6240;&#x9700;&#x4F9D;&#x8D56;:</p>
+<ul>
+<li><code>Qt(5.12)</code></li>
+</ul>
+<p>&#x7F16;&#x8BD1;&#x670D;&#x52A1;&#x7AEF;&#x6240;&#x9700;&#x4F9D;&#x8D56;&#xFF1A;</p>
+<ul>
+<li><code>Boost(1.72)</code></li>
+<li><code>Qt(5.12)</code></li>
+<li><code>Qt MySql Driver(plugin)</code></li>
+<li><code>PicoSHA2</code></li>
+<li><code>rapidjson</code></li>
+<li><code>cpp-base64</code></li>
+</ul>
+<p>&#x5176;&#x4E2D;&#x540E;&#x4E09;&#x9879;&#x5DF2;&#x9644;&#x5728;&#x6E90;&#x7801;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x624B;&#x52A8;&#x5B89;&#x88C5;&#x524D;&#x4E09;&#x9879;&#x3002;</p>
+
+      </div>
+      
+      
+    
+    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false
+  window['MERMAID_CONFIG'].theme = "default"
+}
+mermaid.initialize(window['MERMAID_CONFIG'] || {})
+
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
+    
+    
+    
+    
+    
+  
+    </body></html>

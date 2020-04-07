@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
 	MemoServer::Log::SetOption(MemoServer::LogOption::OutputToStdout, true);
 #undef ERROR
-	MemoServer::Log::InitLog(MemoServer::LogLevel::DEBUG);
+	MemoServer::Log::InitLog(MemoServer::LogLevel::ERROR);
 #define ERROR 0
 
 	MemoServer::DBAccess test("123456");

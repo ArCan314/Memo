@@ -126,22 +126,6 @@ bool MemoServer::AccountManager::CreateAccount()
 	return res;
 }
 
-/*
-bool MemoServer::AccountManager::LogOut()
-{
-	bool res;
-	QSqlQuery query = _db.GetQuery();
-	res = query.prepare(kEventTypeToSQLQueryStr.at(RecvEventType::LOG_OUT));
-	if (!res)
-	{
-		// log
-		assert(1 == 0);
-	}
-
-	return res;
-}
-*/
-
 bool MemoServer::AccountManager::LogIn()
 {
 	bool res;

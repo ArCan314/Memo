@@ -65,7 +65,7 @@ public:
         return _port;
     }
 
-    void setPort(const quint16 port)
+    void setPort(const unsigned port)
     {
         _port = port;
     }

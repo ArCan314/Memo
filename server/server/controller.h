@@ -28,15 +28,26 @@ public:
 
 	RegPointer Register(const std::string &recv_str, std::size_t &reg_pos)
 	{
-		std::lock_guard<std::mutex> lock(_queue_mtx);
 		std::string json_str(base64_decode(recv_str)); // TODO : check if the string has invalid base64 characters
 
 		RegPointer res(new RegType(0, json_str));
+		bool is_fin = false;
 
-		_reg_queue[_queue_now] = res;
-		_queue_now++;
-		if (_queue_now >= kQueueLen)
-			_queue_now = 0;
+		std::lock_guard<std::mutex> lock(_queue_mtx);
+
+		while (!is_fin)
+		{
+			if (!_reg_queue[_queue_now].second)
+			{
+				_reg_queue[_queue_now] = { res, true };
+				reg_pos = _queue_now;
+
+				is_fin = true;
+			}
+			_queue_now++;
+			if (_queue_now >= kQueueLen)
+				_queue_now = 0;
+		}
 
 		return res;
 	}
@@ -89,39 +100,19 @@ public:
 		return res;
 	}
 
-	//void Unregister(const std::size_t reg_pos)
-	//{
-	//	std::lock_guard<std::mutex> lock(_queue_mtx);
-	//	_reg_queue[reg_pos].second = false;
-	//	
-	//	_clean_cnt++;
-	//	if (_clean_cnt >= _clean_cnt_max)
-	//	{
-	//		int has_cleaned = 0;
-	//		_clean_cnt = 0;
-	//		while (_reg_queue.size() && !_reg_queue.front().second)
-	//		{
-	//			has_cleaned++;
-	//			_reg_queue.pop_front();
-	//		}
+	void Unregister(std::size_t reg_pos)
+	{
+		_reg_queue[reg_pos].second = false;
+	}
 
-	//		WRITE_LOG(LogLevel::DEBUG,
-	//					  __Str("Release ")
-	//					  .append(NumStr(has_cleaned))
-	//					  .append(" instances in reg_queue."));
-	//	}
-	//}
 
 private:
 	static constexpr int kQueueLen = 1024;
-	RegPointer _reg_queue[kQueueLen];
+	std::pair<RegPointer, bool> _reg_queue[kQueueLen]; // true means the resource is being used 
 	int _queue_now = 0;
 	std::mutex _queue_mtx;
 
 	std::map<ComponentType, JobQueue<RegPointer> *> _handle_map;
-	
-	// std::mutex _clean_mtx;
-	// static constexpr int _clean_cnt_max = 102400;
 };
 
 }; // MemoServer
